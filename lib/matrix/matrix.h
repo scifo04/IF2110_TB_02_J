@@ -3,7 +3,7 @@
 #ifndef MATRIX_H
 #define MATRIX_H
 
-#include "boolean.h"
+#include "../boolean/boolean.h"
 
 /* Ukuran maksimum baris dan kolom */
 #define ROW_CAP 100
@@ -29,22 +29,22 @@ void createMatrix(int nRows, int nCols, Matrix *m);
 /* F.S. Matriks m sesuai dengan definisi di atas terbentuk */
 
 /* *** Selektor *** */
-#define ROW_EFF(M) (M).rowEff
-#define COL_EFF(M) (M).colEff
-#define ELMT(M, i, j) (M).mem[(i)][(j)]
+#define ROW_EFF_MATRIX(M) (M).rowEff
+#define COL_EFF_MATRIX(M) (M).colEff
+#define MATRIX_ELMT(M, i, j) (M).mem[(i)][(j)]
 
 /* *** Selektor "Dunia Matrix" *** */
 boolean isMatrixIdxValid(int i, int j);
 /* Mengirimkan true jika i, j adalah index yang valid untuk matriks apa pun */
 
 /* *** Selektor: Untuk sebuah matriks m yang terdefinisi: *** */
-IdxType getLastIdxRow(Matrix m);
+IdxType getLastIdxRow_Matrix(Matrix m);
 /* Mengirimkan Index baris terbesar m */
-IdxType getLastIdxCol(Matrix m);
+IdxType getLastIdxCol_Matrix(Matrix m);
 /* Mengirimkan Index kolom terbesar m */
-boolean isIdxEff(Matrix m, IdxType i, IdxType j);
+boolean isIdxEff_Matrix(Matrix m, IdxType i, IdxType j);
 /* Mengirimkan true jika i, j adalah Index efektif bagi m */
-ElType getElmtDiagonal(Matrix m, IdxType i);
+ElType getElmtDiagonal_Matrix(Matrix m, IdxType i);
 /* Mengirimkan elemen m(i,i) */
 
 /* ********** Assignment  Matrix ********** */
@@ -104,35 +104,35 @@ boolean isMatrixSizeEqual(Matrix m1, Matrix m2);
 /* yaitu RowEff(m1) = RowEff (m2) dan ColEff (m1) = ColEff (m2) */
 
 /* ********** Operasi lain ********** */
-int countElmt(Matrix m);
+int countElmt_Matrix(Matrix m);
 /* Mengirimkan banyaknya elemen m */
 
 /* ********** KELOMPOK TEST TERHADAP Matrix ********** */
-boolean isSquare(Matrix m);
+boolean isSquare_Matrix(Matrix m);
 /* Mengirimkan true jika m adalah matriks dg ukuran baris dan kolom sama */
-boolean isSymmetric(Matrix m);
+boolean isSymmetric_Matrix(Matrix m);
 /* Mengirimkan true jika m adalah matriks simetri : isSquare(m) 
    dan untuk setiap elemen m, m(i,j)=m(j,i) */
-boolean isIdentity(Matrix m);
+boolean isIdentity_Matrix(Matrix m);
 /* Mengirimkan true jika m adalah matriks satuan: isSquare(m) dan 
    setiap elemen diagonal m bernilai 1 dan elemen yang bukan diagonal bernilai 0 */
-boolean isSparse(Matrix m);
+boolean isSparse_Matrix(Matrix m);
 /* Mengirimkan true jika m adalah matriks sparse: matriks “jarang” dengan definisi: 
    hanya maksimal 5% dari memori matriks yang efektif bukan bernilai 0 */
-Matrix negation(Matrix m);
+Matrix negation_Matrix(Matrix m);
 /* Menghasilkan salinan m dengan setiap elemen dinegasikan (dikalikan -1) */
-void pNegation(Matrix *m);
+void pNegation_Matrix(Matrix *m);
 /* I.S. m terdefinisi */
 /* F.S. m di-invers, yaitu setiap elemennya dinegasikan (dikalikan -1) */
-float determinant(Matrix m);
+float determinant_Matrix(Matrix m);
 /* Prekondisi: isSquare(m) */
 /* Menghitung nilai determinan m */
-Matrix transpose(Matrix m);
+Matrix transpose_Matrix(Matrix m);
 /* I.S. m terdefinisi dan IsSquare(m) */
 /* F.S. menghasilkan salinan transpose dari m, yaitu setiap elemen m(i,j) ditukar nilainya dengan elemen m(j,i) */
-void pTranspose(Matrix *m);
+void pTranspose_Matrix(Matrix *m);
 /* I.S. m terdefinisi dan IsSquare(m) */
 /* F.S. m "di-transpose", yaitu setiap elemen m(i,j) ditukar nilainya dengan elemen m(j,i) */
-Matrix minor (Matrix m, int a, int b);
+Matrix minor_Matrix(Matrix m, int a, int b);
 
 #endif

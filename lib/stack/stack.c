@@ -3,7 +3,7 @@
 
 /* ************ Prototype ************ */
 /* *** Konstruktor/Kreator *** */
-void CreateEmpty(Stack *S) {
+void CreateEmpty_Stack(Stack *S) {
   Top(*S) = Nil;
 }
 /* I.S. sembarang; */
@@ -12,18 +12,18 @@ void CreateEmpty(Stack *S) {
 /* Ciri stack kosong : TOP bernilai Nil */
 
 /* ************ Predikat Untuk test keadaan KOLEKSI ************ */
-boolean IsEmpty(Stack S) {
+boolean IsEmpty_Stack(Stack S) {
   return Top(S) == Nil;
 }
 /* Mengirim true jika Stack kosong: lihat definisi di atas */
-boolean IsFull(Stack S) {
+boolean IsFull_Stack(Stack S) {
   return Top(S) == MaxEl-1;
 }
 /* Mengirim true jika tabel penampung nilai elemen stack penuh */
 
 /* ************ Menambahkan sebuah elemen ke Stack ************ */
 void Push(Stack * S, infotype X) {
-  if (!IsFull(*S)) {
+  if (!IsFull_Stack(*S)) {
     Top(*S) += 1;
     InfoTop(*S) = X;
   }
@@ -34,7 +34,7 @@ void Push(Stack * S, infotype X) {
 
 /* ************ Menghapus sebuah elemen Stack ************ */
 void Pop(Stack * S, infotype* X) {
-  if (!IsEmpty(*S)) {
+  if (!IsEmpty_Stack(*S)) {
     *X = InfoTop(*S);
     Top(*S) -= 1;
   }

@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include "queue.h"
-#include "boolean.h"
 
 /* *** Kreator *** */
 void CreateQueue(Queue *q) {
@@ -14,17 +13,17 @@ void CreateQueue(Queue *q) {
 /* Proses : Melakukan alokasi, membuat sebuah q kosong */
 
 /* ********* Prototype ********* */
-boolean isEmpty(Queue q) {
+boolean isEmpty_Queue(Queue q) {
         return (IDX_HEAD(q) == IDX_UNDEF) && (IDX_TAIL(q) == IDX_UNDEF);
 }
 /* Mengirim true jika q kosong: lihat definisi di atas */
-boolean isFull(Queue q) {
+boolean isFull_Queue(Queue q) {
         return ((IDX_TAIL(q)+1) % 100 == IDX_HEAD(q));
 }
 /* Mengirim true jika tabel penampung elemen q sudah penuh */
 /* yaitu IDX_TAIL akan selalu di belakang IDX_HEAD dalam buffer melingkar*/
 
-int length(Queue q) {
+int length_Queue(Queue q) {
         if ((IDX_TAIL(q) >= IDX_HEAD(q)) && (IDX_TAIL(q) != IDX_UNDEF && IDX_HEAD(q) != IDX_UNDEF)) {
                 return (IDX_TAIL(q)-IDX_HEAD(q)+1);
         } else if (IDX_TAIL(q) < IDX_HEAD(q)) {
@@ -37,7 +36,7 @@ int length(Queue q) {
 
 /* *** Primitif Add/Delete *** */
 void enqueue(Queue *q, ElType val) {
-        if (isEmpty(*q)) {
+        if (isEmpty_Queue(*q)) {
                 IDX_HEAD(*q) = 0;
         }
         (*q).buffer[(IDX_TAIL(*q)+1) % CAPACITY] = val;
@@ -65,13 +64,13 @@ void dequeue(Queue *q, ElType *val) {
 void displayQueue(Queue q) {
         printf("[");
         int i = IDX_HEAD(q);
-        if (!isEmpty(q)) {
+        if (!isEmpty_Queue(q)) {
                 while (i != IDX_TAIL(q)) {
                         printf("%d,",q.buffer[i]);
                         i = (i+1)%CAPACITY;
                 }
         }
-        if (isEmpty(q)) {
+        if (isEmpty_Queue(q)) {
                 printf("]\n");
         } else {
                 printf("%d]\n",q.buffer[IDX_TAIL(q)]);

@@ -34,7 +34,7 @@ void ADV()
 
        /* Algoritma */
        retval = fscanf(pita, "%c", &currentChar);
-       EOP = (currentChar == MARK);
+       EOP = (currentChar == MARK_LISTSTATIK);
        if (EOP)
        {
               fclose(pita);
