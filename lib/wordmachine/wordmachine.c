@@ -45,7 +45,7 @@ void ADVWORD() {
 void CopyWord() {
     int i;
     i = 0;
-    while ((currentChar != MARK) && (currentChar != BLANK)) {
+    while ((currentChar != MARK)) {
         currentWord.TabWord[i] = currentChar;
         ADV();
         if (i >= NMax) {
@@ -54,6 +54,7 @@ void CopyWord() {
             i++;
         }
     }
+    ADV();
     currentWord.Length = i;
 }
 /* Mengakuisisi kata, menyimpan dalam currentWord
@@ -62,3 +63,33 @@ void CopyWord() {
           currentChar = BLANK atau currentChar = MARK;
           currentChar adalah karakter sesudah karakter terakhir yang diakuisisi.
           Jika panjang kata melebihi NMax, maka sisa kata "dipotong" */
+
+void printWord(Word W) {
+    int i;
+    for (i = 0; i < W.Length; i++) {
+        printf("%c",W.TabWord[i]);
+    }
+}
+
+boolean wordSimilar (Word W1, Word W2) {
+    boolean check = true;
+    int i;
+    if (W1.Length == W2.Length) {
+        for (i = 0; i < W1.Length; i++) {
+            if (W1.TabWord[i] != W2.TabWord[i]) {
+                check = false;
+            }
+        }
+    } else {
+        check = false;
+    }
+    return check;
+}
+
+void PasteWord(Word WIn, Word *WOut) {
+    int i;
+    for (i = 0; i < WIn.Length; i++) {
+        (*WOut).TabWord[i] = WIn.TabWord[i];
+    }
+    (*WOut).Length = WIn.Length;
+}

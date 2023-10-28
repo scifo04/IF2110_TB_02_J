@@ -2,6 +2,7 @@
 #define ADT_H
 
 #include "boolean/boolean.h"
+#include "account/account.h"
 #include "listdin/listdin.h"
 #include "liststatik/liststatik.h"
 #include "matrix/matrix.h"
