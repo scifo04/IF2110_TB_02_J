@@ -3,6 +3,7 @@
 
 #include "boolean/boolean.h"
 #include "account/account.h"
+#include "pcolor/pcolor.h"
 #include "listdin/listdin.h"
 #include "liststatik/liststatik.h"
 #include "matrix/matrix.h"
