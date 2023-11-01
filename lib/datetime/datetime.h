@@ -20,7 +20,6 @@ typedef struct {
 void CreateDATETIME(DATETIME *D);
 void TulisDATETIME(DATETIME D);
 
-
 // boolean DLT(DATETIME D1, DATETIME D2);
 // boolean DGT(DATETIME D1, DATETIME D2);
 
