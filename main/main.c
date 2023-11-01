@@ -5,6 +5,7 @@
 static boolean allowexit = false;
 static ListAcc acc;
 static boolean hasLogged = false;
+static Account currentuser;
 
 void enter() {
     printf("\n");
@@ -76,6 +77,24 @@ Word copyWord_Keluar () {
     return W;
 }
 
+Word copyWord_Ganti_Profil () {
+    Word W;
+    (W).TabWord[0] = 'G';
+    (W).TabWord[1] = 'A';
+    (W).TabWord[2] = 'N';
+    (W).TabWord[3] = 'T';
+    (W).TabWord[4] = 'I';
+    (W).TabWord[5] = '_';
+    (W).TabWord[6] = 'P';
+    (W).TabWord[7] = 'R';
+    (W).TabWord[8] = 'O';
+    (W).TabWord[9] = 'F';
+    (W).TabWord[10] = 'I';
+    (W).TabWord[11] = 'L';
+    (W).Length = 12;
+    return W;
+}
+
 void readCommand (Word W) {
     Word Reader;
     if (wordSimilar(W,copyWord_Exit())) {
@@ -89,12 +108,16 @@ void readCommand (Word W) {
     } else if (wordSimilar(W,copyWord_Keluar())) {
         Keluar();
         printf("\n");
+    } else if (wordSimilar(W,copyWord_Ganti_Profil())) {
+        Ganti_Profil();
+        printf("\n");
     }
 }
 
 // DAFTAR
 void Daftar () {
     Account A;
+    CreateAccount(&A);
     printf("\n");
     if (!hasLogged) {
         if (!isFull_Account(acc)) {
@@ -141,6 +164,7 @@ void Masuk () {
         printf("Wawww!! Kamu sudah masuk ke BurBir dengan username ");
         printWord(A.username);
         printf(". Silakan menelusuri dunia BurBir bersama Ande-Ande Lumut!!!");
+        currentuser = A;
         hasLogged = true;
     } else {
         printf("Kamu sudah login sehingga tidak perlu login lagi, sana nge-BurBir dulu!");
@@ -157,6 +181,35 @@ void Keluar () {
         printf("Belum masuk kok dah keluar? Silakan login dulu!\n");
     }
     printf("\n");
+}
+
+// GANTI_PROFIL
+void Ganti_Profil () {
+    if (hasLogged) {
+        printf("| Nama: ");
+        printWord(currentuser.username);
+        printf("\n");
+        printf("| Bio Akun: ");
+        if (currentuser.bio.Length > 0) {
+            printWord(currentuser.bio);
+        }
+        printf("\n");
+        printf("| No HP: ");
+        if (currentuser.phone_num.Length > 0) {
+            printWord(currentuser.phone_num);
+        }
+        printf("\n");
+        printf("| Weton: ");
+        if (currentuser.weton.Length > 0) {
+            printWord(currentuser.weton);
+        }
+        printf("\n");
+        printf("\n");
+        readBio(&currentuser);
+        readPhone_Num(&currentuser);
+        readWeton(&currentuser);
+        // displayAccount(currentuser);
+    }
 }
 
 int main() {

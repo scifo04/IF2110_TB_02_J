@@ -344,3 +344,11 @@ void sortList_ListStatik(ListStatik *l, boolean asc) {
 /*      Jika asc = false, l terurut mengecil */
 /* Proses : Mengurutkan l dengan salah satu algoritma sorting,
    algoritma bebas */
+
+ListStatik concat_ListStatik (ListStatik L1, ListStatik L2) {
+   int i;
+   for (i = 0; i < listLength_ListStatik(L2); i++) {
+      insertLast_ListStatik(&L1, LISTSTATIK_ELMT(L2,i));
+   }
+   return L1;
+}

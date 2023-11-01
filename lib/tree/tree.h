@@ -3,7 +3,7 @@
 #ifndef TREE_H
 #define TREE_H
 
-#include "../utility/boolean.h"
+#include "../boolean/boolean.h"
 #include "../liststatik/liststatik.h"
 #include "../wordmachine/charmachine.h"
 #include "../wordmachine/wordmachine.h"

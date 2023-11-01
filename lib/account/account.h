@@ -7,6 +7,11 @@
 typedef struct {
     Word username;
     Word password;
+    Word bio;
+    Word phone_num;
+    Word weton;
+    Word photo;
+    boolean publicity;
 } Account;
 
 typedef struct {
@@ -14,7 +19,13 @@ typedef struct {
     int NEff;
 } ListAcc;
 
-void readAccount (Account *A);
+void readUsername (Account *A);
+void readPassword (Account *A);
+void readBio (Account *A);
+void readPhone_Num (Account *A);
+void readWeton (Account *A);
+void readPhoto (Account *A);
+void change_publicity (Account *A);
 void displayAccount (Account A);
 void CreateListAccount (ListAcc *L);
 boolean isEmpty_Account (ListAcc L);

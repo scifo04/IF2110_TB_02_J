@@ -111,34 +111,34 @@ addressTree getAddress (addressTree P, int X){
     }
 }
 
-int Treemachine(char string[], Matrix *m){
-    int count = 0;
-    int count1 = 1;
-    int tempint = 1;
-    int itemp = 0;
-    int k = 0, j = 0;
-    STARTWORD_FILE(string);
-    tempint = WordToInt(currentWord);
-    ADVWORD();
-    while (count != tempint){
-        if (count1 == 2){
-            itemp = WordToInt(currentWord) + 2;
-        }
-        MATRIXELMT(*m,k,j) = WordToInt(currentWord);
-        j++;
-        if (count1 == itemp){
-            k++;
-            j = 0;
-            count1 = 0;
-            count++;
-        }
-        count1++;
-        if (count != tempint){
-            ADVWORD();
-        }
-    }
-    return tempint;
-}
+// int Treemachine(char string[], Matrix *m){
+//     int count = 0;
+//     int count1 = 1;
+//     int tempint = 1;
+//     int itemp = 0;
+//     int k = 0, j = 0;
+//     STARTWORD_FILE(string);
+//     tempint = WordToInt(currentWord);
+//     ADVWORD();
+//     while (count != tempint){
+//         if (count1 == 2){
+//             itemp = WordToInt(currentWord) + 2;
+//         }
+//         MATRIX_ELMT(*m,k,j) = WordToInt(currentWord);
+//         j++;
+//         if (count1 == itemp){
+//             k++;
+//             j = 0;
+//             count1 = 0;
+//             count++;
+//         }
+//         count1++;
+//         if (count != tempint){
+//             ADVWORD();
+//         }
+//     }
+//     return tempint;
+// }
 
 void matrixToTree (Matrix m, int N, Tree *T){
     int i,j,k,found,temp;
@@ -147,25 +147,25 @@ void matrixToTree (Matrix m, int N, Tree *T){
     addressTree PNow;
 
     for (i = 0 ; i < N ; i ++){
-        P[i] = Alokasi(MATRIXELMT(m,i,0));
+        P[i] = Alokasi(MATRIX_ELMT(m,i,0));
     }
 
     (*T).root = P[N-1];
 
     for (i = 0 ; i < N ; i++){
         temp = 0;
-        for (j = 0 ; j < MATRIXELMT(m,i,1) ; j++){
+        for (j = 0 ; j < MATRIX_ELMT(m,i,1) ; j++){
             // check if m[i][j+2] exists in P
             found = 0;
             k = 0;
             while (k < N && !found){
-                if (MATRIXELMT(m,i,j+2) == Data(P[k])){
+                if (MATRIX_ELMT(m,i,j+2) == Data(P[k])){
                     found = 1;
                 }
                 k++;
             }
             if (!found){
-                PNow = Alokasi(MATRIXELMT(m,i,j+2));
+                PNow = Alokasi(MATRIX_ELMT(m,i,j+2));
             } else {
                 PNow = P[k-1];
             }
