@@ -82,6 +82,7 @@ void CreateAccount (Account *A) {
     (*A).phone_num.Length = 0;
     (*A).weton.Length = 0;
 }
+
 void readUsername(Account *A) {
     printf("Masukkan nama: ");
     printf("\n");
@@ -340,3 +341,12 @@ boolean passAvailable (ListAcc L, Word U) {
     }
     return check;
 }
+
+// boolean getPublicitybyUsername(ListAcc L, Word username){
+//     int i;
+//     for (i = 0; i < length_Account(L); i++) {
+//         if (wordSimilar(L.buffer[i].username, username)) {
+//             return L.buffer[i].publicity;
+//         }
+//     }
+// }

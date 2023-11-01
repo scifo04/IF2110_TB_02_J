@@ -45,5 +45,6 @@ void deleteFirst_Account (ListAcc *L, Account *A);
 void deleteLast_Account (ListAcc*L, Account  *A);
 void deleteAt_Account (ListAcc*L, int idx, Account *A);
 void displayList_Account (ListAcc L);
+// boolean getPublicitybyUsername(ListAcc L, Word username);
 
 #endif

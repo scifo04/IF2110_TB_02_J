@@ -17,6 +17,7 @@ void STARTWORD() {
     IgnoreBlanks();
     if (currentChar == MARK) {
         EndWord = true;
+        currentWord="";
     } else {
         EndWord = false;
         CopyWord();
