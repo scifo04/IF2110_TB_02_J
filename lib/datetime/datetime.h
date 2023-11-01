@@ -2,7 +2,8 @@
 #define DATETIME_H
 
 #include "../boolean/boolean.h"
-#include "../time/time.h"
+#include "../time/time.c"
+#include <time.h>
 
 typedef struct {
     int DD;   /* integer [1..31] */
@@ -16,20 +17,13 @@ typedef struct {
 #define Year(D) (D).YYYY
 #define Time(D) (D).T
 
-int GetMaxDay(int M, int Y);
-boolean IsDATETIMEValid(int D, int M, int Y, int h, int m, int s);
-
-void CreateDATETIME(DATETIME *D, int DD, int MM, int YYYY, int hh, int mm, int ss);
-void BacaDATETIME(DATETIME *D);
+void CreateDATETIME(DATETIME *D);
 void TulisDATETIME(DATETIME D);
 
-boolean DEQ(DATETIME D1, DATETIME D2);
-boolean DNEQ(DATETIME D1, DATETIME D2);
-boolean DLT(DATETIME D1, DATETIME D2);
-boolean DGT(DATETIME D1, DATETIME D2);
-DATETIME DATETIMENextNDetik(DATETIME D, int N);
-DATETIME DATETIMEPrevNDetik(DATETIME D, int N);
 
-long int DATETIMEDurasi(DATETIME DAw, DATETIME DAkh);
+// boolean DLT(DATETIME D1, DATETIME D2);
+// boolean DGT(DATETIME D1, DATETIME D2);
+
+// long int DATETIMEDurasi(DATETIME DAw, DATETIME DAkh);
 
 #endif
