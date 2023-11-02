@@ -48,13 +48,13 @@ void CopyWord();
 
 void printWord(Word W);
 
+char ToLowerCase (char a);
+// untuk wordSimilarCI
+
 boolean wordSimilar (Word W1, Word W2);
 boolean wordSimilarCI (Word W1, Word W2);
 // wordSimilar untuk yang case sensitive
 // wordSimilarCI untuk yang case insensitive, untuk validasi weton dan tagar (bonus)
-
-char ToLowerCase (char a);
-// untuk wordSimilarCI
 
 void PasteWord(Word WIn, Word *WOut);
 boolean intCheck (Word W);

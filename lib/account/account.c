@@ -143,10 +143,10 @@ void readWeton (Account *A) {
     STARTWORD();
     printf("\n");
     W = currentWord;
-    if ((wordSimilar(W,copyWord_Kliwon()) || wordSimilar(W,copyWord_Legi()) || wordSimilar(W,copyWord_Pon()) || wordSimilar(W,copyWord_Pahing()) || wordSimilar(W,copyWord_Wage()))) {
+    if ((wordSimilarCI(W,copyWord_Kliwon()) || wordSimilarCI(W,copyWord_Legi()) || wordSimilarCI(W,copyWord_Pon()) || wordSimilarCI(W,copyWord_Pahing()) || wordSimilarCI(W,copyWord_Wage()))) {
         /* NOTHING */
     } else {
-        while (!((wordSimilar(W,copyWord_Kliwon()) || wordSimilar(W,copyWord_Legi()) || wordSimilar(W,copyWord_Pon()) || wordSimilar(W,copyWord_Pahing()) || wordSimilar(W,copyWord_Wage())))) {
+        while (!((wordSimilarCI(W,copyWord_Kliwon()) || wordSimilarCI(W,copyWord_Legi()) || wordSimilarCI(W,copyWord_Pon()) || wordSimilarCI(W,copyWord_Pahing()) || wordSimilarCI(W,copyWord_Wage())))) {
             printf("Weton tidak valid. Masukkan kembali Weton: ");
             printf("\n");
             STARTWORD();
@@ -154,7 +154,11 @@ void readWeton (Account *A) {
             W = currentWord;
         }
     }
-    (*A).weton = W;
+    if (wordSimilarCI(W, copyWord_Kliwon())){PasteWord(copyWord_Kliwon(), &(A)->weton);}
+    else if (wordSimilarCI(W, copyWord_Legi())){PasteWord(copyWord_Legi(), &(A)->weton);}
+    else if (wordSimilarCI(W, copyWord_Pon())){PasteWord(copyWord_Pon(), &(A)->weton);}
+    else if (wordSimilarCI(W, copyWord_Pahing())){PasteWord(copyWord_Pahing(), &(A)->weton);}
+    else {PasteWord(copyWord_Wage(), &(A)->weton);}
 }
 void readPhoto (Account *A) {
     Word W;
