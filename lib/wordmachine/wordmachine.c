@@ -73,15 +73,10 @@ void printWord(Word W) {
 }
 
 char ToLowerCase (char a){
-    if (a == 'A'){return 'a';} if (a == 'B'){return 'b';} if (a == 'C'){return 'c';}
-    if (a == 'D'){return 'd';} if (a == 'E'){return 'e';} if (a == 'F'){return 'f';}
-    if (a == 'G'){return 'g';} if (a == 'H'){return 'h';} if (a == 'I'){return 'i';}
-    if (a == 'J'){return 'j';} if (a == 'K'){return 'k';} if (a == 'L'){return 'l';}
-    if (a == 'M'){return 'm';} if (a == 'N'){return 'n';} if (a == 'O'){return 'o';}
-    if (a == 'P'){return 'p';} if (a == 'Q'){return 'q';} if (a == 'R'){return 'r';}
-    if (a == 'S'){return 's';} if (a == 'T'){return 't';} if (a == 'U'){return 'u';}
-    if (a == 'V'){return 'v';} if (a == 'W'){return 'w';} if (a == 'X'){return 'x';}
-    if (a == 'Y'){return 'y';} if (a == 'Z'){return 'z';} return a;
+    int ASCII = (int) a;
+    if ((ASCII > 64) && (ASCII < 91)){ASCII += 32;}
+    char CHARA = (char) ASCII;
+    return CHARA;
 }
 
 boolean wordSimilar (Word W1, Word W2) {
