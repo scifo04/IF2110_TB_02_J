@@ -46,6 +46,9 @@ void CopyWord();
           currentChar adalah karakter sesudah karakter terakhir yang diakuisisi.
           Jika panjang kata melebihi NMax, maka sisa kata "dipotong" */
 
-void PasteWord();
+void printWord(Word W);
+boolean wordSimilar (Word W1, Word W2);
+void PasteWord(Word WIn, Word *WOut);
+boolean intCheck (Word W);
 
 #endif

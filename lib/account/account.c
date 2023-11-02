@@ -168,7 +168,7 @@ void change_publicity (Account *A) {
     if ((*A).publicity == true) {
         printf("Saat ini, akun Anda adalah akun Publik. Ingin mengubah ke akun Privat? (YA/TIDAK) ");
         STARTWORD();
-        if (wordSimilar(currentWord,copyWord_YA)) {
+        if (wordSimilar(currentWord,copyWord_YA())) {
             (*A).publicity == false;
             printf("\n");
             printf("Akun anda sudah diubah menjadi akun Privat.");
@@ -177,7 +177,7 @@ void change_publicity (Account *A) {
     } else {
         printf("Saat ini, akun Anda adalah akun Privat. Ingin mengubah ke akun Publik? (YA/TIDAK) ");
         STARTWORD();
-        if (wordSimilar(currentWord,copyWord_YA)) {
+        if (wordSimilar(currentWord,copyWord_YA())) {
             (*A).publicity == true;
             printf("\n");
             printf("Akun anda sudah diubah menjadi akun Publik.");
@@ -276,8 +276,8 @@ void insertAt_Account (ListAcc *L, int idx, Account A) {
 void deleteFirst_Account (ListAcc *L, Account *A) {
     int i;
     if (!isEmpty_Account(*L)) {
-        PasteWord(getFirstElmt_Account(*L).username,(&*A)->username);
-        PasteWord(getFirstElmt_Account(*L).password,(&*A)->password);
+        PasteWord(getFirstElmt_Account(*L).username,&(A)->username);
+        PasteWord(getFirstElmt_Account(*L).password,&(A)->password);
         for (i = 0; i < length_Account(*L); i++) {
             setElmt_Account(&*L,i,getElmt_Account(*L,i+1));
         }
@@ -287,8 +287,8 @@ void deleteFirst_Account (ListAcc *L, Account *A) {
 
 void deleteLast_Account (ListAcc *L, Account *A) {
     if (!isEmpty_Account(*L)) {
-        PasteWord(getLastElmt_Account(*L).username,(&*A)->username);
-        PasteWord(getLastElmt_Account(*L).password,(&*A)->password);
+        PasteWord(getLastElmt_Account(*L).username,&(A)->username);
+        PasteWord(getLastElmt_Account(*L).password,&(A)->password);
         (*L).NEff -= 1;
     }
 }
@@ -296,8 +296,8 @@ void deleteLast_Account (ListAcc *L, Account *A) {
 void deleteAt_Account (ListAcc *L, int idx, Account *A) {
     int i;
     if (!isEmpty_Account(*L)) {
-        PasteWord(getElmt_Account(*L,idx).username,(&*A)->username);
-        PasteWord(getElmt_Account(*L,idx).password,(&*A)->password);
+        PasteWord(getElmt_Account(*L,idx).username,&(A)->username);
+        PasteWord(getElmt_Account(*L,idx).password,&(A)->password);
         for (i = idx; i < length_Account(*L); i++) {
             setElmt_Account(&*L,i,getElmt_Account(*L,i+1));
         }

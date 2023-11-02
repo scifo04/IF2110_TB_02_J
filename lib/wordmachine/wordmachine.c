@@ -17,7 +17,7 @@ void STARTWORD() {
     IgnoreBlanks();
     if (currentChar == MARK) {
         EndWord = true;
-        currentWord="";
+        currentWord.Length = 0;
     } else {
         EndWord = false;
         CopyWord();
