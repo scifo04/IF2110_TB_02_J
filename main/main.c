@@ -95,25 +95,6 @@ Word copyWord_Ganti_Profil () {
     return W;
 }
 
-void readCommand (Word W) {
-    Word Reader;
-    if (wordSimilar(W,copyWord_Exit())) {
-        allowexit = true;
-    } else if (wordSimilar(W,copyWord_Daftar())) {
-        Daftar();
-        printf("\n");
-    } else if (wordSimilar(W,copyWord_Masuk())) {
-        Masuk();
-        printf("\n");
-    } else if (wordSimilar(W,copyWord_Keluar())) {
-        Keluar();
-        printf("\n");
-    } else if (wordSimilar(W,copyWord_Ganti_Profil())) {
-        Ganti_Profil();
-        printf("\n");
-    }
-}
-
 // DAFTAR
 void Daftar () {
     Account A;
@@ -209,6 +190,25 @@ void Ganti_Profil () {
         readPhone_Num(&currentuser);
         readWeton(&currentuser);
         // displayAccount(currentuser);
+    }
+}
+
+void readCommand (Word W) {
+    Word Reader;
+    if (wordSimilar(W,copyWord_Exit())) {
+        allowexit = true;
+    } else if (wordSimilar(W,copyWord_Daftar())) {
+        Daftar();
+        printf("\n");
+    } else if (wordSimilar(W,copyWord_Masuk())) {
+        Masuk();
+        printf("\n");
+    } else if (wordSimilar(W,copyWord_Keluar())) {
+        Keluar();
+        printf("\n");
+    } else if (wordSimilar(W,copyWord_Ganti_Profil())) {
+        Ganti_Profil();
+        printf("\n");
     }
 }
 

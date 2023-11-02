@@ -19,6 +19,14 @@ typedef struct {
     int NEff;
 } ListAcc;
 
+Word copyWord_Pahing ();
+Word copyWord_Legi ();
+Word copyWord_Pon ();
+Word copyWord_Wage ();
+Word copyWord_Kliwon ();
+Word copyWord_YA ();
+Word copyWord_TIDAK ();
+void CreateAccount (Account *A);
 void readUsername (Account *A);
 void readPassword (Account *A);
 void readBio (Account *A);
@@ -45,6 +53,8 @@ void deleteFirst_Account (ListAcc *L, Account *A);
 void deleteLast_Account (ListAcc*L, Account  *A);
 void deleteAt_Account (ListAcc*L, int idx, Account *A);
 void displayList_Account (ListAcc L);
+boolean nameAvailable (ListAcc L, Word U);
+boolean passAvailable (ListAcc L, Word U);
 // boolean getPublicitybyUsername(ListAcc L, Word username);
 
 #endif

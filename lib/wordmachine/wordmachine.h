@@ -47,7 +47,15 @@ void CopyWord();
           Jika panjang kata melebihi NMax, maka sisa kata "dipotong" */
 
 void printWord(Word W);
+
 boolean wordSimilar (Word W1, Word W2);
+boolean wordSimilarCI (Word W1, Word W2);
+// wordSimilar untuk yang case sensitive
+// wordSimilarCI untuk yang case insensitive, untuk validasi weton dan tagar (bonus)
+
+char ToLowerCase (char a);
+// untuk wordSimilarCI
+
 void PasteWord(Word WIn, Word *WOut);
 boolean intCheck (Word W);
 
