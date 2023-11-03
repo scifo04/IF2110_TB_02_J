@@ -131,12 +131,12 @@ void Daftar () {
             }
             readPassword(&A);
             insertLast_Account((&acc),A);
-            printf("Registrasi berhasil. Silakan nikmati fitur-fitur yang ada di BurBir!\n");
+            printf("Registrasi berhasil. Silakan nikmati fitur-fitur yang ada di BurBir!");
         } else {
-            printf("BurBir sudah tidak bisa menghandle lebih banyak akun lagi! Coba lakukan pengusiran!\n");
+            printf("BurBir sudah tidak bisa menghandle lebih banyak akun lagi! Coba lakukan pengusiran!");
         }
     } else {
-        printf("Kamu sudah login sehingga tidak bisa daftar, sana nge-BurBir dulu!\n");
+        printf("Kamu sudah login sehingga tidak bisa daftar, sana nge-BurBir dulu!");
     }
     printf("\n");
 }
@@ -144,6 +144,7 @@ void Daftar () {
 // MASUK
 void Masuk () {
     Account A;
+    CreateAccount(&A);
     if (!hasLogged) {
         while (true) {
             readUsername(&A);
@@ -208,7 +209,7 @@ void Ganti_Profil () {
         readBio(&currentuser);
         readPhone_Num(&currentuser);
         readWeton(&currentuser);
-        // displayAccount(currentuser);
+        printf("Profil Anda sudah berhasil diperbarui!\n");
     }
 }
 
