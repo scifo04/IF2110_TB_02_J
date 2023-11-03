@@ -4,6 +4,7 @@
 #ifndef __CHAR_MACHINE_H__
 #define __CHAR_MACHINE_H__
 
+#include <stdio.h>
 #include "../boolean/boolean.h"
 
 #define MARK ';'

@@ -7,7 +7,7 @@
 #include "../boolean/boolean.h"
 #include "charmachine.h"
 
-#define NMax 300
+#define NMax 280
 #define BLANK ' '
 
 typedef struct
@@ -46,6 +46,17 @@ void CopyWord();
           currentChar adalah karakter sesudah karakter terakhir yang diakuisisi.
           Jika panjang kata melebihi NMax, maka sisa kata "dipotong" */
 
-void PasteWord();
+void printWord(Word W);
+
+char ToLowerCase (char a);
+// untuk wordSimilarCI
+
+boolean wordSimilar (Word W1, Word W2);
+boolean wordSimilarCI (Word W1, Word W2);
+// wordSimilar untuk yang case sensitive
+// wordSimilarCI untuk yang case insensitive, untuk validasi weton dan tagar (bonus)
+
+void PasteWord(Word WIn, Word *WOut);
+boolean intCheck (Word W);
 
 #endif

@@ -17,6 +17,7 @@ void STARTWORD() {
     IgnoreBlanks();
     if (currentChar == MARK) {
         EndWord = true;
+        currentWord.Length = 0;
     } else {
         EndWord = false;
         CopyWord();
@@ -71,6 +72,13 @@ void printWord(Word W) {
     }
 }
 
+char ToLowerCase (char a){
+    int ASCII = (int) a;
+    if ((ASCII > 64) && (ASCII < 91)){ASCII += 32;}
+    char CHARA = (char) ASCII;
+    return CHARA;
+}
+
 boolean wordSimilar (Word W1, Word W2) {
     boolean check = true;
     int i;
@@ -86,6 +94,19 @@ boolean wordSimilar (Word W1, Word W2) {
     return check;
 }
 
+boolean wordSimilarCI (Word W1, Word W2) {
+    Word WI, WO;
+    PasteWord(W1, &WI); PasteWord(W2, &WO);
+    int i;
+    for (i = 0; i < WI.Length; i++){
+        WI.TabWord[i] = ToLowerCase(WI.TabWord[i]);
+    }
+    for (i = 0; i < WO.Length; i++){
+        WO.TabWord[i] = ToLowerCase(WO.TabWord[i]);
+    }
+    return (wordSimilar (WI, WO));
+}
+
 void PasteWord(Word WIn, Word *WOut) {
     int i;
     for (i = 0; i < WIn.Length; i++) {
@@ -98,6 +119,24 @@ boolean intCheck (Word W) {
     boolean check = true;
     for (int i = 0; i < W.Length; i++) {
         if (!(W.TabWord[i] >= 48 && W.TabWord[i] <= 57)) {
+            check = false;
+            return check;
+        }
+    }
+    return check;
+}
+
+boolean substring_beginning (Word W1, Word W2) {
+    int i;
+    int len;
+    boolean check = true;
+    if (W1.Length >= W2.Length) {
+        len = W2.Length;
+    } else {
+        len = W1.Length;
+    }
+    for (i = 0; i < len; i++) {
+        if (W1.TabWord[i] != W2.TabWord[i]) {
             check = false;
             return check;
         }

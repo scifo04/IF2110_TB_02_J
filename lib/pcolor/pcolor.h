@@ -21,3 +21,4 @@ We only provide 8 colors. Feel free to modify/add colors if you want to.
 void print_red(char c);
 void print_green(char c);
 void print_blue(char c);
+void print_color(char c, int choice);

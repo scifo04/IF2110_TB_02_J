@@ -26,3 +26,13 @@ void print_blue(char c)
     printf("%s%c", BLUE, c);
     printf("%s", NORMAL);
 }
+
+void print_color(char c, int choice) {
+    if (choice == 1) {
+        print_red(c);
+    } else if (choice == 2) {
+        print_blue(c);
+    } else {
+        print_green(c);
+    }
+}

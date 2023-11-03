@@ -34,21 +34,14 @@ void load (Word W);
 // COMMAND READERS
 Word copyWord_Exit () {
     Word W;
-    (W).TabWord[0] = 'E';
-    (W).TabWord[1] = 'X';
-    (W).TabWord[2] = 'I';
-    (W).TabWord[3] = 'T';
+    (W).TabWord[0] = 'E';(W).TabWord[1] = 'X';(W).TabWord[2] = 'I';(W).TabWord[3] = 'T';
     (W).Length = 4;
     return W;
 }
 
 Word copyWord_Daftar () {
     Word W;
-    (W).TabWord[0] = 'D';
-    (W).TabWord[1] = 'A';
-    (W).TabWord[2] = 'F';
-    (W).TabWord[3] = 'T';
-    (W).TabWord[4] = 'A';
+    (W).TabWord[0] = 'D';(W).TabWord[1] = 'A';(W).TabWord[2] = 'F';(W).TabWord[3] = 'T';(W).TabWord[4] = 'A';
     (W).TabWord[5] = 'R';
     (W).Length = 6;
     return W;
@@ -56,62 +49,50 @@ Word copyWord_Daftar () {
 
 Word copyWord_Masuk () {
     Word W;
-    (W).TabWord[0] = 'M';
-    (W).TabWord[1] = 'A';
-    (W).TabWord[2] = 'S';
-    (W).TabWord[3] = 'U';
-    (W).TabWord[4] = 'K';
+    (W).TabWord[0] = 'M';(W).TabWord[1] = 'A';(W).TabWord[2] = 'S';(W).TabWord[3] = 'U';(W).TabWord[4] = 'K';
     (W).Length = 5;
     return W;
 }
 
 Word copyWord_Keluar () {
     Word W;
-    (W).TabWord[0] = 'K';
-    (W).TabWord[1] = 'E';
-    (W).TabWord[2] = 'L';
-    (W).TabWord[3] = 'U';
-    (W).TabWord[4] = 'A';
-    (W).TabWord[5] = 'R';
+    (W).TabWord[0] = 'K';(W).TabWord[1] = 'E';(W).TabWord[2] = 'L';(W).TabWord[3] = 'U';(W).TabWord[4] = 'A';(W).TabWord[5] = 'R';
     (W).Length = 6;
     return W;
 }
 
 Word copyWord_Ganti_Profil () {
     Word W;
-    (W).TabWord[0] = 'G';
-    (W).TabWord[1] = 'A';
-    (W).TabWord[2] = 'N';
-    (W).TabWord[3] = 'T';
-    (W).TabWord[4] = 'I';
-    (W).TabWord[5] = '_';
-    (W).TabWord[6] = 'P';
-    (W).TabWord[7] = 'R';
-    (W).TabWord[8] = 'O';
-    (W).TabWord[9] = 'F';
-    (W).TabWord[10] = 'I';
-    (W).TabWord[11] = 'L';
+    (W).TabWord[0] = 'G';(W).TabWord[1] = 'A';(W).TabWord[2] = 'N';(W).TabWord[3] = 'T';(W).TabWord[4] = 'I';(W).TabWord[5] = '_';
+    (W).TabWord[6] = 'P';(W).TabWord[7] = 'R';(W).TabWord[8] = 'O';(W).TabWord[9] = 'F';(W).TabWord[10] = 'I';(W).TabWord[11] = 'L';
     (W).Length = 12;
     return W;
 }
 
-void readCommand (Word W) {
-    Word Reader;
-    if (wordSimilar(W,copyWord_Exit())) {
-        allowexit = true;
-    } else if (wordSimilar(W,copyWord_Daftar())) {
-        Daftar();
-        printf("\n");
-    } else if (wordSimilar(W,copyWord_Masuk())) {
-        Masuk();
-        printf("\n");
-    } else if (wordSimilar(W,copyWord_Keluar())) {
-        Keluar();
-        printf("\n");
-    } else if (wordSimilar(W,copyWord_Ganti_Profil())) {
-        Ganti_Profil();
-        printf("\n");
-    }
+Word copyWord_Lihat_Profil () {
+    Word W;
+    (W).TabWord[0] = 'L';(W).TabWord[1] = 'I';(W).TabWord[2] = 'H';(W).TabWord[3] = 'A';(W).TabWord[4] = 'T';(W).TabWord[5] = '_';
+    (W).TabWord[6] = 'P';(W).TabWord[7] = 'R';(W).TabWord[8] = 'O';(W).TabWord[9] = 'F';(W).TabWord[10] = 'I';(W).TabWord[11] = 'L';
+    (W).Length = 12;
+    return W;
+}
+
+Word copyWord_Atur_Jenis_Akun () {
+    Word W;
+    (W).TabWord[0] = 'A';(W).TabWord[1] = 'T';(W).TabWord[2] = 'U';(W).TabWord[3] = 'R';(W).TabWord[4] = '_';(W).TabWord[5] = 'J';
+    (W).TabWord[6] = 'E';(W).TabWord[7] = 'N';(W).TabWord[8] = 'I';(W).TabWord[9] = 'S';(W).TabWord[10] = '_';(W).TabWord[11] = 'A';
+    (W).TabWord[12] = 'K';(W).TabWord[13] = 'U';(W).TabWord[14] = 'N';
+    (W).Length = 15;
+    return W;
+}
+
+Word copyWord_Ubah_Foto_Profil () {
+    Word W;
+    (W).TabWord[0] = 'U';(W).TabWord[1] = 'B';(W).TabWord[2] = 'A';(W).TabWord[3] = 'H';(W).TabWord[4] = '_';(W).TabWord[5] = 'F';
+    (W).TabWord[6] = 'O';(W).TabWord[7] = 'T';(W).TabWord[8] = 'O';(W).TabWord[9] = '_';(W).TabWord[10] = 'P';(W).TabWord[11] = 'R';
+    (W).TabWord[12] = 'O';(W).TabWord[13] = 'F';(W).TabWord[14] = 'I';(W).TabWord[15] = 'L';
+    (W).Length = 16;
+    return W;
 }
 
 // DAFTAR
@@ -165,7 +146,7 @@ void Masuk () {
         printf("Wawww!! Kamu sudah masuk ke BurBir dengan username ");
         printWord(A.username);
         printf(". Silakan menelusuri dunia BurBir bersama Ande-Ande Lumut!!!");
-        currentuser = A;
+        currentuser = getElmt_Account(acc,getIdx_Account(acc,A));
         hasLogged = true;
     } else {
         printf("Kamu sudah login sehingga tidak perlu login lagi, sana nge-BurBir dulu!");
@@ -209,7 +190,101 @@ void Ganti_Profil () {
         readBio(&currentuser);
         readPhone_Num(&currentuser);
         readWeton(&currentuser);
+        setElmt_Account(&acc, getIdx_Account(acc,currentuser), currentuser);
+        printf("\n");
         printf("Profil Anda sudah berhasil diperbarui!\n");
+    }
+}
+
+void Lihat_Profil (Word Username) {
+    if (hasLogged) {
+        Account target_acc;
+        target_acc = getElmt_Account(acc,getIdx_Username(acc,Username));
+        if (getIdx_Username(acc,Username) != IDX_ACCOUNT_UNDEF) {
+            if (target_acc.publicity) {
+                printf("| Nama: ");
+                printWord(target_acc.username);
+                printf("\n");
+                printf("| Bio Akun: ");
+                if (target_acc.bio.Length > 0) {
+                    printWord(target_acc.bio);
+                }
+                printf("\n");
+                printf("| No HP: ");
+                if (target_acc.phone_num.Length > 0) {
+                    printWord(target_acc.phone_num);
+                }
+                printf("\n");
+                printf("| Weton: ");
+                if (target_acc.weton.Length > 0) {
+                    printWord(target_acc.weton);
+                }
+                printf("\n\n");
+                printf("Foto profil akun ");
+                printWord(target_acc.username);
+                printf("\n\n");
+                displayPhoto(target_acc.photo);
+            } else {
+                printf("Wah, akun ");
+                printWord(target_acc.username);
+                printf(" diprivat nih. Ikuti dulu yuk untuk bisa melihat profil ");
+                printWord(target_acc.username);
+                printf("!\n");
+            }
+        } else {
+            printf("Akun tidak ditemukan!\n");
+        }
+    }
+}
+
+void Atur_Jenis_Akun () {
+    Account copyToData;
+    change_publicity(&currentuser);
+    setElmt_Account(&acc, getIdx_Account(acc,currentuser), currentuser);
+}
+
+void Ubah_Foto_Profil () {
+    Account copyToData;
+    Pics P;
+    printf("Foto profil Anda saat ini adalah\n");
+    displayPhoto(currentuser.photo);
+    printf("\n\n");
+    readPhoto(&currentuser);
+    displayPhoto(currentuser.photo);
+    printf("\n\n");
+    setElmt_Account(&acc, getIdx_Account(acc,currentuser), currentuser);
+}
+
+void readCommand (Word W) {
+    Word Reader;
+    if (wordSimilar(W,copyWord_Exit())) {
+        allowexit = true;
+    } else if (wordSimilar(W,copyWord_Daftar())) {
+        Daftar();
+        printf("\n");
+    } else if (wordSimilar(W,copyWord_Masuk())) {
+        Masuk();
+        printf("\n");
+    } else if (wordSimilar(W,copyWord_Keluar())) {
+        Keluar();
+        printf("\n");
+    } else if (wordSimilar(W,copyWord_Ganti_Profil())) {
+        Ganti_Profil();
+        printf("\n");
+    } else if (substring_beginning(W,copyWord_Lihat_Profil())) {
+        Word user;
+        user.Length = W.Length - copyWord_Lihat_Profil().Length - 1;
+        for (int i = 0; i < user.Length; i++) {
+            user.TabWord[i] = W.TabWord[i + W.Length - user.Length];
+        }
+        Lihat_Profil(user);
+        printf("\n");
+    } else if (wordSimilar(W,copyWord_Atur_Jenis_Akun())) {
+        Atur_Jenis_Akun();
+        printf("\n");
+    } else if (wordSimilar(W,copyWord_Ubah_Foto_Profil())) {
+        Ubah_Foto_Profil();
+        printf("\n");
     }
 }
 

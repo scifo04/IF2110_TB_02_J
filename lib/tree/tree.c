@@ -13,10 +13,17 @@ void CreateTree(Tree *T){
 }
 
 /* *** Manajemen Memory *** */
-addressTree Alokasi(int X){
+addressTree Alokasi(int id, char user[20], DATETIME d, char pesan[280]){
     addressTree P = (addressTree) malloc(sizeof(Node));
     if(P != NULL){
-        Data(P) = X;
+        Id(P) = id;
+        for (int i = 0; i < 20 && user[i] != BLANK; i++) {
+            User(P)[i] = user[i];
+        }
+        DateTime(P) = d;
+        for (int i = 0; i < 280 && pesan[i] != BLANK; i++) {
+            Pesan(P)[i] = pesan[i];
+        }
         FirstChild(P) = NULL;
         NextSibling(P) = NULL;
     }
@@ -140,151 +147,151 @@ addressTree getAddress (addressTree P, int X){
 //     return tempint;
 // }
 
-void matrixToTree (Matrix m, int N, Tree *T){
-    int i,j,k,found,temp;
-    addressTree P[N];
-    addressTree PPrev;
-    addressTree PNow;
+// void matrixToTree (Matrix m, int N, Tree *T){
+//     int i,j,k,found,temp;
+//     addressTree P[N];
+//     addressTree PPrev;
+//     addressTree PNow;
 
-    for (i = 0 ; i < N ; i ++){
-        P[i] = Alokasi(MATRIX_ELMT(m,i,0));
-    }
+//     for (i = 0 ; i < N ; i ++){
+//         P[i] = Alokasi(MATRIX_ELMT(m,i,0));
+//     }
 
-    (*T).root = P[N-1];
+//     (*T).root = P[N-1];
 
-    for (i = 0 ; i < N ; i++){
-        temp = 0;
-        for (j = 0 ; j < MATRIX_ELMT(m,i,1) ; j++){
-            // check if m[i][j+2] exists in P
-            found = 0;
-            k = 0;
-            while (k < N && !found){
-                if (MATRIX_ELMT(m,i,j+2) == Data(P[k])){
-                    found = 1;
-                }
-                k++;
-            }
-            if (!found){
-                PNow = Alokasi(MATRIX_ELMT(m,i,j+2));
-            } else {
-                PNow = P[k-1];
-            }
+//     for (i = 0 ; i < N ; i++){
+//         temp = 0;
+//         for (j = 0 ; j < MATRIX_ELMT(m,i,1) ; j++){
+//             // check if m[i][j+2] exists in P
+//             found = 0;
+//             k = 0;
+//             while (k < N && !found){
+//                 if (MATRIX_ELMT(m,i,j+2) == Data(P[k])){
+//                     found = 1;
+//                 }
+//                 k++;
+//             }
+//             if (!found){
+//                 PNow = Alokasi(MATRIXELMT(m,i,j+2));
+//             } else {
+//                 PNow = P[k-1];
+//             }
 
-            if (temp == 0){
-                AddChild(&P[i], PNow);
-                temp = 1;
-            }
-            else{
-                AddSibling(&PPrev, PNow);
-            }
-            PPrev = PNow;
-        }
-    }
-}
+//             if (temp == 0){
+//                 AddChild(&P[i], PNow);
+//                 temp = 1;
+//             }
+//             else{
+//                 AddSibling(&PPrev, PNow);
+//             }
+//             PPrev = PNow;
+//         }
+//     }
+// }
 
-addressTree getParent(addressTree root,addressTree C){
-    // I.S. C terdefinisi
-    // F.S. mengembalikan addressTree parent dari C
-    if(FirstChild(root) == C){
-        return root;
-    }else{
-        addressTree Q = FirstChild(root);
-        while(Q != NULL){
-            if(NextSibling(Q) == C){
-                return root;
-            }else{
-                addressTree R = getParent(Q, C);
-                if(R != NULL){
-                    return R;
-                }else{
-                    Q = NextSibling(Q);
-                }
-            }
-        }
-        return NULL;
-    }
-}
+// addressTree getParent(addressTree root,addressTree C){
+//     // I.S. C terdefinisi
+//     // F.S. mengembalikan addressTree parent dari C
+//     if(FirstChild(root) == C){
+//         return root;
+//     }else{
+//         addressTree Q = FirstChild(root);
+//         while(Q != NULL){
+//             if(NextSibling(Q) == C){
+//                 return root;
+//             }else{
+//                 addressTree R = getParent(Q, C);
+//                 if(R != NULL){
+//                     return R;
+//                 }else{
+//                     Q = NextSibling(Q);
+//                 }
+//             }
+//         }
+//         return NULL;
+//     }
+// }
 
-ListStatik getChild(addressTree parent){
-    ListStatik L;
-    CreateListStatik(&L);
-    if(FirstChild(parent)!=NULL){
-        parent=FirstChild(parent);
-        insertLast_ListStatik(&L,Data(parent));
-        while (NextSibling(parent)!=NULL)
-        {
-            parent=NextSibling(parent);
-            insertLast_ListStatik(&L,Data(parent));
-        }            
-    }
-    return L;
-}
+// ListStatik getChild(addressTree parent){
+//     ListStatik L;
+//     CreateListStatik(&L);
+//     if(FirstChild(parent)!=NULL){
+//         parent=FirstChild(parent);
+//         insertLast_ListStatik(&L,Data(parent));
+//         while (NextSibling(parent)!=NULL)
+//         {
+//             parent=NextSibling(parent);
+//             insertLast_ListStatik(&L,Data(parent));
+//         }            
+//     }
+//     return L;
+// }
 
-ListStatik getAllNodes(addressTree parent){
-    // return all the nodes inside the tree
-    ListStatik L;
-    CreateListStatik(&L);
-    if(parent!=NULL){
-        insertLast_ListStatik(&L,Data(parent));
-        if(FirstChild(parent)!=NULL){
-            L=concat_ListStatik(L,getAllNodes(FirstChild(parent)));
-        }
-        if(NextSibling(parent)!=NULL){
-            L=concat_ListStatik(L,getAllNodes(NextSibling(parent)));
-        }
-    }
-    return L;
-}
+// ListStatik getAllNodes(addressTree parent){
+//     // return all the nodes inside the tree
+//     ListStatik L;
+//     CreateListStatik(&L);
+//     if(parent!=NULL){
+//         insertLast_ListStatik(&L,Data(parent));
+//         if(FirstChild(parent)!=NULL){
+//             L = concat_ListStatik(L,getAllNodes(FirstChild(parent)));
+//         }
+//         if(NextSibling(parent)!=NULL){
+//             L = concat_ListStatik(L,getAllNodes(NextSibling(parent)));
+//         }
+//     }
+//     return L;
+// }
 
     /* ----------------------------------------------- */
 
-void CreateListTreeStatik(ListTreeStatik *l)
-/* I.S. l sembarang */
-/* F.S. Terbentuk List l kosong dengan kapasitas CAPACITY */
-/* Proses: Inisialisasi semua elemen List l dengan LISTMARK */
-{
-    int i;
-    for (i = 0; i < CAPACITY; i++){
-        LISTELMT(*l, i).root = NULL;
-    }
-}
-int listLength_ListTreeStatik(ListTreeStatik l)
-/* Mengirimkan banyaknya elemen efektif List */
-/* Mengirimkan nol jika List kosong */
-{
-    int i, count;
-    count = 0;
-    for (i = 0 ; i < CAPACITY ; i++){
-        if (LISTELMT(l, i).root != NULL){
-            count++;
-        }
-    }
-    return count;
-}
-boolean isEmpty_ListTreeStatik(ListTreeStatik l){
-    return (listLength_ListTreeStatik(l) == 0);
-}
+// void CreateListTreeStatik(ListTreeStatik *l)
+// /* I.S. l sembarang */
+// /* F.S. Terbentuk List l kosong dengan kapasitas CAPACITY */
+// /* Proses: Inisialisasi semua elemen List l dengan LISTMARK */
+// {
+//     int i;
+//     for (i = 0; i < CAPACITY; i++){
+//         LISTELMT(*l, i).root = NULL;
+//     }
+// }
+// int listLength_ListTreeStatik(ListTreeStatik l)
+// /* Mengirimkan banyaknya elemen efektif List */
+// /* Mengirimkan nol jika List kosong */
+// {
+//     int i, count;
+//     count = 0;
+//     for (i = 0 ; i < CAPACITY ; i++){
+//         if (LISTELMT(l, i).root != NULL){
+//             count++;
+//         }
+//     }
+//     return count;
+// }
+// boolean isEmpty_ListTreeStatik(ListTreeStatik l){
+//     return (listLength_ListTreeStatik(l) == 0);
+// }
 
-void insertLast_ListTreeStatik(ListTreeStatik *l, ListTreeStatik_ElType val)
-/* Proses: Menambahkan val sebagai elemen terakhir List */
-/* I.S. List l boleh kosong, tetapi tidak penuh */
-/* F.S. val adalah elemen terakhir l yang baru */
-{
-    LISTELMT(*l, listLength_ListTreeStatik(*l)) = val;
-}
-void printList_ListTreeStatik(ListTreeStatik l)
-/* Proses : Menuliskan isi List dengan traversal, List ditulis di antara kurung 
-   siku; antara dua elemen dipisahkan dengan separator "koma", tanpa tambahan 
-   karakter di depan, di tengah, atau di belakang, termasuk spasi dan enter */
-/* I.S. l boleh kosong */
-/* F.S. Jika l tidak kosong: [e1,e2,...,en] */
-/* Contoh : jika ada tiga elemen bernilai 1, 20, 30 akan dicetak: [1,20,30] */
-/* Jika List kosong : menulis [] */
-{
-    int i;
-    for (i = 0; i < listLength_ListTreeStatik(l); i++) {
-        printTree(LISTELMT(l,i).root, 0);
-        printf("\n------------------- %d -------------------\n", i+1);
-    }   
+// void insertLast_ListTreeStatik(ListTreeStatik *l, ListTreeStatik_ElType val)
+// /* Proses: Menambahkan val sebagai elemen terakhir List */
+// /* I.S. List l boleh kosong, tetapi tidak penuh */
+// /* F.S. val adalah elemen terakhir l yang baru */
+// {
+//     LISTELMT(*l, listLength_ListTreeStatik(*l)) = val;
+// }
+// void printList_ListTreeStatik(ListTreeStatik l)
+// /* Proses : Menuliskan isi List dengan traversal, List ditulis di antara kurung 
+//    siku; antara dua elemen dipisahkan dengan separator "koma", tanpa tambahan 
+//    karakter di depan, di tengah, atau di belakang, termasuk spasi dan enter */
+// /* I.S. l boleh kosong */
+// /* F.S. Jika l tidak kosong: [e1,e2,...,en] */
+// /* Contoh : jika ada tiga elemen bernilai 1, 20, 30 akan dicetak: [1,20,30] */
+// /* Jika List kosong : menulis [] */
+// {
+//     int i;
+//     for (i = 0; i < listLength_ListTreeStatik(l); i++) {
+//         printTree(LISTELMT(l,i).root, 0);
+//         printf("\n------------------- %d -------------------\n", i+1);
+//     }   
 
-}
+// }

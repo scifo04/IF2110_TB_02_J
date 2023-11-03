@@ -3,6 +3,11 @@
 
 #include "../boolean/boolean.h"
 #include "../wordmachine/wordmachine.h"
+#include "../pcolor/pcolor.h"
+
+typedef struct {
+    Word Row[5];
+} Pics;
 
 typedef struct {
     Word username;
@@ -10,7 +15,7 @@ typedef struct {
     Word bio;
     Word phone_num;
     Word weton;
-    Word photo;
+    Pics photo;
     boolean publicity;
 } Account;
 
@@ -19,12 +24,24 @@ typedef struct {
     int NEff;
 } ListAcc;
 
+#define PICROW(x,i,j) ((x).Row[i]).TabWord[j]
+#define IDX_ACCOUNT_UNDEF -1
+
+Word copyWord_Pahing ();
+Word copyWord_Legi ();
+Word copyWord_Pon ();
+Word copyWord_Wage ();
+Word copyWord_Kliwon ();
+Word copyWord_YA ();
+Word copyWord_TIDAK ();
+void CreateAccount (Account *A);
 void readUsername (Account *A);
 void readPassword (Account *A);
 void readBio (Account *A);
 void readPhone_Num (Account *A);
 void readWeton (Account *A);
 void readPhoto (Account *A);
+void displayPhoto (Pics P);
 void change_publicity (Account *A);
 void displayAccount (Account A);
 void CreateListAccount (ListAcc *L);
@@ -45,5 +62,8 @@ void deleteFirst_Account (ListAcc *L, Account *A);
 void deleteLast_Account (ListAcc*L, Account  *A);
 void deleteAt_Account (ListAcc*L, int idx, Account *A);
 void displayList_Account (ListAcc L);
+boolean nameAvailable (ListAcc L, Word U);
+boolean passAvailable (ListAcc L, Word U);
+// boolean getPublicitybyUsername(ListAcc L, Word username);
 
 #endif

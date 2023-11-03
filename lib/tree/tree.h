@@ -8,6 +8,7 @@
 #include "../wordmachine/charmachine.h"
 #include "../wordmachine/wordmachine.h"
 #include "../matrix/matrix.h"
+#include "../datetime/datetime.h"
 
 /*  Kamus Umum */
 #define CAPACITY 100
@@ -16,7 +17,10 @@
 /* Definisi Type Data */
 typedef struct tNode *addressTree;
 typedef struct tNode {
-    int data;
+    int id;
+    char user[20];
+    DATETIME d;
+    char pesan[280];
     addressTree firstChild;
     addressTree nextSibling;
 } Node;
@@ -32,11 +36,14 @@ typedef struct {
 } ListTreeStatik;
 
 
-#define Data(P) (P)->data
+#define Id(P) (P)->id
+#define User(P) (P)->user
+#define DateTime(P) (P)->d
+#define Pesan(P) (P)->pesan
 #define FirstChild(P) (P)->firstChild
 #define NextSibling(P) (P)->nextSibling
 #define Root(T) (T).root
-#define LISTELMT(l, i) (l).contents[(i)]
+// #define LISTELMT(l, i) (l).contents[(i)]
 
 /* Definisi Pohon : */
 /* Pohon kosong : P = Nil */
@@ -45,7 +52,7 @@ typedef struct {
 
 void CreateTree(Tree *T);
 
-addressTree Alokasi(int X);
+addressTree Alokasi(int id, char user[20], DATETIME d, char pesan[280]);
 
 void Dealokasi(addressTree P);
 
@@ -63,24 +70,24 @@ boolean isTreeElmt (addressTree P, int X);
 
 addressTree getAddress (addressTree P, int X);
 
-int Treemachine(char string[], Matrix *m);
+// int Treemachine(char string[], Matrix *m);
 
-void matrixToTree (Matrix m, int N, Tree *T);
+// void matrixToTree (Matrix m, int N, Tree *T);
 
-addressTree getParent(addressTree root,addressTree C);
+// addressTree getParent(addressTree root,addressTree C);
 
-ListStatik getChild(addressTree parent);
+// ListStatik getChild(addressTree parent);
 
-ListStatik getAllNodes(addressTree parent);
+// ListStatik getAllNodes(addressTree parent);
 
-void CreateListTreeStatik(ListTreeStatik *l);
+// void CreateListTreeStatik(ListTreeStatik *l);
 
-int listLength_ListTreeStatik(ListTreeStatik l);
+// int listLength_ListTreeStatik(ListTreeStatik l);
 
-boolean isEmpty_ListTreeStatik(ListTreeStatik l);
+// boolean isEmpty_ListTreeStatik(ListTreeStatik l);
 
-void insertLast_ListTreeStatik(ListTreeStatik *l, ListTreeStatik_ElType val);
+// void insertLast_ListTreeStatik(ListTreeStatik *l, ListTreeStatik_ElType val);
 
-void printList_ListTreeStatik(ListTreeStatik l);
+// void printList_ListTreeStatik(ListTreeStatik l);
 
 #endif
