@@ -87,3 +87,78 @@ void Pop(Draft * S, infotype* X){
         compressDraft(S);
     }
 }
+
+
+createDraft(Draft *S){
+    Twit kicau;
+    printf("Masukkan draf: \n");
+    // baca draf
+    printf("Apakah anda ingin menghapus, menyimpan, atau menerbitkan draf ini?\n");
+
+    char choice = "foo";
+
+    if (choice == "HAPUS"){
+        exit(0); // DO NOTHING;
+    }
+    else if (choice == "SIMPAN"){
+        Push(S, kicau);
+    }
+    else{
+        // TERBIT
+        exit(0);
+        // Passing twit nya ke terbit
+    }
+}
+
+
+displayDraft(Draft *S){
+    if (IsEmpty_Draft(*S)){
+        printf("Yah, anda belum memiliki draf apapun! Buat dulu ya :D\n");
+    }
+    else{
+        Twit delVal;
+        InfoTop(*S);
+        // tampilin draf teratas
+        printf("Apakah anda ingin mengubah, menghapus, atau menerbitkan draf ini? (KEMBALI jika ingin kembali)\n");
+
+        char choice = "foo";
+
+        if (choice == "KEMBALI"){
+            exit(0);
+            // DO NOTHING
+        }
+        else if (choice == "HAPUS"){
+            Pop(S, &delVal);
+            printf("Draf telah berhasil dihapus!\n");
+        }
+        else if (choice == "UBAH"){
+            Pop(S, &delVal);
+            Twit kicauBaru = delval;
+
+            printf("Masukkan draf yang baru: \n");
+            // baca drafbaru
+            // ubah word nya dan waktu
+            printf("Apakah anda ingin menghapus, menyimpan, atau menerbitkan draf ini?\n");
+
+            char choiceEdit = "foo";
+            
+            if (choiceEdit == "HAPUS"){
+                exit(0);
+                // DO NOTHING
+            }
+            else if (choiceEdit == "SIMPAN"){
+                Push(S, kicauBaru);
+            }
+            else {
+                // TERBIT
+                exit(0);
+                // Passing twit nya ke terbit
+            }
+        }
+        else{
+            // TERBIT
+            exit(0);
+            // Passing twit nya ke terbit
+        }
+    }
+}
