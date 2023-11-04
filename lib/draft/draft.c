@@ -89,13 +89,13 @@ void Pop(Draft * S, infotype* X){
 }
 
 
-createDraft(Draft *S){
+void createDraft(Draft *S){
     Twit kicau;
     printf("Masukkan draf: \n");
     // baca draf
     printf("Apakah anda ingin menghapus, menyimpan, atau menerbitkan draf ini?\n");
 
-    char choice = "foo";
+    char choice[] = "foo";
 
     if (choice == "HAPUS"){
         exit(0); // DO NOTHING;
@@ -111,7 +111,7 @@ createDraft(Draft *S){
 }
 
 
-displayDraft(Draft *S){
+void displayDraft(Draft *S){
     if (IsEmpty_Draft(*S)){
         printf("Yah, anda belum memiliki draf apapun! Buat dulu ya :D\n");
     }
@@ -121,7 +121,7 @@ displayDraft(Draft *S){
         // tampilin draf teratas
         printf("Apakah anda ingin mengubah, menghapus, atau menerbitkan draf ini? (KEMBALI jika ingin kembali)\n");
 
-        char choice = "foo";
+        char choice[] = "foo";
 
         if (choice == "KEMBALI"){
             exit(0);
@@ -133,14 +133,14 @@ displayDraft(Draft *S){
         }
         else if (choice == "UBAH"){
             Pop(S, &delVal);
-            Twit kicauBaru = delval;
+            Twit kicauBaru = delVal;
 
             printf("Masukkan draf yang baru: \n");
             // baca drafbaru
             // ubah word nya dan waktu
             printf("Apakah anda ingin menghapus, menyimpan, atau menerbitkan draf ini?\n");
 
-            char choiceEdit = "foo";
+            char choiceEdit[] = "foo";
             
             if (choiceEdit == "HAPUS"){
                 exit(0);

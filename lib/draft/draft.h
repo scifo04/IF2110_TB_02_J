@@ -51,4 +51,29 @@ void Push(Draft * S, infotype X);
 /* F.S. X adalah nilai elemen TOP yang lama, TOP berkurang 1 */
 void Pop(Draft * S, infotype* X);
 
+/* ************ Mengompress kapasitas Draft ************ */
+/* Mengompress kapasitas draft jika (sepi) efisensi kapasitas <= 0.25. */
+/* I.S. S adalah Draft yang sepi */
+/* F.S. kapasitas Draft menjadi 50% dari kapasitas sebelumnya */
+void compressDraft(Draft *S);
+
+/* ************ Membuat Draft Kicau ************ */
+/* Membaca draft dan melakukan operasi HAPUS atau SIMPAN atau TERBIT  */
+/* I.S. S terdefinisi */
+/* F.S. Jika SIMPAN maka kicau ditambahkan ke draft
+        Jika TERBIT maka kicau langsung diterbitkan
+        JIKA HAPUS maka operasi sebelumnya diabaikan
+*/
+void createDraft(Draft *S);
+
+/* ************ Menampilkan Draft Kicau ************ */
+/* Menampilkan draft terbaru (time-based) dan melakukan operasi KEMBALI atau HAPUS atau UBAH atau TERBIT  */
+/* I.S. S mungkin kosong */
+/* F.S. Jika KEMBALI maka nothing
+        JIKA HAPUS maka draft kicau tersebut dihapus
+        Jika UBAH maka pengguna menulis ulang isi draft lalu melakukan operasi HAPUS atau SIMPAN atau TERBIT
+        Jika TERBIT maka kicau langsung diterbitkan
+*/
+void displayDraft(Draft *S);
+
 #endif
