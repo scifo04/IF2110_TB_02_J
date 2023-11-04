@@ -3,6 +3,7 @@
 
 #include "boolean/boolean.h"
 #include "account/account.h"
+#include "affection/affection.h"
 #include "pcolor/pcolor.h"
 #include "listdin/listdin.h"
 #include "liststatik/liststatik.h"
