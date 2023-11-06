@@ -7,10 +7,12 @@
 
 #include "../boolean/boolean.h"
 #include "../account/account.h"
-
+#include "../wordmachine/wordmachine.h"
+#include "../affection/affection.h"
 /* Definisi elemen dan address */
 typedef struct {
-	Account account;
+	int idRequester;
+	int idRequested;
 	int popularity;
 } FriendRequest;
 
@@ -34,8 +36,8 @@ Address addrTail; /* alamat penambahan */
 
 /* ********* AKSES (Selektor) ********* */
 /* Jika p adalah node dan q adalah Queue serta r adalah FriendRequest, maka akses elemen : */
-#define NAME(p) (p)->info.account.username
-#define ACCOUNT(p) (p)->info.account
+#define ID_REQUESTER(p) (p)->info.idRequester
+#define ID_REQUESTED(p) (p)->info.idRequested
 #define POPULARITY(p) (p)->info.popularity
 #define NEXT(p) (p)->next
 #define INFO(p) (p)->info
@@ -69,9 +71,11 @@ void dequeue(Queue *q, ElType *x);
 /* I.S. q tidak mungkin kosong */
 /* F.S. x = nilai elemen HEAD pd I.S., HEAD "mundur" */
 
+int indexOf(Queue q, int idRequester);
+/* Mengembalikan indeks idRequester di suatu queue*/
 
 /* Operasi Tambahan */
-void PrintPrioQueueTime (PrioQueueTime Q);
+void displayFriendRequests (Queue Q);
 /* Mencetak isi queue Q ke layar */
 /* I.S. Q terdefinisi, mungkin kosong */
 /* F.S. Q tercetak ke layar dengan format:
@@ -80,5 +84,13 @@ void PrintPrioQueueTime (PrioQueueTime Q);
 <time-n> <elemen-n>
 #
 */
+
+void CreateFriendRequest(*FriendRequest, int idRequester, int idRequested);
+/* Membuat Tiper FriendRequest baru*/
+
+void addFriend(Queue qSelf, Queue *qRequested);
+/* Menambahkan teman */
+
+
 
 #endif

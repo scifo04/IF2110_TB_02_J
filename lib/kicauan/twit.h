@@ -37,7 +37,7 @@ typedef struct {
 /* **************************************************************** */
 
 /* Konstruktor: Membentuk Twit dari komponen-komponennya*/
-void CreateTwit(Twit *K, Word isiTwit, Word tagar);
+void CreateTwit(Twit *K);
 
 /* Membaca Twit */
 /* Twit yang dimasukkan terpotong secara otomatis dengan jumlah karakter maksimum 280.

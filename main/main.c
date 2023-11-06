@@ -7,6 +7,7 @@ static ListAcc acc;
 static boolean hasLogged = false;
 static Account currentuser;
 static Affection friends;
+ListKicauan Kicauan;
 
 void enter() {
     printf("\n");

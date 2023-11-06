@@ -410,6 +410,11 @@ boolean passAvailable (ListAcc L, Word U) {
     return check;
 }
 
+Word getUsernamebyID (ListAcc L, int id){
+    return L.buffer[id-1].username;
+}
+
+
 // boolean getPublicitybyUsername(ListAcc L, Word username){
 //     int i;
 //     for (i = 0; i < length_Account(L); i++) {
