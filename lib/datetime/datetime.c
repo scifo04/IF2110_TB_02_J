@@ -5,6 +5,7 @@ void CreateDATETIME(DATETIME *D) {
     int total;
     time_t t = time(NULL);
     struct tm tm = *localtime(&t);
+    Day(*D) = tm.tm_mday;
     Month(*D) = tm.tm_mon + 1;
     Year(*D) = tm.tm_year + 1900;
     total = tm.tm_hour * 3600 + tm.tm_min * 60 + tm.tm_sec;
@@ -16,12 +17,12 @@ void TulisDATETIME(DATETIME D) {
     TulisTIME(Time(D));
 }
 
-boolean DLT(DATETIME D1, DATETIME D2) {
-    return ((Year(D1) < Year(D2)) || (Month(D1) < Month(D2)) || (Day(D1) < Day(D2)) || (Hour(Time(D1)) < Hour(Time(D2))) || (Minute(Time(D1)) < Minute(Time(D2))) || (Second(Time(D1)) < Second(Time(D2))));
-}
-boolean DGT(DATETIME D1, DATETIME D2) {
-    return ((Year(D1) > Year(D2)) || (Month(D1) > Month(D2)) || (Day(D1) > Day(D2)) || (Hour(Time(D1)) > Hour(Time(D2))) || (Minute(Time(D1)) > Minute(Time(D2))) || (Second(Time(D1)) > Second(Time(D2))));
-}
+// boolean DLT(DATETIME D1, DATETIME D2) {
+//     return ((Year(D1) < Year(D2)) || (Month(D1) < Month(D2)) || (Day(D1) < Day(D2)) || (Hour(Time(D1)) < Hour(Time(D2))) || (Minute(Time(D1)) < Minute(Time(D2))) || (Second(Time(D1)) < Second(Time(D2))));
+// }
+// boolean DGT(DATETIME D1, DATETIME D2) {
+//     return ((Year(D1) > Year(D2)) || (Month(D1) > Month(D2)) || (Day(D1) > Day(D2)) || (Hour(Time(D1)) > Hour(Time(D2))) || (Minute(Time(D1)) > Minute(Time(D2))) || (Second(Time(D1)) > Second(Time(D2))));
+// }
 
 // long int DATETIMEDurasi(DATETIME DAw, DATETIME DAkh) {
 //     long int total1, total2;

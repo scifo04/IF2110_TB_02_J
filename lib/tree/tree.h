@@ -17,10 +17,7 @@
 /* Definisi Type Data */
 typedef struct tNode *addressTree;
 typedef struct tNode {
-    int id;
-    char user[20];
-    DATETIME d;
-    char pesan[280];
+    int Data;
     addressTree firstChild;
     addressTree nextSibling;
 } Node;
@@ -36,10 +33,11 @@ typedef struct {
 } ListTreeStatik;
 
 
-#define Id(P) (P)->id
-#define User(P) (P)->user
-#define DateTime(P) (P)->d
-#define Pesan(P) (P)->pesan
+// #define Id(P) (P)->id
+// #define User(P) (P)->user
+// #define DateTime(P) (P)->d
+// #define Pesan(P) (P)->pesan
+#define Data(P) (P)->Data
 #define FirstChild(P) (P)->firstChild
 #define NextSibling(P) (P)->nextSibling
 #define Root(T) (T).root
@@ -52,13 +50,15 @@ typedef struct {
 
 void CreateTree(Tree *T);
 
-addressTree Alokasi(int id, char user[20], DATETIME d, char pesan[280]);
+addressTree Alokasi(int data);
 
 void Dealokasi(addressTree P);
 
 void AddChild(addressTree *P, addressTree C);
 
 void AddSibling(addressTree *P, addressTree S);
+
+void deleteTree(addressTree P);
 
 void printSiblings(addressTree P);
 
@@ -68,7 +68,7 @@ void printTree (addressTree P, int h);
 
 boolean isTreeElmt (addressTree P, int X);
 
-addressTree getAddress (addressTree P, int X);
+addressTree getAddressBefore (addressTree P, addressTree R);
 
 // int Treemachine(char string[], Matrix *m);
 

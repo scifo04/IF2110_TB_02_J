@@ -13,17 +13,10 @@ void CreateTree(Tree *T){
 }
 
 /* *** Manajemen Memory *** */
-addressTree Alokasi(int id, char user[20], DATETIME d, char pesan[280]){
+addressTree Alokasi(int x){
     addressTree P = (addressTree) malloc(sizeof(Node));
     if(P != NULL){
-        Id(P) = id;
-        for (int i = 0; i < 20 && user[i] != BLANK; i++) {
-            User(P)[i] = user[i];
-        }
-        DateTime(P) = d;
-        for (int i = 0; i < 280 && pesan[i] != BLANK; i++) {
-            Pesan(P)[i] = pesan[i];
-        }
+        Data(P) = x;
         FirstChild(P) = NULL;
         NextSibling(P) = NULL;
     }
@@ -59,6 +52,20 @@ void AddSibling(addressTree *P, addressTree S){
     }
 }
 
+void deleteTree(addressTree P) {
+    if (P != NULL) {
+        boolean found = false;
+        deleteTree(NextSibling(P));
+        deleteTree(FirstChild(P));
+        printf("Deleting node with value: %d\n", Data(P));
+
+        NextSibling(P) = NULL;
+        FirstChild(P) = NULL;
+        P = NULL;
+        free(P);
+    }
+}
+
 void printSiblings(addressTree P){
     if(P != NULL){
         printf("%d ", Data(P));
@@ -74,7 +81,7 @@ void printChild(addressTree P){
     }
 }
 
-void printTree (addressTree P, int h){
+void printTree(addressTree P, int h){
     if(P != NULL){
         int i;
         for(i = 0; i < h; i++){
@@ -99,21 +106,25 @@ boolean isTreeElmt (addressTree P, int X){
 }
 
 // int to addressTree
-addressTree getAddress (addressTree P, int X){
-// I.S. P terdefinisi
-// F.S. mengembalikan addressTree dengan data X
+addressTree getAddressBefore (addressTree P, addressTree Q){
     if(P != NULL){
-        if(Data(P) == X){
+        if(NextSibling(P) == Q){
             return P;
-        }else{
-            addressTree Q = getAddress(FirstChild(P), X);
-            if(Q != NULL){
-                return Q;
-            }else{
-                return getAddress(NextSibling(P), X);
+        }
+        else if (FirstChild(P) == Q) {
+            return P;
+        }
+        else{
+            addressTree R = getAddressBefore(FirstChild(P), Q);
+            if(R != NULL){
+                return R;
+            }
+            else {
+                addressTree R = getAddressBefore(NextSibling(P), Q);
             }
         }
-    }else{
+    }
+    else {
         return NULL;
     }
 }
