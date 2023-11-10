@@ -1,8 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "tree.h"
-#include "affection/affection.h"
-#include "account/account.h"
 // #include "../liststatik/liststatik.h"
 // #include "../liststatik/liststatik.c"
 // #include "../wordmachine/wordmachine.c"
@@ -90,58 +88,37 @@ void deleteTree(addressTree P) {
 
 void printTree(addressTree P, int h){
     if(P != NULL){
-        int i, id_user_dibalas;
-        Affection A;
-        ListAcc L;
-        id_user_dibalas = getIdx_Username(User(P));
-        if (getPublicitybyUsername(L, User(P))) {
-            for(i = 0; i < h; i++){
-            printf("| ");
-            }
-            printf("%d\n", Id(P));
-
-            for(i = 0; i < h; i++){
-                printf("| ");
-            }
-            printf("%s\n", User(P));
-
-            for(i = 0; i < h; i++){
-                printf(" ");
-            }
-            TulisDATETIME(DateTime(P));
-            printf("\n");
-
-            for(i = 0; i < h; i++){
-                printf("| ");
-            }
-            printf("%s\n\n", Pesan(P));
-            printTree(FirstChild(P), h+1, active_id);
-            printTree(NextSibling(P), h, active_id);
+        int i;
+        printf("\n");
+        for(i = 0; i < h; i++){
+            printf("    ");
         }
+        printf("| %d", Id(P));
 
-        else {
-            for(i = 0; i < h; i++){
-            printf("| ");
-            }
-            printf("%d\n", Id(P));
-
-            for(i = 0; i < h; i++){
-                printf("| PRIVAT\n");
-            }
-
-            for(i = 0; i < h; i++){
-                printf(" ");
-            }
-            printf("| PRIVAT\n");
-
-            for(i = 0; i < h; i++){
-                printf("| ");
-            }
-            printf("| PRIVAT\n");
-            printTree(FirstChild(P), h+1);
-            printTree(NextSibling(P), h);
+        printf("\n");
+        for(i = 0; i < h; i++){
+            printf("    ");
         }
-        
+        printf("| ");
+        printWord(User(P));
+
+        printf("\n");
+        for(i = 0; i < h; i++){
+            printf("    ");
+        }
+        printf("| ");
+        TulisDATETIME(DateTime(P));
+
+        printf("\n");
+        for(i = 0; i < h; i++){
+            printf("    ");
+        }
+        printf("| ");
+        printWord(Pesan(P));
+        printf("\n");
+
+        printTree(FirstChild(P), h+1);
+        printTree(NextSibling(P), h);
     }
 }
 
