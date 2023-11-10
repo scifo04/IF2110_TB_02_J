@@ -117,6 +117,27 @@ boolean wordSimilarCI (Word W1, Word W2) {
     return (wordSimilar (WI, WO));
 }
 
+boolean wordSimilarWithoutLength (Word W1, Word W2) {
+    boolean check = true;
+    int i;
+    for (i = 0; i < W1.Length; i++) {
+        if ((int)W1.TabWord[i] >= 97 || (int)W1.TabWord[i] <= 122 || (int)W1.TabWord[i] >= 65 || (int)W1.TabWord[i] <= 90) {
+            if ((int)W1.TabWord[i] == (int)W2.TabWord[i] || (int)W1.TabWord[i] == (int)W2.TabWord[i] - 32 || (int)W1.TabWord[i] - 32 == (int)W2.TabWord[i]) {
+                // DO NOTHING
+            }
+            else {
+                check = false;
+            }
+        }
+        else {
+            if (W1.TabWord[i] != W2.TabWord[i]) {
+                check = false;
+            }
+        }
+    }
+    return check;
+}
+
 void PasteWord(Word WIn, Word *WOut) {
     int i;
     for (i = 0; i < WIn.Length; i++) {
