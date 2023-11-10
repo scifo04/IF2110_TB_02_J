@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "tree.h"
+#include "affection/affection.h"
+#include "account/account.h"
 // #include "../liststatik/liststatik.h"
 // #include "../liststatik/liststatik.c"
 // #include "../wordmachine/wordmachine.c"
@@ -13,10 +15,19 @@ void CreateTree(Tree *T){
 }
 
 /* *** Manajemen Memory *** */
-addressTree Alokasi(int x){
+addressTree Alokasi(int id, Word username, DATETIME d, Word message){
     addressTree P = (addressTree) malloc(sizeof(Node));
     if(P != NULL){
-        Data(P) = x;
+        Id(P) = id;
+        User(P).Length = username.Length;
+        for (int i = 0; i < username.Length; i++) {
+            User(P).TabWord[i] = username.TabWord[i];
+        }
+        DateTime(P) = d;
+        Pesan(P).Length = message.Length;
+        for (int i = 0; i < message.Length; i++) {
+            Pesan(P).TabWord[i] = message.TabWord[i];
+        }
         FirstChild(P) = NULL;
         NextSibling(P) = NULL;
     }
@@ -54,11 +65,7 @@ void AddSibling(addressTree *P, addressTree S){
 
 void deleteTree(addressTree P) {
     if (P != NULL) {
-        boolean found = false;
-        deleteTree(NextSibling(P));
         deleteTree(FirstChild(P));
-        printf("Deleting node with value: %d\n", Data(P));
-
         NextSibling(P) = NULL;
         FirstChild(P) = NULL;
         P = NULL;
@@ -66,39 +73,84 @@ void deleteTree(addressTree P) {
     }
 }
 
-void printSiblings(addressTree P){
-    if(P != NULL){
-        printf("%d ", Data(P));
-        printSiblings(NextSibling(P));
-    }
-}
+// void printSiblings(addressTree P){
+//     if(P != NULL){
+//         printf("%d ", Data(P));
+//         printSiblings(NextSibling(P));
+//     }
+// }
 
-void printChild(addressTree P){
-    if(P != NULL){
-        printf("%d ", Data(P));
-        printChild(FirstChild(P));
-        printSiblings(NextSibling(P));
-    }
-}
+// void printChild(addressTree P){
+//     if(P != NULL){
+//         printf("%d ", Data(P));
+//         printChild(FirstChild(P));
+//         printSiblings(NextSibling(P));
+//     }
+// }
 
 void printTree(addressTree P, int h){
     if(P != NULL){
-        int i;
-        for(i = 0; i < h; i++){
-            printf("    ");
+        int i, id_user_dibalas;
+        Affection A;
+        ListAcc L;
+        id_user_dibalas = getIdx_Username(User(P));
+        if (getPublicitybyUsername(L, User(P))) {
+            for(i = 0; i < h; i++){
+            printf("| ");
+            }
+            printf("%d\n", Id(P));
+
+            for(i = 0; i < h; i++){
+                printf("| ");
+            }
+            printf("%s\n", User(P));
+
+            for(i = 0; i < h; i++){
+                printf(" ");
+            }
+            TulisDATETIME(DateTime(P));
+            printf("\n");
+
+            for(i = 0; i < h; i++){
+                printf("| ");
+            }
+            printf("%s\n\n", Pesan(P));
+            printTree(FirstChild(P), h+1, active_id);
+            printTree(NextSibling(P), h, active_id);
         }
-        printf("%d\n", Data(P));
-        printTree(FirstChild(P), h+1);
-        printTree(NextSibling(P), h);
+
+        else {
+            for(i = 0; i < h; i++){
+            printf("| ");
+            }
+            printf("%d\n", Id(P));
+
+            for(i = 0; i < h; i++){
+                printf("| PRIVAT\n");
+            }
+
+            for(i = 0; i < h; i++){
+                printf(" ");
+            }
+            printf("| PRIVAT\n");
+
+            for(i = 0; i < h; i++){
+                printf("| ");
+            }
+            printf("| PRIVAT\n");
+            printTree(FirstChild(P), h+1);
+            printTree(NextSibling(P), h);
+        }
+        
     }
 }
 
-boolean isTreeElmt (addressTree P, int X){
+boolean isIdTreeElmt (addressTree P, int id){
     if(P != NULL){
-        if(Data(P) == X){
+        if(Id(P) == id){
             return true;
         }else{
-            return isTreeElmt(FirstChild(P), X) || isTreeElmt(NextSibling(P), X);
+            return isIdTreeElmt(FirstChild(P), id) || isIdTreeElmt(NextSibling(P), id);
         }
     }else{
         return false;
@@ -121,6 +173,26 @@ addressTree getAddressBefore (addressTree P, addressTree Q){
             }
             else {
                 addressTree R = getAddressBefore(NextSibling(P), Q);
+            }
+        }
+    }
+    else {
+        return NULL;
+    }
+}
+
+addressTree getAddressWithId(addressTree P, int id) {
+    if (P != NULL) {
+        if (Id(P) == id) {
+            return P;
+        }
+        else {
+            addressTree Q = getAddressWithId(FirstChild(P), id);
+            if (Q != NULL) {
+                return Q;
+            }
+            else {
+                return getAddressWithId(NextSibling(P), id);
             }
         }
     }
