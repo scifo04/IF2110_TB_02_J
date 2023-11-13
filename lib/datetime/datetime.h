@@ -2,7 +2,7 @@
 #define DATETIME_H
 
 #include "../boolean/boolean.h"
-#include "../time(1)/time.h"
+#include "time.h"
 #include <time.h>
 
 typedef struct {

@@ -18,9 +18,9 @@
 typedef struct tNode *addressTree;
 typedef struct tNode {
     int id;
-    char user[20];
+    Word user;
     DATETIME d;
-    char pesan[280];
+    Word pesan;
     addressTree firstChild;
     addressTree nextSibling;
 } Node;
@@ -28,13 +28,6 @@ typedef struct tNode {
 typedef struct {
     addressTree root;
 } Tree;
-
-typedef Tree ListTreeStatik_ElType;
-typedef int ListTreeStatik_IdxType;
-typedef struct {
-    ListTreeStatik_ElType contents[CAPACITY]; /* memori tempat penyimpan elemen (container) */
-} ListTreeStatik;
-
 
 #define Id(P) (P)->id
 #define User(P) (P)->user
@@ -52,7 +45,7 @@ typedef struct {
 
 void CreateTree(Tree *T);
 
-addressTree Alokasi(int id, char user[20], DATETIME d, char pesan[280]);
+addressTree Alokasi(int id, Word user, DATETIME d, Word pesan);
 
 void Dealokasi(addressTree P);
 
@@ -60,15 +53,19 @@ void AddChild(addressTree *P, addressTree C);
 
 void AddSibling(addressTree *P, addressTree S);
 
+void deleteTree(addressTree P);
+
 void printSiblings(addressTree P);
 
 void printChild(addressTree P);
 
 void printTree (addressTree P, int h);
 
-boolean isTreeElmt (addressTree P, int X);
+boolean isIdTreeElmt(addressTree P, int id);
 
-addressTree getAddress (addressTree P, int X);
+addressTree getAddressBefore (addressTree P, addressTree R);
+
+addressTree getAddressWithId (addressTree P, int id);
 
 // int Treemachine(char string[], Matrix *m);
 
