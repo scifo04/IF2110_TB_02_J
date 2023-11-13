@@ -5,10 +5,12 @@
 /* **************************************************************** */
 /* DEFINISI TWIT                                                */
 /* **************************************************************** */
+Account currentuser;
+ListKicauan kicauan;
 
 /* Konstruktor: Membentuk Twit dari komponen-komponennya*/
-void CreateTwit(Twit *K){
-    ID(*K) = listLength_ListKicauan(ListKicauan); /*Bingung. ListKicauan adalah suatu variabel global di main.*/
+void CreateTwit(Twit *K, ListKicauan kicauan, Account currentuser){
+    ID(*K) = listLength_ListKicauan(kicauan); /*Bingung. ListKicauan adalah suatu variabel global di main.*/
     IDUtas(*K) = -1; /*Secara default, Twit bukanlah Utas, kecuali ditandai sebagai Utas*/
     Like(*K) = 0;
     Author(*K) = currentuser; /*Bingung. Misal Account adalah variabel global yang selalu di-update di main. */

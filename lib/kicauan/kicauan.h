@@ -1,11 +1,35 @@
-/* MODUL KICAUAN DYNAMIC LIST */
 
 #ifndef KICAUAN_H
 #define KICAUAN_H
+#include "../adt.h"
 
-#include "twit.h"
-#include "../boolean/boolean.h"
-#include "../teman/teman.h"
+/* MODUL ADT SEDERHANA TWIT*/
+/* *** Definisi TYPE Twit *** */
+typedef struct {
+    int idKicau;
+    int like; 
+    int idUtas;
+    Account author; 
+    DATETIME datetime;
+    Word isiTwit; /*Panjang maksimal 280 Karakter*/
+    Word tagar;
+    //Tree Balasan;
+    //ListUtas Utas;
+} Twit;
+
+
+/* *** Notasi Akses: Selektor Twit *** */
+#define ID(K) (K).idKicau
+#define IDUtas(K) (K).idUtas
+#define Like(K) (K).like
+#define Author(K) (K).author
+#define DateTime(K) (K).datetime
+#define IsiTwit(K) (K).isiTwit
+#define Tagar(K) (K).tagar
+// #define Balasan(K) (K).Balasan
+// #define Utas(K) (K).Utas
+
+/* MODUL KICAUAN DYNAMIC LIST */
 
 /*  Kamus Umum */
 #define IDX_MIN 0
@@ -14,11 +38,11 @@
 /* Indeks tak terdefinisi*/
 
 /* Definisi elemen dan koleksi objek */
-typedef Twit ElType; /* type elemen list */
+typedef Twit ElKicauanType; /* type elemen list */
 typedef int IdxType;
 typedef struct
 {
-    ElType *buffer; /* memori tempat penyimpan elemen (container) */
+    ElKicauanType *buffer; /* memori tempat penyimpan elemen (container) */
     int nEff;       /* >=0, banyaknya elemen efektif */
     int capacity;   /* ukuran elemen */
 } ListKicauan;
@@ -40,12 +64,37 @@ typedef struct
 #define ListKicauan_ELMT(l, i) (l).buffer[i]
 #define ListKicauan_CAPACITY(l) (l).capacity
 
+/* **************************************************************** */
+/* DEFINISI TWIT                                                */
+/* **************************************************************** */
+
+/* Konstruktor: Membentuk Twit dari komponen-komponennya*/
+void CreateTwit(Twit *K, ListKicauan kicauan, Account currentuser);
+
+/* Membaca Twit */
+/* Twit yang dimasukkan terpotong secara otomatis dengan jumlah karakter maksimum 280.
+Twit tidak boleh berisi spasi*/
+void BacaTwit(Word *K);
+
+/* Detail Twit*/
+void DetailTwit(Twit K);
+
+/* Pesan Berhasil Membuat Twit*/
+void SuccessTwit();
+
+/*Menambahkan tagar pada Twit*/
+void BacaTagar(Word *tagar);
+
+
+/* ********************************************************************************************************************************** */
+/* ********************************************************************************************************************************** */
+
 /* ********** FITUR ********** */
 /*Pengguna dapat menyukai suatu Twit dengan indeks yang vali, milik pengguna sendiri,
 milik teman, ataupun milik akun publik*/
-void LikeKicauan(ListKicauan *l, int idKicauan);
+void LikeKicauan(ListKicauan *l, int idKicauan, Account currentuser, Affection friends, ListAcc accounts);
 
-void EditKicauan(ListKicauan *l, int idKicauan);
+void EditKicauan(ListKicauan *l, int idKicauan, Account currentuser, ListAcc accounts);
 
 
 /* ********** KONSTRUKTOR ********** */
@@ -54,7 +103,7 @@ void CreateListKicauan(ListKicauan *l, int capacity);
 /* I.S. l sembarang, capacity > 0 */
 /* F.S. Terbentuk list dinamis l kosong dengan kapasitas capacity */
 
-void dealocateList(ListKicauan *l);
+void dealocateListKicauan(ListKicauan *l);
 /* I.S. l terdefinisi; */
 /* F.S. (l) dikembalikan ke system, CAPACITY(l)=0; NEFF(l)=0 */
 
@@ -83,11 +132,11 @@ boolean isFull_ListKicauan(ListKicauan l);
 
 /* ********** BACA dan TULIS dengan INPUT/OUTPUT device ********** */
 /* *** Mendefinisikan isi list dari pembacaan *** */
-void readList_ListKicauan(ListKicauan *l);
+// void readList_ListKicauan(ListKicauan *l);
 /*Berisi serangkaian fungsi untuk membaca kicauan.config dan memasukannya ke List Dinamik Kicauan
 Tapi kayanya nanti bikin file khusus deh readconfig.c*/
 
-void DisplayListKicauan(ListKicauan l);
+void DisplayListKicauan(ListKicauan l, Account currentuser, Affection friends, ListAcc accounts);
 /* Menuliskan Kicauan milik sendiri dan teman.
 Proses: Melakukan traversal terhadap kicauan dengan mengecek Author setiap elemen Twit K.
 Jika Author(K) adalah diri sendiri, atau teman, maka tampilkan.*/
@@ -100,14 +149,14 @@ void copyList_ListKicauan(ListKicauan lIn, ListKicauan *lOut);
 
 /* ********** MENAMBAH DAN MENGHAPUS ELEMEN DI AKHIR ********** */
 /* *** Menambahkan elemen terakhir *** */
-void insertLast_ListKicauan(ListKicauan *l, ElType val);
+void insertLast_ListKicauan(ListKicauan *l, ElKicauanType val);
 /* Proses: Menambahkan val sebagai elemen terakhir list */
 /* I.S. List l boleh kosong, tetapi tidak penuh */
 /* F.S. val adalah elemen terakhir l yang baru */
 /* ********** MENGHAPUS ELEMEN ********** */
 
 /* ********* MENGUBAH UKURAN ARRAY ********* */
-void expandList(ListKicauan *l, int num);
+void expandListKicauan(ListKicauan *l, int num);
 /* Proses : Menambahkan capacity l sebanyak num */
 /* I.S. List sudah terdefinisi */
 /* F.S. Ukuran list bertambah sebanyak num */

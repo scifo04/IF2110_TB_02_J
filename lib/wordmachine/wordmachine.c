@@ -107,6 +107,19 @@ boolean wordSimilarCI (Word W1, Word W2) {
     return (wordSimilar (WI, WO));
 }
 
+boolean isWordSimilar(Word W, char *W2){
+    int i = 0;
+    while (W.TabWord[i] != '\0' && W2[i] != '\0') {
+        if (W.TabWord[i] != W2[i]) {
+            return false;
+        }
+        i++;
+    }
+    return (W.TabWord[i] == '\0' && W2[i] == '\0');
+}
+
+
+
 void PasteWord(Word WIn, Word *WOut) {
     int i;
     for (i = 0; i < WIn.Length; i++) {

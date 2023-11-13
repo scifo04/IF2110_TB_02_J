@@ -410,6 +410,17 @@ boolean passAvailable (ListAcc L, Word U) {
     return check;
 }
 
+int getIdx_Username(ListAcc L, Word U){
+    int i;
+    boolean check = false;
+    for (i = 0; i < length_Account(L); i++) {
+        if (wordSimilar(U,L.buffer[i].username)) {
+            return i;
+        }
+    }
+    return IDX_ACCOUNT_UNDEF;
+}
+
 Word getUsernamebyID (ListAcc L, int id){
     return L.buffer[id-1].username;
 }

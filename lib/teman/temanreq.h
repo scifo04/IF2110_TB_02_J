@@ -5,6 +5,7 @@
 #ifndef TEMANREQ_H
 #define TEMANREQ_H
 
+// #include "../adt.h"
 #include "../boolean/boolean.h"
 #include "../account/account.h"
 #include "../wordmachine/wordmachine.h"
@@ -16,10 +17,10 @@ typedef struct {
 	int popularity;
 } FriendRequest;
 
-typedef FriendRequest ElType;
+typedef FriendRequest ELFRType;
 typedef struct node *Address;
 typedef struct node { 
-	ElType info;
+	ELFRType info;
 	Address next;
 } Node;
 
@@ -35,19 +36,22 @@ Address addrTail; /* alamat penambahan */
 /* Elemen terakhir list: jika Addressnya Last, maka NEXT(Last)=FIRST(l) */
 
 /* ********* AKSES (Selektor) ********* */
-/* Jika p adalah node dan q adalah Queue serta r adalah FriendRequest, maka akses elemen : */
-#define ID_REQUESTER(p) (p)->info.idRequester
-#define ID_REQUESTED(p) (p)->info.idRequested
-#define POPULARITY(p) (p)->info.popularity
+/* Jika p adalah node dan q adalah Queue serta f adalah FriendRequest, maka akses elemen : */
+#define ID_REQUESTER(f) (f).idRequester
+#define ID_REQUESTED(f) (f).idRequested
+#define POPULARITY(f) (f).popularity
 #define NEXT(p) (p)->next
 #define INFO(p) (p)->info
+#define ID_REQUESTERN(p) (p)->info.idRequester
+#define ID_REQUESTEDN(p) (p)->info.idRequested
+#define POPULARITYN(p) (p)->info.popularity
 #define ADDR_HEAD(q) (q).addrHead
 #define ADDR_TAIL(q) (q).addrTail
 #define HEAD(q) (q).addrHead->info
 
 /* ********* Prototype ********* */
 /* Prototype manajemen memori */
-Address newNode(ElType x);
+Address newNode(ELFRType x);
 /* Mengembalikan alamat sebuah Node hasil alokasi dengan info = x,
 atau NIL jika alokasi gagal */
 
@@ -62,10 +66,10 @@ void CreateQueue(Queue *q);
 /* I.S. sembarang */
 /* F.S. Sebuah q kosong terbentuk */
 /*** Primitif Enqueue/Dequeue ***/
-void enqueue(Queue *q, ElType x);
+void enqueue(Queue *q, ELFRType x);
 /* Proses: Mengalokasi x dan menambahkan x terurut mengecil pada q
 jika alokasi berhasil; jika alokasi gagal q tetap */
-void dequeue(Queue *q, ElType *x);
+void dequeue(Queue *q, ELFRType *x);
 /* Proses: Menghapus x pada bagian HEAD dari q dan mendealokasi elemen HEAD */
 /* Pada dasarnya operasi deleteFirst */
 /* I.S. q tidak mungkin kosong */
@@ -75,7 +79,7 @@ int indexOf(Queue q, int idRequester);
 /* Mengembalikan indeks idRequester di suatu queue*/
 
 /* Operasi Tambahan */
-void displayFriendRequests (Queue Q);
+void displayFriendRequests (Queue Q, ListAcc acc);
 /* Mencetak isi queue Q ke layar */
 /* I.S. Q terdefinisi, mungkin kosong */
 /* F.S. Q tercetak ke layar dengan format:
@@ -85,12 +89,13 @@ void displayFriendRequests (Queue Q);
 #
 */
 
-void CreateFriendRequest(*FriendRequest, int idRequester, int idRequested);
+void CreateFriendRequest(FriendRequest *friendReq, int idRequester, int idRequested, Affection friends);
 /* Membuat Tiper FriendRequest baru*/
 
-void addFriend(Queue qSelf, Queue *qRequested);
+void addFriend(Queue qSelf, Queue *qRequested, ListAcc acc, Account currentuser, Affection friends);
 /* Menambahkan teman */
 
-
+/* Setujui Pertemanan */
+void processRequest(Queue *q, Affection friends, ListAcc acc);
 
 #endif

@@ -2,11 +2,15 @@
 #define TWIT_H
 
 #include "../boolean/boolean.h"
-#include "../datetime/datetime.h"
-#include "../wordmachine/wordmachine.h"
+#include "../datetime/datetime.h" 
+#include "../wordmachine/wordmachine.h" 
 #include "../account/account.h"
+#include "kicauan.h"
+#include "../adt.h"
 // include ADT Tree Balasan
 // include ADT Linked List Utas
+
+
 
 /* *** Definisi TYPE Twit *** */
 typedef struct {
@@ -21,8 +25,9 @@ typedef struct {
     //ListUtas Utas;
 } Twit;
 
+
 /* *** Notasi Akses: Selektor Twit *** */
-#define ID(K) (K).id
+#define ID(K) (K).idKicau
 #define IDUtas(K) (K).idUtas
 #define Like(K) (K).like
 #define Author(K) (K).author
@@ -49,3 +54,5 @@ void DetailTwit(Twit K);
 
 /* Pesan Berhasil Membuat Twit*/
 void SuccessTwit();
+
+#endif

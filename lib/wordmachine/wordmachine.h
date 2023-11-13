@@ -55,6 +55,8 @@ boolean wordSimilar (Word W1, Word W2);
 boolean wordSimilarCI (Word W1, Word W2);
 // wordSimilar untuk yang case sensitive
 // wordSimilarCI untuk yang case insensitive, untuk validasi weton dan tagar (bonus)
+boolean isWordSimilar(Word W, char *W2);
+/*mengembalikan true jika kata W sama dengan string W2*/
 
 void PasteWord(Word WIn, Word *WOut);
 boolean intCheck (Word W);
