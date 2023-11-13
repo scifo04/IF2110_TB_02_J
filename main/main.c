@@ -126,6 +126,26 @@ Word copyWord_Hapus_Teman () {
     (W).Length = 11;
     return W;
 }
+Word copyWord_Balas() {
+    Word w;
+    w.Length = 5;
+    w.TabWord[0] = 'b'; w.TabWord[1] = 'a'; w.TabWord[2] = 'l'; w.TabWord[3] = 'a'; w.TabWord[4] = 's';
+}
+
+Word copyWord_Balasan() {
+    Word w;
+    w.Length = 7;
+    w.TabWord[0] = 'b'; w.TabWord[1] = 'a'; w.TabWord[2] = 'l'; w.TabWord[3] = 'a'; w.TabWord[4] = 's'; w.TabWord[5] = 'a';
+    w.TabWord[6] = 'n';
+}
+
+Word copyWord_hapusBalasan() {
+    Word w;
+    w.Length = 13;
+    w.TabWord[0] = 'h'; w.TabWord[1] = 'a'; w.TabWord[2] = 'p'; w.TabWord[3] = 'u'; w.TabWord[4] = 's'; w.TabWord[5] = '_';
+    w.TabWord[6] = 'b'; w.TabWord[7] = 'a'; w.TabWord[8] = 'l'; w.TabWord[9] = 'a'; w.TabWord[10] = 's'; w.TabWord[11] = 'a';
+    w.TabWord[12] = 'n';
+}
 
 // DAFTAR
 void Daftar () {
