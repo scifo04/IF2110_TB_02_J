@@ -46,7 +46,7 @@ void ADVWORD() {
 void CopyWord() {
     int i;
     i = 0;
-    while ((currentChar != MARK)) {
+    while ((currentChar != MARK && currentWord.Length<NMax)) {
         currentWord.TabWord[i] = currentChar;
         ADV();
         if (i >= NMax) {
@@ -55,8 +55,12 @@ void CopyWord() {
             i++;
         }
     }
-    ADV();
+    // ADV();
     currentWord.Length = i;
+    while ((currentChar != MARK)) {
+        ADV();
+    }
+    ADV();
 }
 /* Mengakuisisi kata, menyimpan dalam currentWord
    I.S. : currentChar adalah karakter pertama dari kata
