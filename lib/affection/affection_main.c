@@ -2,6 +2,7 @@
 #include "affection.h"
 
 int main () {
+    /*
     int a,b,c;
     Affection Af;
     CreateAffection(&Af);
@@ -12,5 +13,6 @@ int main () {
     convertAffection(&Af,a,c);
     convertAffection(&Af,b,c);
     displayAffection(Af);
+    */
     return 0;
 }
