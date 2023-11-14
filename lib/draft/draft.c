@@ -2,13 +2,14 @@
 #include <stdlib.h>
 #include "draft.h"
 #include "../boolean/boolean.h"
-#include "../kicauan/twit.h"
+#include "../kicauan/kicauan.h"
 
 /* ************ Prototype ************ */
 /* *** Konstruktor/Kreator *** */
-void CreateEmpty_Draft(Draft *S){
+void CreateEmpty_Draft(Draft *S, Account author){
     Top(*S) = Nil;
     Cap(*S) = 1;
+    Author(*S) = author.username;
 }
 
 /* ************ Predikat Untuk test keadaan KOLEKSI ************ */
@@ -26,9 +27,9 @@ boolean IsFull_Draft(Draft S){
 /* Menambahkan X sebagai elemen Draft S. */
 /* I.S. S mungkin kosong, tabel penampung elemen stack TIDAK penuh */
 /* F.S. X menjadi TOP yang baru,TOP bertambah 1 */
-void Push(Draft * S, infotype X){
+void Push(Draft *S, infotype X){
     if (IsFull_Draft(*S)){
-        Twit *temp = (Twit*)malloc(sizeof(infotype) * Cap(*S) * 2);
+        kicauDraft *temp = (kicauDraft*)malloc(sizeof(infotype) * Cap(*S) * 2);
         if (temp == NULL){
             printf("Draft PENUH dan ekspansi draft GAGAL!");
             return;
@@ -54,7 +55,7 @@ void Push(Draft * S, infotype X){
 /* F.S. Ukuran capacity = nEff */
 void compressDraft(Draft *S) {
     int newCap = 0.5 * Cap(*S);
-    Twit *temp = (Twit*)malloc(sizeof(infotype) * newCap);
+    kicauDraft *temp = (kicauDraft*)malloc(sizeof(infotype) * newCap);
     if (temp == NULL){
         printf("GAGAL mengalokasi memori");
         return;
@@ -76,7 +77,7 @@ void compressDraft(Draft *S) {
 /* Menghapus X dari Draft S. */
 /* I.S. S  tidak mungkin kosong */
 /* F.S. X adalah nilai elemen TOP yang lama, TOP berkurang 1 */
-void Pop(Draft * S, infotype* X){
+void Pop(Draft *S, infotype* X){
     if (!IsEmpty_Draft(*S)) {
         *X = InfoTop(*S);
         Top(*S) -= 1;
@@ -89,76 +90,134 @@ void Pop(Draft * S, infotype* X){
 }
 
 
-void createDraft(Draft *S){
-    Twit kicau;
+void BacaDraft(Word *isiTwit){
     printf("Masukkan draf: \n");
-    // baca draf
-    printf("Apakah anda ingin menghapus, menyimpan, atau menerbitkan draf ini?\n");
-
-    char choice[] = "foo";
-
-    if (choice == "HAPUS"){
-        exit(0); // DO NOTHING;
-    }
-    else if (choice == "SIMPAN"){
-        Push(S, kicau);
-    }
-    else{
-        // TERBIT
-        exit(0);
-        // Passing twit nya ke terbit
+    currentWord.TabWord[0] = '\0'; //Mengosongkan currentWord
+    currentWord.Length = 0;
+    STARTWORD();
+    printWord(currentWord);
+    if(isWordSimilar(currentWord, "")){ //W mungkin tidak berisi apa-apa
+        while(isWordSimilar(currentWord, "")){
+            printf("Draf tidak boleh hanya berisi spasi!\n");
+            printf("Masukkan draf: \n");
+            STARTWORD();
+            printf("\n");
+            *isiTwit = currentWord;
+        }
+    }else {
+        *isiTwit = currentWord;
     }
 }
 
 
-void displayDraft(Draft *S){
+Twit kicauDraftToTwit(Word *W, ListKicauan kicauan, Account currentuser){
+    Twit *K;
+    ID(*K) = listLength_ListKicauan(kicauan)+1; /*Bingung. ListKicauan adalah suatu variabel global di main.*/
+    IDUtas(*K) = -1; /*Secara default, Twit bukanlah Utas, kecuali ditandai sebagai Utas*/
+    Like(*K) = 0;
+    Author(*K) = currentuser; /*Bingung. Misal Account adalah variabel global yang selalu di-update di main. */
+    DATETIME D; CreateDATETIME(&D); DateTime(*K) = D; 
+    IsiTwit(*K) = *W;
+    Word tagar; currentWord.TabWord[0] = '\0'; currentWord.Length = 0; Tagar(*K) = currentWord;
+
+    return *K;
+}
+
+void createDraft(Draft *S, ListKicauan kicauanList, Account currentuser){
+    kicauDraft kicau;
+    Word isiDraft;
+    
+    BacaDraft(&isiDraft);
+    printf("Apakah anda ingin menghapus, menyimpan, atau menerbitkan draf ini?\n");
+    currentWord.TabWord[0] = '\0'; //Mengosongkan currentWord
+    currentWord.Length = 0;
+    STARTWORD();
+    printWord(currentWord);
+    if(isWordSimilar(currentWord, "HAPUS")){
+        printf("Draf telah berhasil dihapus");
+    }
+    else if (isWordSimilar(currentWord, "SIMPAN")){
+        KicauDraf(kicau) = isiDraft;
+        DATETIME D; CreateDATETIME(&D); DateTime(kicau) = D;
+
+        Push(S, kicau);
+        printf("Draf telah berhasil disimpan");
+    }
+    else if (isWordSimilar(currentWord, "TERBIT")){
+        Twit drafTwit = kicauDraftToTwit(&isiDraft, kicauanList, currentuser);
+        insertLast_ListKicauan(&kicauanList, drafTwit);
+        SuccessTwit(drafTwit);
+    }
+    else{
+        exit(0);
+    }
+}
+
+
+void displayDraft(Draft *S, ListKicauan kicauanList, Account currentuser){
     if (IsEmpty_Draft(*S)){
         printf("Yah, anda belum memiliki draf apapun! Buat dulu ya :D\n");
     }
     else{
-        Twit delVal;
-        InfoTop(*S);
-        // tampilin draf teratas
+        kicauDraft delVal;
+
+        kicauDraft topDraft = InfoTop(*S);
+        printf("Ini draf terakhir anda:\n");
+        printf("| ");
+        TulisDATETIME(DateTime(topDraft));
+        printf("\n");
+        printf("| ");
+        printWord(KicauDraf(topDraft));
+        printf("\n");
+
         printf("Apakah anda ingin mengubah, menghapus, atau menerbitkan draf ini? (KEMBALI jika ingin kembali)\n");
 
-        char choice[] = "foo";
-
-        if (choice == "KEMBALI"){
+        currentWord.TabWord[0] = '\0'; //Mengosongkan currentWord
+        currentWord.Length = 0;
+        STARTWORD();
+        printWord(currentWord);
+        if(isWordSimilar(currentWord, "KEMBALI")){
             exit(0);
-            // DO NOTHING
         }
-        else if (choice == "HAPUS"){
+        else if (isWordSimilar(currentWord, "HAPUS")){
             Pop(S, &delVal);
             printf("Draf telah berhasil dihapus!\n");
         }
-        else if (choice == "UBAH"){
+        else if (isWordSimilar(currentWord, "UBAH")){
             Pop(S, &delVal);
-            Twit kicauBaru = delVal;
+            kicauDraft kicauBaru;
+            Word isiDraft;
 
             printf("Masukkan draf yang baru: \n");
-            // baca drafbaru
+            BacaDraft(&isiDraft);
+
+            KicauDraf(kicauBaru) = isiDraft;
+            DATETIME D; CreateDATETIME(&D); DateTime(kicauBaru) = D; 
+
             // ubah word nya dan waktu
             printf("Apakah anda ingin menghapus, menyimpan, atau menerbitkan draf ini?\n");
 
-            char choiceEdit[] = "foo";
-            
-            if (choiceEdit == "HAPUS"){
+            currentWord.TabWord[0] = '\0'; //Mengosongkan currentWord
+            currentWord.Length = 0;
+            STARTWORD();
+            printWord(currentWord);
+            if(isWordSimilar(currentWord, "HAPUS")){
                 exit(0);
-                // DO NOTHING
             }
-            else if (choiceEdit == "SIMPAN"){
+            else if(isWordSimilar(currentWord, "SIMPAN")){
                 Push(S, kicauBaru);
             }
-            else {
-                // TERBIT
-                exit(0);
-                // Passing twit nya ke terbit
+            else{
+                Twit drafTwit = kicauDraftToTwit(&isiDraft, kicauanList, currentuser);
+                insertLast_ListKicauan(&kicauanList, drafTwit);
+                SuccessTwit(drafTwit);
             }
         }
         else{
-            // TERBIT
-            exit(0);
-            // Passing twit nya ke terbit
+            Word isiDraft = KicauDraf(InfoTop(*S));
+            Twit drafTwit = kicauDraftToTwit(&isiDraft, kicauanList, currentuser);
+            insertLast_ListKicauan(&kicauanList, drafTwit);
+            SuccessTwit(drafTwit);
         }
     }
 }

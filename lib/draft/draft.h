@@ -5,29 +5,40 @@
 #define DRAFT_H
 
 #include "../boolean/boolean.h"
-#include "../kicauan/twit.h"
+#include "../kicauan/kicauan.h"
+#include "../wordmachine/wordmachine.h"
+#include "../datetime/datetime.h"
+#include "../account/account.h"
 
 /* Nil adalah stack dengan elemen kosong . */
 #define Nil -1
+
+typedef struct { 
+  Word kicau; /* tabel penyimpan elemen */
+  DATETIME datetime;
+} kicauDraft;
+
+typedef kicauDraft infotype;
+typedef int address;
+
+#define KicauDraf(K) (K).kicau
+#define DateTime(K) (K).datetime
+
+typedef struct { 
+  infotype* buffer; /* tabel penyimpan elemen */
+  int capacity;
+  address TOP;  /* alamat TOP: elemen puncak */
+  Word author;
+} Draft;
 
 /* Definisi akses dengan Selektor : Set dan Get */
 #define Top(S) (S).TOP
 #define InfoTop(S) (S).buffer[(S).TOP]
 #define Cap(S) (S).capacity
 
-typedef Twit infotype;
-typedef int address;   /* indeks tabel */
-
-typedef struct { 
-  infotype* buffer; /* tabel penyimpan elemen */
-  int capacity;
-  address TOP;  /* alamat TOP: elemen puncak */
-} Draft;
-
-
 /* ************ Prototype ************ */
 /* *** Konstruktor/Kreator *** */
-void CreateEmpty_Draft(Draft *S);
+void CreateEmpty_Draft(Draft *S, Account author);
 /* I.S. sembarang; */
 /* F.S. Membuat sebuah stack S yang kosong berkapasitas 0 */
 /* Ciri stack kosong : TOP bernilai Nil */
@@ -64,7 +75,7 @@ void compressDraft(Draft *S);
         Jika TERBIT maka kicau langsung diterbitkan
         JIKA HAPUS maka operasi sebelumnya diabaikan
 */
-void createDraft(Draft *S);
+void createDraft(Draft *S, ListKicauan kicauanList, Account currentuser);
 
 /* ************ Menampilkan Draft Kicau ************ */
 /* Menampilkan draft terbaru (time-based) dan melakukan operasi KEMBALI atau HAPUS atau UBAH atau TERBIT  */
@@ -74,6 +85,11 @@ void createDraft(Draft *S);
         Jika UBAH maka pengguna menulis ulang isi draft lalu melakukan operasi HAPUS atau SIMPAN atau TERBIT
         Jika TERBIT maka kicau langsung diterbitkan
 */
-void displayDraft(Draft *S);
+
+void BacaDraft(Word *isiTwit);
+
+Twit kicauDraftToTwit(Word *W, ListKicauan kicauanList, Account currentuser);
+
+void displayDraft(Draft *S, ListKicauan kicauanList, Account currentuser);
 
 #endif
