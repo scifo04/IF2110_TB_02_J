@@ -83,7 +83,7 @@ Pics CreateBlankPicture () {
         PICROW(P,i,4) = 'R';PICROW(P,i,5) = ' ';PICROW(P,i,6) = '*';PICROW(P,i,7) = ' ';
         PICROW(P,i,8) = 'R';PICROW(P,i,9) = ' ';PICROW(P,i,10) = '*';PICROW(P,i,11) = ' ';
         PICROW(P,i,12) = 'R';PICROW(P,i,13) = ' ';PICROW(P,i,14) = '*';PICROW(P,i,15) = ' ';
-        PICROW(P,i,16) = 'R';PICROW(P,i,17) = ' ';PICROW(P,i,18) = '*';PICROW(P,i,19) = '\n';P.Row[i].Length = 20;
+        PICROW(P,i,16) = 'R';PICROW(P,i,17) = ' ';PICROW(P,i,18) = '*';PICROW(P,i,19) = '\n';
     }
     return P;
 }
@@ -186,7 +186,6 @@ void readPhoto (Account *A) {
         for (j = 0; j < 20; j++) {
             PICROW((*A).photo,i,j) = currentWord.TabWord[(20*i) + j];
         }
-        (*A).photo.Row[i].Length = 20;
     }
 }
 
@@ -287,16 +286,6 @@ int getIdx_Account (ListAcc L, Account A) {
     int i;
     for (i = 0; i < length_Account(L); i++) {
         if (wordSimilar(L.buffer[i].username,A.username) && wordSimilar(L.buffer[i].password,A.password)) {
-            return i;
-        }
-    }
-    return IDX_ACCOUNT_UNDEF;
-}
-
-int getIdx_Username (ListAcc L, Word Username) {
-    int i;
-    for (i = 0; i < length_Account(L); i++) {
-        if (wordSimilar(L.buffer[i].username,Username)) {
             return i;
         }
     }
@@ -410,6 +399,21 @@ boolean passAvailable (ListAcc L, Word U) {
     }
     return check;
 }
+
+int getIdx_Username(ListAcc L, Word U){
+    int i;
+    for (i = 0; i < length_Account(L); i++) {
+        if (wordSimilar(U,L.buffer[i].username)) {
+            return i;
+        }
+    }
+    return IDX_ACCOUNT_UNDEF;
+}
+
+Word getUsernamebyID (ListAcc L, int id){
+    return L.buffer[id-1].username;
+}
+
 
 // boolean getPublicitybyUsername(ListAcc L, Word username){
 //     int i;

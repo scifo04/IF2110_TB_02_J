@@ -1,8 +1,11 @@
 programmain: main/main.c
-	gcc -o lib/account/account_main lib/account/account_main.c lib/account/account.c lib/wordmachine/charmachine.c lib/wordmachine/wordmachine.c -lm
+	gcc -o lib/account/account_main lib/account/account_main.c lib/account/account.c lib/pcolor/pcolor.c lib/wordmachine/charmachine.c lib/wordmachine/wordmachine.c -lm
 	clear
 	./lib/account/account_main
-	gcc -o lib/datetime/datetime_main lib/datetime/datetime_main.c lib/datetime/datetime.c lib/time/time.c -lm
+	gcc -o lib/affection/affection_main lib/affection/affection_main.c lib/affection/affection.c -lm
+	clear
+	./lib/affection/affection_main
+	gcc -o lib/datetime/datetime_main lib/datetime/datetime_main.c lib/datetime/datetime.c lib/datetime/time.c -lm
 	clear
 	./lib/datetime/datetime_main
 	gcc -o lib/listdin/listdin_main lib/listdin/listdin_main.c lib/listdin/listdin.c -lm
@@ -26,15 +29,9 @@ programmain: main/main.c
 	gcc -o lib/stack/stack_main lib/stack/stack_main.c lib/stack/stack.c -lm
 	clear
 	./lib/stack/stack_main
-	gcc -o lib/time/time_main lib/time/time_main.c lib/time/time.c -lm
-	clear
-	./lib/time/time_main
-	gcc -o lib/tree/tree_main lib/tree/tree_main.c lib/tree/tree.c lib/matrix/matrix.c lib/liststatik/liststatik.c lib/wordmachine/charmachine.c lib/wordmachine/wordmachine.c -lm
-	clear
-	./lib/tree/tree_main
 	gcc -o lib/wordmachine/charword_main lib/wordmachine/charword_main.c lib/wordmachine/charmachine.c lib/wordmachine/wordmachine.c -lm
 	clear
 	./lib/wordmachine/charword_main
-	gcc -o main/main main/main.c lib/boolean/boolean.h lib/pcolor/pcolor.c lib/account/account.c lib/datetime/datetime.c lib/listdin/listdin.c lib/listlinier/listlinier.c lib/liststatik/liststatik.c lib/matrix/matrix.c lib/queue/queue.c lib/stack/stack.c lib/time/time.c lib/wordmachine/charmachine.c lib/wordmachine/wordmachine.c -lm
+	gcc -o main/main main/main.c lib/pcolor/pcolor.c lib/account/account.c lib/affection/affection.c lib/datetime/datetime.c lib/listdin/listdin.c lib/listlinier/listlinier.c lib/liststatik/liststatik.c lib/matrix/matrix.c lib/queue/queue.c lib/stack/stack.c lib/datetime/time.c lib/wordmachine/charmachine.c lib/wordmachine/wordmachine.c -lm
 	clear
 	./main/main

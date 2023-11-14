@@ -6,7 +6,7 @@
 #include "../pcolor/pcolor.h"
 
 typedef struct {
-    Word Row[5];
+    char content[5][20];
 } Pics;
 
 typedef struct {
@@ -24,7 +24,7 @@ typedef struct {
     int NEff;
 } ListAcc;
 
-#define PICROW(x,i,j) ((x).Row[i]).TabWord[j]
+#define PICROW(x,i,j) (x).content[(i)][(j)]
 #define IDX_ACCOUNT_UNDEF -1
 
 Word copyWord_Pahing ();
@@ -64,6 +64,8 @@ void deleteAt_Account (ListAcc*L, int idx, Account *A);
 void displayList_Account (ListAcc L);
 boolean nameAvailable (ListAcc L, Word U);
 boolean passAvailable (ListAcc L, Word U);
+Word getUsernamebyID (ListAcc L, int id);
+int getIdx_Username(ListAcc L, Word U);
 // boolean getPublicitybyUsername(ListAcc L, Word username);
 
 #endif
