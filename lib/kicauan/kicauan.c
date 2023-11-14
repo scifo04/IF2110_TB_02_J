@@ -204,9 +204,8 @@ void expandListKicauan(ListKicauan *l, int num){
     int i;
     copyList_ListKicauan(*l,&temp);
     dealocateListKicauan(l);
-    CreateListKicauan(l, ListKicauan_CAPACITY(temp));
     ListKicauan_CAPACITY(temp) += num;
-    ListKicauan_BUFFER(*l) = realloc(ListKicauan_BUFFER(*l),ListKicauan_CAPACITY(temp)*sizeof(ElKicauanType));
+    CreateListKicauan(l, ListKicauan_CAPACITY(temp));
     for (i = 0; i < ListKicauan_NEFF(temp); i++) {
         ListKicauan_ELMT(*l,i) = ListKicauan_ELMT(temp,i);
     }
