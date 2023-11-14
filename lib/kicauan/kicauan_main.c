@@ -1,6 +1,5 @@
 #include <stdio.h>
-#include "kicauan.h" 
-#include "../adt.h"
+#include "kicauan.h"
 
 int main() {
     ListAcc acc;

@@ -1,7 +1,9 @@
-
 #ifndef KICAUAN_H
 #define KICAUAN_H
-#include "../adt.h"
+#include "../boolean/boolean.h"
+#include "../datetime/datetime.h" 
+#include "../wordmachine/wordmachine.h" 
+#include "../account/account.h"
 
 /* MODUL ADT SEDERHANA TWIT*/
 /* *** Definisi TYPE Twit *** */

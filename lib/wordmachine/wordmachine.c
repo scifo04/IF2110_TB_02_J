@@ -84,12 +84,13 @@ char ToLowerCase (char a){
 }
 
 boolean wordSimilar (Word W1, Word W2) {
+    // untuk masukan case sensitive (huruf besar dan huruf kecil dianggap beda)
     boolean check = true;
     int i;
     if (W1.Length == W2.Length) {
         for (i = 0; i < W1.Length; i++) {
             if (W1.TabWord[i] != W2.TabWord[i]) {
-                check = false;
+                check = false; break;
             }
         }
     } else {
@@ -99,34 +100,27 @@ boolean wordSimilar (Word W1, Word W2) {
 }
 
 boolean wordSimilarCI (Word W1, Word W2) {
-    Word WI, WO;
-    PasteWord(W1, &WI); PasteWord(W2, &WO);
+    // untuk masukan case insensitive (huruf besar dan huruf kecil dianggap sama)
+    boolean check = true;
     int i;
-    for (i = 0; i < WI.Length; i++){
-        WI.TabWord[i] = ToLowerCase(WI.TabWord[i]);
+    if (W1.Length == W2.Length) {
+        for (i = 0; i < W1.Length; i++) {
+            if (ToLowerCase(W1.TabWord[i]) != ToLowerCase(W2.TabWord[i])) {
+                check = false; break;
+            }
+        }
+    } else {
+        check = false;
     }
-    for (i = 0; i < WO.Length; i++){
-        WO.TabWord[i] = ToLowerCase(WO.TabWord[i]);
-    }
-    return (wordSimilar (WI, WO));
+    return check;
 }
 
 boolean wordSimilarWithoutLength (Word W1, Word W2) {
     boolean check = true;
     int i;
     for (i = 0; i < W1.Length; i++) {
-        if ((int)W1.TabWord[i] >= 97 || (int)W1.TabWord[i] <= 122 || (int)W1.TabWord[i] >= 65 || (int)W1.TabWord[i] <= 90) {
-            if ((int)W1.TabWord[i] == (int)W2.TabWord[i] || (int)W1.TabWord[i] == (int)W2.TabWord[i] - 32 || (int)W1.TabWord[i] - 32 == (int)W2.TabWord[i]) {
-                // DO NOTHING
-            }
-            else {
-                check = false;
-            }
-        }
-        else {
-            if (W1.TabWord[i] != W2.TabWord[i]) {
-                check = false;
-            }
+        if (ToLowerCase(W1.TabWord[i]) != ToLowerCase(W2.TabWord[i])) {
+            check = false; break;
         }
     }
     return check;

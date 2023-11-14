@@ -6,7 +6,6 @@
 #include "../wordmachine/wordmachine.h" 
 #include "../account/account.h"
 #include "kicauan.h"
-#include "../adt.h"
 // include ADT Tree Balasan
 // include ADT Linked List Utas
 
