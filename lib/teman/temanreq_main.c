@@ -1,10 +1,10 @@
 #include <stdio.h>
-#include "kicauan.h"
-#include "kicauan.c" //khusus shulha, nanti di hapus
+#include "temanreq.h"
+#include "temanreq.c" //khusus shulha, nanti di hapus
 #include "../account/account.c"
 #include "../affection/affection.c"
 #include "../datetime/datetime.c"
-// #include "../kicauan/kicauan.c"
+#include "../kicauan/kicauan.c"
 #include "../pcolor/pcolor.c"
 #include "../listdin/listdin.c"
 #include "../liststatik/liststatik.c"
@@ -90,43 +90,37 @@ int main() {
     ListAcc acc;
     dummyListAccounts(&acc);
     Account currentuser=acc.buffer[0];
-    ListKicauan kicauanList;
     Affection friends;
     dummyAffection(&friends);
-    CreateListKicauan(&kicauanList, 10); // Assume capacity is 10, adjust as needed
 
-    // Assume accounts and friends are already initialized
-    // Assume currentuser is already initialized
+    // Initialize QueueFR
+    // QueueFR friendRequests;
+    // CreateQueueFR(&friendRequests);
+
+    QueueFR qself, qRequested;
+
     boolean on = true;
     while(on){
         currentWord.TabWord[0] = '\0'; //Mengosongkan currentWord
         currentWord.Length = 0;
         STARTWORD();
         printWord(currentWord);
-        if(isWordSimilar(currentWord, "KICAU")){
-            Twit newTwit;
-            CreateTwit(&newTwit, kicauanList, currentuser);
-            insertLast_ListKicauan(&kicauanList, newTwit);
-            SuccessTwit(newTwit);
-        } else if(isWordSimilar(currentWord, "KICAUAN")){
-            DisplayListKicauan(kicauanList, currentuser, friends, acc);
-        } else if(isWordSimilar(currentWord, "LIKE_KICAUAN")){
-            LikeKicauan(&kicauanList, 1, currentuser, friends, acc);
-            printf("\n");
-            LikeKicauan(&kicauanList, 1000, currentuser, friends, acc);
-        } else if(isWordSimilar(currentWord, "UBAH_KICAUAN")){
-            EditKicauan(&kicauanList, 1, currentuser, acc);
-            printf("\n");
-            EditKicauan(&kicauanList, 1000, currentuser, acc);
+        if(isWordSimilar(currentWord, "TAMBAH_TEMAN")){
+            qself = currentuser.friend_requests;
+            qRequested = acc[1].friend_requests;
+            addFriend(qSelf, &qRequested, acc, currentuser, friends);
+        } else if(isWordSimilar(currentWord, "DAFTAR_PERMINTAAN_PERTEMANAN")){
+            qself = currentuser.friend_requests;
+            displayFriendRequests(qself, acc);
+        } else if(isWordSimilar(currentWord, "SETUJUI_PERTEMANAN")){
+            qself = currentuser.friend_requests;
+            processRequest(&qself, friends, acc);
         } else if(isWordSimilar(currentWord, "DONE")){
             on=false;
         } else {
             printf("GAGAL KICAU\n");
         }
     }
-
-    // Clean up memory
-    dealocateListKicauan(&kicauanList);
 
     return 0;
 }

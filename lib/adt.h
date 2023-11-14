@@ -15,5 +15,6 @@
 #include "datetime/time.h"
 #include "wordmachine/wordmachine.h"
 #include "wordmachine/charmachine.h"
+#include "teman/temanreq.h"
 
 #endif

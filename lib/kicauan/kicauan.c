@@ -6,7 +6,7 @@
 
 /* Konstruktor: Membentuk Twit dari komponen-komponennya*/
 void CreateTwit(Twit *K, ListKicauan kicauan, Account currentuser){
-    ID(*K) = listLength_ListKicauan(kicauan); /*Bingung. ListKicauan adalah suatu variabel global di main.*/
+    ID(*K) = listLength_ListKicauan(kicauan)+1; /*Bingung. ListKicauan adalah suatu variabel global di main.*/
     IDUtas(*K) = -1; /*Secara default, Twit bukanlah Utas, kecuali ditandai sebagai Utas*/
     Like(*K) = 0;
     Author(*K) = currentuser; /*Bingung. Misal Account adalah variabel global yang selalu di-update di main. */
@@ -21,35 +21,31 @@ void CreateTwit(Twit *K, ListKicauan kicauan, Account currentuser){
 Twit tidak boleh berisi spasi. Hal ini sudah di-handle di wordmachine. Panjang maksimal Word adalah 280.*/
 void BacaTwit(Word *isiTwit){
     printf("Masukkan kicauan baru: \n");
+    currentWord.TabWord[0] = '\0'; //Mengosongkan currentWord
+    currentWord.Length = 0;
     STARTWORD();
-    printf("\n");
-    *isiTwit = currentWord;
-    if(isWordSimilar(*isiTwit, "")){ //W mungkin tidak berisi apa-apa
-        while(isWordSimilar(*isiTwit, "")){
+    printWord(currentWord);
+    if(isWordSimilar(currentWord, "")){ //W mungkin tidak berisi apa-apa
+        while(isWordSimilar(currentWord, "")){
             printf("Kicauan tidak boleh hanya berisi spasi!\n");
             printf("Masukkan kicauan: \n");
             STARTWORD();
             printf("\n");
             *isiTwit = currentWord;
         }
+    }else {
+        *isiTwit = currentWord;
     }
 }
 
 /*Membaca Tagar*/
 void BacaTagar(Word *tagar){
+    currentWord.TabWord[0] = '\0'; //Mengosongkan currentWord
+    currentWord.Length = 0;
     printf("Masukkan tagar: \n");
     STARTWORD();
     printf("\n");
     *tagar = currentWord;
-    if(isWordSimilar(*tagar, "")){ //currentWord mungkin tidak berisi apa-apa
-        while(isWordSimilar(*tagar, "")){
-            printf("Tagar tidak boleh hanya berisi spasi!\n");
-            printf("Masukkan tagar: \n");
-            STARTWORD();
-            printf("\n");
-            *tagar = currentWord;
-        }
-    }
 }
 
 /* Detail Twit*/

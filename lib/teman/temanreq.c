@@ -1,10 +1,15 @@
 /* File : temanreq.c */
-/* Definisi ADT Priority Queue Popularity dengan representasi Struktur Berkait */
-/* Elemen queue terurut membesar berdasarkan popularitas */
+/* Definisi ADT Priority QueueFR Popularity dengan representasi Struktur Berkait */
+/* Elemen QueueFR terurut membesar berdasarkan popularitas */
 
 #include <stdio.h>
 #include <stdlib.h>
 #include "temanreq.h"
+//numpang
+// #include "../account/account.c"
+// #include "../wordmachine/wordmachine.c"
+// #include "../wordmachine/charmachine.c"
+// #include "../affection/affection.c"
 
 /* ********* Prototype ********* */
 /* Prototype manajemen memori */
@@ -20,11 +25,11 @@ Address newRequest(ELFRType x){
     return a;
 }
 
-boolean isEmpty(Queue q){
+boolean isEmpty(QueueFR q){
     return ADDR_HEAD(q)==NULL && ADDR_TAIL(q)==NULL;
 }
 
-int length_queue(Queue q){
+int length_QueueFR(QueueFR q){
     Address a;
     int i = 1;
     a = ADDR_HEAD(q);
@@ -40,13 +45,13 @@ int length_queue(Queue q){
 }
 
 /*** Kreator ***/
-void CreateQueue(Queue *q){
+void CreateQueueFR(QueueFR *q){
     ADDR_HEAD(*q)=NULL;
     ADDR_TAIL(*q)=NULL;
 }
 
-/*** Primitif Enqueue/Dequeue ***/
-void enqueue(Queue *q, ELFRType x){
+/*** Primitif EnQueueFR/DeQueueFR ***/
+void enQueueFR(QueueFR *q, ELFRType x){
     Address loc = ADDR_HEAD(*q);
     Address p = newRequest(x);
     if(p!=NULL){
@@ -65,7 +70,7 @@ void enqueue(Queue *q, ELFRType x){
         }
     }
 }
-void dequeue(Queue *q, ELFRType *x){
+void deQueueFR(QueueFR *q, ELFRType *x){
     Address p = ADDR_HEAD(*q);
     *x = INFO(p);
     ADDR_HEAD(*q)= NEXT(p);
@@ -73,7 +78,7 @@ void dequeue(Queue *q, ELFRType *x){
     free(p);
 }
 
-int indexOf(Queue q, int idRequester) {
+int indexOf(QueueFR q, int idRequester) {
     Address a;
     int i = 0;
     a = ADDR_HEAD(q);
@@ -90,12 +95,12 @@ int indexOf(Queue q, int idRequester) {
 
 
 /* Daftar Permintaan Pertemanan*/
-void displayFriendRequests (Queue q, ListAcc acc){
+void displayFriendRequests (QueueFR q, ListAcc acc){
     int requests; Word name;
     if(isEmpty(q)){
         printf("Tidak ada permintaan pertemanan untuk Anda.\n");
     } else{
-        requests = length_queue(q);
+        requests = length_QueueFR(q);
         printf("Terdapat %d permintaan pertemanan untuk Anda.\n", requests);
         printf("\n");
         Address a = ADDR_HEAD(q);
@@ -117,14 +122,14 @@ void CreateFriendRequest(FriendRequest *FR, int idRequester, int idRequested, Af
 }
 
 /* Tambah Teman*/
-void addFriend(Queue qSelf, Queue *qRequested, ListAcc acc, Account currentuser, Affection friends){
+void addFriend(QueueFR qSelf, QueueFR *qRequested, ListAcc acc, Account currentuser, Affection friends){
     /* KAMUS LOKAL */
     Word nameReq;
     int idRequested, idRequester;
     FriendRequest FR;
 
     /* ALGORITMA */
-    /* Check if friend request queue of currentacc is empty */
+    /* Check if friend request QueueFR of currentacc is empty */
     if(!isEmpty(qSelf)){
         printf("Terdapat permintaan pertemanan yang belum Anda setujui. Silakan kosongkan daftar permintaan pertemanan untuk Anda terlebih dahulu.\n");
     } else {
@@ -141,7 +146,7 @@ void addFriend(Queue qSelf, Queue *qRequested, ListAcc acc, Account currentuser,
             idRequester = getIdx_Account(acc, currentuser);
             if(indexOf(*qRequested, idRequester)!=-1){
                 CreateFriendRequest(&FR, idRequester, idRequested, friends);
-                enqueue(qRequested, FR);
+                enQueueFR(qRequested, FR);
 
                 printf("Permintaan pertemanan kepada ");
                 printWord(nameReq);
@@ -160,13 +165,13 @@ void addFriend(Queue qSelf, Queue *qRequested, ListAcc acc, Account currentuser,
 }
 
 /* Setujui Pertemanan */
-void processRequest(Queue *q, Affection friends, ListAcc acc){
+void processRequest(QueueFR *q, Affection friends, ListAcc acc){
     if(isEmpty(*q)){
         printf("Tidak terdapat permintaan pertemanan untuk Anda.\n");
     } else{
         /*Menampilkan Permintaan Pertemanan Teratas*/
         FriendRequest topRequest; int idRequested, idRequester;
-        dequeue(q, &topRequest);
+        deQueueFR(q, &topRequest);
         idRequester = ID_REQUESTER(topRequest);
         idRequested = ID_REQUESTED(topRequest);
         Word name = getUsernamebyID(acc, idRequester);
