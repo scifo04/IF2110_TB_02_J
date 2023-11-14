@@ -5,7 +5,7 @@ programmain: main/main.c
 	gcc -o lib/affection/affection_main lib/affection/affection_main.c lib/affection/affection.c -lm
 	clear
 	./lib/affection/affection_main
-	gcc -o lib/datetime/datetime_main lib/datetime/datetime_main.c lib/datetime/datetime.c lib/time/time.c -lm
+	gcc -o lib/datetime/datetime_main lib/datetime/datetime_main.c lib/datetime/datetime.c lib/datetime/time.c -lm
 	clear
 	./lib/datetime/datetime_main
 	gcc -o lib/listdin/listdin_main lib/listdin/listdin_main.c lib/listdin/listdin.c -lm
@@ -32,6 +32,6 @@ programmain: main/main.c
 	gcc -o lib/wordmachine/charword_main lib/wordmachine/charword_main.c lib/wordmachine/charmachine.c lib/wordmachine/wordmachine.c -lm
 	clear
 	./lib/wordmachine/charword_main
-	gcc -o main/main main/main.c lib/boolean/boolean.h lib/pcolor/pcolor.c lib/account/account.c lib/affection/affection.c lib/datetime/datetime.c lib/listdin/listdin.c lib/listlinier/listlinier.c lib/liststatik/liststatik.c lib/matrix/matrix.c lib/queue/queue.c lib/stack/stack.c lib/time/time.c lib/wordmachine/charmachine.c lib/wordmachine/wordmachine.c -lm
+	gcc -o main/main main/main.c lib/pcolor/pcolor.c lib/account/account.c lib/affection/affection.c lib/datetime/datetime.c lib/listdin/listdin.c lib/listlinier/listlinier.c lib/liststatik/liststatik.c lib/matrix/matrix.c lib/queue/queue.c lib/stack/stack.c lib/datetime/time.c lib/wordmachine/charmachine.c lib/wordmachine/wordmachine.c -lm
 	clear
 	./main/main

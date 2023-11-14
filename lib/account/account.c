@@ -292,16 +292,6 @@ int getIdx_Account (ListAcc L, Account A) {
     return IDX_ACCOUNT_UNDEF;
 }
 
-int getIdx_Username (ListAcc L, Word Username) {
-    int i;
-    for (i = 0; i < length_Account(L); i++) {
-        if (wordSimilar(L.buffer[i].username,Username)) {
-            return i;
-        }
-    }
-    return IDX_ACCOUNT_UNDEF;
-}
-
 void setElmt_Account (ListAcc *L, int idx, Account A) {
     (((*L).buffer)[idx]).username = A.username;
     (((*L).buffer)[idx]).password = A.password;
@@ -412,7 +402,6 @@ boolean passAvailable (ListAcc L, Word U) {
 
 int getIdx_Username(ListAcc L, Word U){
     int i;
-    boolean check = false;
     for (i = 0; i < length_Account(L); i++) {
         if (wordSimilar(U,L.buffer[i].username)) {
             return i;

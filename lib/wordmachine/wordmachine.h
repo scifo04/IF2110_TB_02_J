@@ -62,5 +62,6 @@ boolean isWordSimilar(Word W, char *W2);
 
 void PasteWord(Word WIn, Word *WOut);
 boolean intCheck (Word W);
+boolean substring_beginning (Word W1, Word W2);
 
 #endif
