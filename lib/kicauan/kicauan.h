@@ -9,9 +9,9 @@
 /* *** Definisi TYPE Twit *** */
 typedef struct {
     int idKicau;
-    int like; 
+    int like;
     int idUtas;
-    Account author; 
+    Account author;
     DATETIME datetime;
     Word isiTwit; /*Panjang maksimal 280 Karakter*/
     Word tagar;
@@ -34,9 +34,9 @@ typedef struct {
 /* MODUL KICAUAN DYNAMIC LIST */
 
 /*  Kamus Umum */
-#define IDX_MIN 0
+#define KICAU_IDX_MIN 0
 /* Indeks minimum list */
-#define IDX_UNDEF -1
+#define KICAU_IDX_UNDEF -1
 /* Indeks tak terdefinisi*/
 
 /* Definisi elemen dan koleksi objek */
@@ -67,7 +67,7 @@ typedef struct
 #define ListKicauan_CAPACITY(l) (l).capacity
 
 /* **************************************************************** */
-/* DEFINISI TWIT                                                */
+/* DEFINISI TWIT                                                    */
 /* **************************************************************** */
 
 /* Konstruktor: Membentuk Twit dari komponen-komponennya*/
@@ -82,7 +82,7 @@ void BacaTwit(Word *K);
 void DetailTwit(Twit K);
 
 /* Pesan Berhasil Membuat Twit*/
-void SuccessTwit();
+void SuccessTwit(Twit K);
 
 /*Menambahkan tagar pada Twit*/
 void BacaTagar(Word *tagar);
