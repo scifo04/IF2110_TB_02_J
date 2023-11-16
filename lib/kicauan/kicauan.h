@@ -7,8 +7,8 @@
 
 /* MODUL UTAS */
 /* *** Definisi Type Utas *** */
-typedef struct node* AddressUtas;
-typedef struct node {
+typedef struct Node* AddressUtas;
+typedef struct Node {
   DATETIME waktuUtas;
   Word isiTwitUtas;
   AddressUtas Sambungan;

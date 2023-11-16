@@ -48,7 +48,7 @@ Address addrTail; /* alamat penambahan */
 #define POPULARITYN(p) (p)->info.popularity
 #define ADDR_HEAD(q) (q).addrHead
 #define ADDR_TAIL(q) (q).addrTail
-#define HEAD(q) (q).addrHead->info
+#define INFOHEAD(q) (q).addrHead->info
 
 /* ********* Prototype ********* */
 /* Prototype manajemen memori */
