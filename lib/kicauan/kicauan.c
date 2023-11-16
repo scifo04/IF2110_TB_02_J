@@ -2,6 +2,11 @@
 #include <stdlib.h>
 #include "kicauan.h"
 
+/* MODUL UTAS */
+void CreateUtas (AddressUtas *U){
+    *U = NULL;
+}
+
 /* MODUL ADT SEDERHANA TWIT*/
 
 /* Konstruktor: Membentuk Twit dari komponen-komponennya*/
@@ -14,7 +19,7 @@ void CreateTwit(Twit *K, ListKicauan kicauan, Account currentuser){
     Word isiTwit; BacaTwit(&isiTwit); IsiTwit(*K) = isiTwit;
     Word tagar; BacaTagar(&tagar); Tagar(*K) = tagar;
     // Balasan(*K) = CreateTreeBalasan;
-    // Utas(*K) = CreateLinkedListUtas;
+    AddressUtas U; CreateUtas(&U); Utas(*K) = U;
 }
 /* Membaca Twit */
 /* Twit yang dimasukkan terpotong secara otomatis dengan jumlah karakter maksimum 280.

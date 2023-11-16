@@ -5,6 +5,19 @@
 #include "../wordmachine/wordmachine.h" 
 #include "../account/account.h"
 
+/* MODUL UTAS */
+/* *** Definisi Type Utas *** */
+typedef struct node* AddressUtas;
+typedef struct node {
+  DATETIME waktuUtas;
+  Word isiTwitUtas;
+  AddressUtas Sambungan;
+} TwitUtas;
+
+#define waktuUtas(U) (U)->waktuUtas
+#define isiTwitUtas(U) (U)->isiTwitUtas
+#define Sambungan(U) (U)->Sambungan
+
 /* MODUL ADT SEDERHANA TWIT*/
 /* *** Definisi TYPE Twit *** */
 typedef struct {
@@ -16,9 +29,8 @@ typedef struct {
     Word isiTwit; /*Panjang maksimal 280 Karakter*/
     Word tagar;
     //Tree Balasan;
-    //ListUtas Utas;
+    AddressUtas Utas;
 } Twit;
-
 
 /* *** Notasi Akses: Selektor Twit *** */
 #define ID(K) (K).idKicau
@@ -29,7 +41,7 @@ typedef struct {
 #define IsiTwit(K) (K).isiTwit
 #define Tagar(K) (K).tagar
 // #define Balasan(K) (K).Balasan
-// #define Utas(K) (K).Utas
+#define Utas(K) (K).Utas
 
 /* MODUL KICAUAN DYNAMIC LIST */
 
@@ -67,6 +79,12 @@ typedef struct
 #define ListKicauan_CAPACITY(l) (l).capacity
 
 /* **************************************************************** */
+/* DEFINISI UTAS                                                    */
+/* **************************************************************** */
+
+void CreateUtas (AddressUtas *U);
+
+/* **************************************************************** */
 /* DEFINISI TWIT                                                    */
 /* **************************************************************** */
 
@@ -76,16 +94,16 @@ void CreateTwit(Twit *K, ListKicauan kicauan, Account currentuser);
 /* Membaca Twit */
 /* Twit yang dimasukkan terpotong secara otomatis dengan jumlah karakter maksimum 280.
 Twit tidak boleh berisi spasi*/
-void BacaTwit(Word *K);
+void BacaTwit(Word *isiTwit);
+
+/*Menambahkan tagar pada Twit*/
+void BacaTagar(Word *tagar);
 
 /* Detail Twit*/
 void DetailTwit(Twit K);
 
 /* Pesan Berhasil Membuat Twit*/
 void SuccessTwit(Twit K);
-
-/*Menambahkan tagar pada Twit*/
-void BacaTagar(Word *tagar);
 
 
 /* ********************************************************************************************************************************** */
