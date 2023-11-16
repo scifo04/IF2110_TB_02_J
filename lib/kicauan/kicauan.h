@@ -4,6 +4,7 @@
 #include "../datetime/datetime.h" 
 #include "../wordmachine/wordmachine.h" 
 #include "../account/account.h"
+#include "../affection/affection.h"
 
 /* MODUL UTAS */
 /* *** Definisi Type Utas *** */

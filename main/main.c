@@ -130,6 +130,7 @@ Word copyWord_Balas() {
     Word w;
     w.Length = 5;
     w.TabWord[0] = 'B'; w.TabWord[1] = 'A'; w.TabWord[2] = 'L'; w.TabWord[3] = 'A'; w.TabWord[4] = 'S';
+    return w;
 }
 
 Word copyWord_Balasan() {
@@ -137,6 +138,7 @@ Word copyWord_Balasan() {
     w.Length = 7;
     w.TabWord[0] = 'B'; w.TabWord[1] = 'A'; w.TabWord[2] = 'L'; w.TabWord[3] = 'A'; w.TabWord[4] = 'S'; w.TabWord[5] = 'A';
     w.TabWord[6] = 'N';
+    return w;
 }
 
 Word copyWord_hapusBalasan() {
@@ -145,6 +147,38 @@ Word copyWord_hapusBalasan() {
     w.TabWord[0] = 'H'; w.TabWord[1] = 'A'; w.TabWord[2] = 'P'; w.TabWord[3] = 'U'; w.TabWord[4] = 'S'; w.TabWord[5] = '_';
     w.TabWord[6] = 'B'; w.TabWord[7] = 'A'; w.TabWord[8] = 'L'; w.TabWord[9] = 'A'; w.TabWord[10] = 'S'; w.TabWord[11] = 'A';
     w.TabWord[12] = 'N';
+    return w;
+}
+
+Word copyWord_Kicau() {
+    Word w;
+    w.Length = 5;
+    w.TabWord[0] = 'K'; w.TabWord[1] = 'I'; w.TabWord[2] = 'C'; w.TabWord[3] = 'A'; w.TabWord[4] = 'U';
+    return w;
+}
+
+Word copyWord_Kicauan() {
+    Word w;
+    w.Length = 7;
+    w.TabWord[0] = 'K'; w.TabWord[1] = 'I'; w.TabWord[2] = 'C'; w.TabWord[3] = 'A'; w.TabWord[4] = 'U'; w.TabWord[5] = 'A';
+    w.TabWord[6] = 'N';
+    return w;
+}
+
+Word copyWord_sukaKicauan() {
+    Word w;
+    w.Length = 12;
+    w.TabWord[0] = 'S'; w.TabWord[1] = 'U'; w.TabWord[2] = 'K'; w.TabWord[3] = 'A'; w.TabWord[4] = '_'; w.TabWord[5] = 'K';
+    w.TabWord[6] = 'I'; w.TabWord[7] = 'C'; w.TabWord[8] = 'A'; w.TabWord[9] = 'U'; w.TabWord[10] = 'A'; w.TabWord[11] = 'N';
+    return w;
+}
+
+Word copyWord_ubahKicauan() {
+    Word w;
+    w.Length = 12;
+    w.TabWord[0] = 'U'; w.TabWord[1] = 'B'; w.TabWord[2] = 'A'; w.TabWord[3] = 'H'; w.TabWord[4] = '_'; w.TabWord[5] = 'K';
+    w.TabWord[6] = 'I'; w.TabWord[7] = 'C'; w.TabWord[8] = 'A'; w.TabWord[9] = 'U'; w.TabWord[10] = 'A'; w.TabWord[11] = 'N';
+    return w;
 }
 
 // DAFTAR
@@ -383,8 +417,28 @@ void Hapus_Teman () {
     }
 }
 
+void Kicau(){
+    Twit newTwit;
+    CreateTwit(&newTwit, Kicauan, currentuser);
+    insertLast_ListKicauan(&Kicauan, newTwit);
+    SuccessTwit(newTwit);
+}
+
+void LihatKicauan(){
+    DisplayListKicauan(Kicauan, currentuser, friends, acc);
+}
+
+void SukaKicauan(int idKicauan){
+    LikeKicauan(&Kicauan, idKicauan, currentuser, friends, acc);
+    printf("\n");
+}
+
+void UbahKicauan(int idKicau){
+    EditKicauan(&Kicauan, idKicau, currentuser, acc);
+    printf("\n");
+}
+
 void readCommand (Word W) {
-    Word Reader;
     if (wordSimilar(W,copyWord_Exit())) {
         allowexit = true;
     } else if (wordSimilar(W,copyWord_Daftar())) {
@@ -418,6 +472,38 @@ void readCommand (Word W) {
         printf("\n");
     } else if (wordSimilar(W,copyWord_Hapus_Teman())) {
         Hapus_Teman();
+        printf("\n");
+    } else if (wordSimilar(W,copyWord_Kicau())) {
+        Kicau();
+        printf("\n");
+    } else if (wordSimilar(W,copyWord_Kicauan())) {
+        LihatKicauan();
+        printf("\n");
+    } else if (wordSimilarWithoutLength(W,copyWord_sukaKicauan())) {
+        int id = 0;
+        boolean Ignore_ = false;
+        for (int i = 12; i < W.Length; i++){
+            if ((W.TabWord[i] == ' ') && Ignore_){break;}
+            if (((int) W.TabWord[i]) >= 48 && ((int) W.TabWord[i]) <= 57){
+                id = id*10;
+                id += W.TabWord[i] - '0';
+                Ignore_ = true;
+            } else if (W.TabWord[i] != ' '){break;}
+        }
+        SukaKicauan(id);
+        printf("\n");
+    } else if (wordSimilarWithoutLength(W,copyWord_ubahKicauan())) {
+        int id = 0;
+        boolean Ignore_ = false;
+        for (int i = 12; i < W.Length; i++){
+            if ((W.TabWord[i] == ' ') && Ignore_){break;}
+            if (((int) W.TabWord[i]) >= 48 && ((int) W.TabWord[i]) <= 57){
+                id = id*10;
+                id += W.TabWord[i] - '0';
+                Ignore_ = true;
+            } else if (W.TabWord[i] != ' '){break;}
+        }
+        UbahKicauan(id);
         printf("\n");
     }
 }

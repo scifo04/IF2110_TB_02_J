@@ -29,7 +29,6 @@ void BacaTwit(Word *isiTwit){
     currentWord.TabWord[0] = '\0'; //Mengosongkan currentWord
     currentWord.Length = 0;
     STARTWORD();
-    printWord(currentWord);
     if(isWordSimilar(currentWord, "")){ //W mungkin tidak berisi apa-apa
         while(isWordSimilar(currentWord, "")){
             printf("Kicauan tidak boleh hanya berisi spasi!\n");
@@ -99,7 +98,7 @@ void LikeKicauan(ListKicauan *l, int idKicauan, Account currentuser, Affection f
 }
 /*Pengguna hanya dapat mengubah miliknya sendiri*/
 void EditKicauan(ListKicauan *l, int idKicauan, Account currentuser, ListAcc accounts){
-    if(isIdxEff_ListKicauan(*l, idKicauan)){ 
+    if(isIdxEff_ListKicauan(*l, idKicauan-1)){ 
         if(getIdx_Account(accounts, Author(ListKicauan_ELMT(*l, idKicauan-1))) == getIdx_Account(accounts, currentuser)){
             Twit *K = &ListKicauan_ELMT(*l, idKicauan-1);
             Word isiTwit; BacaTwit(&isiTwit); IsiTwit(*K) = isiTwit;
@@ -165,8 +164,8 @@ void DisplayListKicauan(ListKicauan l, Account currentuser, Affection friends, L
         printf("Tidak ada kicauan yang dapat ditampilkan");
     } else {
         int i; boolean found=false;
-        for(i=1;i<=ListKicauan_NEFF(l);i++){
-            if(isFriends_Affection(friends, getIdx_Account(accounts, Author(ListKicauan_ELMT(l, i))), getIdx_Account(accounts, currentuser))){
+        for(i = ListKicauan_NEFF(l); i > 0;i--){
+            if(isFriends_Affection(friends, getIdx_Account(accounts, Author(ListKicauan_ELMT(l, i-1))), getIdx_Account(accounts, currentuser))){
                 found=true;
                 DetailTwit(ListKicauan_ELMT(l, i-1));
                 printf("\n");

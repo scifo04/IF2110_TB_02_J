@@ -1,19 +1,18 @@
 #include <stdio.h>
 #include "kicauan.h"
-#include "kicauan.c" //khusus shulha, nanti di hapus
-#include "../account/account.c"
-#include "../affection/affection.c"
-#include "../datetime/datetime.c"
-// #include "../kicauan/kicauan.c"
-#include "../pcolor/pcolor.c"
-#include "../listdin/listdin.c"
-#include "../liststatik/liststatik.c"
-#include "../matrix/matrix.c"
-#include "../queue/queue.c"
-#include "../stack/stack.c"
-#include "../datetime/time.c"
-#include "../wordmachine/wordmachine.c"
-#include "../wordmachine/charmachine.c"
+#include "../account/account.h"
+#include "../affection/affection.h"
+#include "../datetime/datetime.h"
+// #include "../kicauan/kicauan.h"
+#include "../pcolor/pcolor.h"
+#include "../listdin/listdin.h"
+#include "../liststatik/liststatik.h"
+#include "../matrix/matrix.h"
+#include "../queue/queue.h"
+#include "../stack/stack.h"
+#include "../datetime/time.h"
+#include "../wordmachine/wordmachine.h"
+#include "../wordmachine/charmachine.h"
 
 void dummyListAccounts(ListAcc *ACC){
     CreateListAccount(ACC);
