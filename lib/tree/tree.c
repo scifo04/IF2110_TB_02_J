@@ -1,15 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "tree.h"
-// #include "../liststatik/liststatik.h"
-// #include "../liststatik/liststatik.c"
-// #include "../wordmachine/wordmachine.c"
-// #include "../matrix/matrix.c"
-
 
 /*KONSTRUKTOR*/
 void CreateTree(Tree *T){
-    (*T).root = NULL;
+    Root(*T) = NULL;
 }
 
 /* *** Manajemen Memory *** */
@@ -70,21 +65,6 @@ void deleteTree(addressTree P) {
         free(P);
     }
 }
-
-// void printSiblings(addressTree P){
-//     if(P != NULL){
-//         printf("%d ", Data(P));
-//         printSiblings(NextSibling(P));
-//     }
-// }
-
-// void printChild(addressTree P){
-//     if(P != NULL){
-//         printf("%d ", Data(P));
-//         printChild(FirstChild(P));
-//         printSiblings(NextSibling(P));
-//     }
-// }
 
 void printTree(addressTree P, int h){
     if(P != NULL){
@@ -178,180 +158,230 @@ addressTree getAddressWithId(addressTree P, int id) {
     }
 }
 
-// int Treemachine(char string[], Matrix *m){
-//     int count = 0;
-//     int count1 = 1;
-//     int tempint = 1;
-//     int itemp = 0;
-//     int k = 0, j = 0;
-//     STARTWORD_FILE(string);
-//     tempint = WordToInt(currentWord);
-//     ADVWORD();
-//     while (count != tempint){
-//         if (count1 == 2){
-//             itemp = WordToInt(currentWord) + 2;
-//         }
-//         MATRIX_ELMT(*m,k,j) = WordToInt(currentWord);
-//         j++;
-//         if (count1 == itemp){
-//             k++;
-//             j = 0;
-//             count1 = 0;
-//             count++;
-//         }
-//         count1++;
-//         if (count != tempint){
-//             ADVWORD();
-//         }
-//     }
-//     return tempint;
-// }
+void Balas(Word input, ListAcc LAcc, Affection aff, ListKicauan LKicau, int id_untuk_balas) {
+    int space_count, IDKicau, IDBalas, id_user_pembalas, id_user_dibalas;
+    Word balasan, username_pembalas, username_dibalas;
+    Tree tree;
+    space_count = IDKicau = IDBalas = 0;
+    for (int i = 0; input.TabWord[i] != EndWord; i++) {
+        if (input.TabWord[i] == BLANK) {
+            space_count++;
+        }
+        else if ((int)input.TabWord[i] >= 48 && (int)input.TabWord[i] <= 57) {
+            if (space_count == 1) {
+                IDKicau = IDKicau * 10 + (input.TabWord[i] - '0');
+            }
+            else if (space_count == 2) {
+                IDBalas = IDBalas * 10 + (input.TabWord[i] - '0');
+            }
+        }
+    }
+    // username_pembalas = active_username;
+    if (isIdxEff_ListKicauan(LKicau, IDKicau)) { // IdKicau EXIST (ADA)
+        boolean cek_NULL = false;
+        id_user_pembalas = getIdx_Username(LAcc, username_pembalas);
+        for (int i = 0; i < listLength_ListKicauan(LKicau); i++) {
+            if (ListKicauan_ELMT(LKicau, i).idKicau == IDKicau) {
+                if (ListKicauan_ELMT(LKicau, i).Balasan == NULL) {
+                    cek_NULL = true;
+                }
+                username_dibalas = ListKicauan_ELMT(LKicau, i).author.username;
+                tree = ListKicauan_ELMT(LKicau, i).Balasan;
+                p = Root(tree);
+                break;
+            }
+        }
+        if (IDBalas == -1) {
+            if (cek_NULL) {
+                id_user_dibalas = getIdx_Username(LAcc, username_dibalas);
+                if (getPublicitybyUsername(LAcc, username_dibalas) || isFriends_Affection(Aff, id_user_pembalas, id_user_dibalas)) {
+                    addressTree new, old;
+                    DATETIME Date;
+                    CreateDATETIME(&Date);
+                    printf("\nMasukkan balasan:\n");
+                    STARTWORD();
+                    balasan = currentWord;
+                    STARTWORD();
+                    username_pembalas = currentWord;
+                    printf("\nSelamat! balasan telah diterbitkan!\nDetil balasan:\n");
+                    printf("| ID = \n"); // ID PENGGUNA
+                    printf("| \n"); // USERNAME
+                    printf("| "); // DATETIME
+                    TulisDATETIME(Date);
+                    printf("\n| ");
+                    for (int i = 0; i < balasan.Length; i++) {
+                        printf("%c", balasan.TabWord[i]);
+                    }
 
-// void matrixToTree (Matrix m, int N, Tree *T){
-//     int i,j,k,found,temp;
-//     addressTree P[N];
-//     addressTree PPrev;
-//     addressTree PNow;
+                    new = Alokasi(id_untuk_balas, username_dibalas, Date, balasan);
+                    old = getAddressWithId(p, IDKicau);
+                    if (FirstChild(old) == NULL) {
+                        AddChild(&old, new);
+                    }
+                    else {
+                        AddSibling(&old, new);
+                    }
+                    id_untuk_balas++;
+                }
+                else {
+                    printf("Wah, akun tersebut merupakan akun privat dan anda belum berteman akun tersebut!\n");
+                }
+            }
+            else {
 
-//     for (i = 0 ; i < N ; i ++){
-//         P[i] = Alokasi(MATRIX_ELMT(m,i,0));
-//     }
+            }
+        }
+        else { // IDBALAS != (=1)
+            if (isIdTreeElmt(p, IDBalas)) { // IdBalasan EXIST
+                if (getPublicitybyUsername(LAcc, username_dibalas || isFriends_Affection(aff, id_user_pembalas, id_user_dibalas))) {  // Jika publik atau berteman
+                    addressTree new, old;
+                    DATETIME Date;
+                    id_user_dibalas = getIdx_Username(LAcc, username_dibalas);
+                    CreateDATETIME(&Date);
+                    printf("\nMasukkan balasan:\n");
+                    STARTWORD();
+                    balasan = currentWord;
+                    int id = 6969;
+                    STARTWORD();
+                    username_pembalas = currentWord;
+                    printf("\nSelamat! balasan telah diterbitkan!\nDetil balasan:\n");
+                    printf("| ID = \n"); // ID PENGGUNA
+                    printf("| \n"); // USERNAME
+                    printf("| "); // DATETIME
+                    TulisDATETIME(Date);
+                    printf("\n| ");
+                    for (int i = 0; i < balasan.Length; i++) {
+                        printf("%c", balasan.TabWord[i]);
+                    }
 
-//     (*T).root = P[N-1];
+                    new = Alokasi(id_untuk_balas, username_pembalas, Date, balasan);
+                    old = getAddressWithId(p, IDBalas);
+                    if (FirstChild(old) == NULL) {
+                        AddChild(&old, new);
+                    }
+                    else {
+                        AddSibling(&old, new);
+                    }
+                    id_untuk_balas++;
+                }       
+                else {
+                    printf("Wah, akun tersebut merupakan akun privat dan anda belum berteman dengan akun tersebut!\n");
+                }
+            }
+            else { // IdBalas NOT EXIST
+                printf("Wah, tidak terdapat balasan yang ingin anda balas!\n");
+            }
+        }
+    }
+    else { // IdKicau NOT EXIST
+        printf("Wah, tidak terdapat kicauan yang ingin Anda balas!\n");
+    }
+}
 
-//     for (i = 0 ; i < N ; i++){
-//         temp = 0;
-//         for (j = 0 ; j < MATRIX_ELMT(m,i,1) ; j++){
-//             // check if m[i][j+2] exists in P
-//             found = 0;
-//             k = 0;
-//             while (k < N && !found){
-//                 if (MATRIX_ELMT(m,i,j+2) == Data(P[k])){
-//                     found = 1;
-//                 }
-//                 k++;
-//             }
-//             if (!found){
-//                 PNow = Alokasi(MATRIXELMT(m,i,j+2));
-//             } else {
-//                 PNow = P[k-1];
-//             }
+void Balasan(Word input) {
+    int space_count, IDKicau;
+    space_count = IDKicau  = 0;
 
-//             if (temp == 0){
-//                 AddChild(&P[i], PNow);
-//                 temp = 1;
-//             }
-//             else{
-//                 AddSibling(&PPrev, PNow);
-//             }
-//             PPrev = PNow;
-//         }
-//     }
-// }
+    for (int i = 0; input.TabWord[i] != EndWord; i++) {
+        if (input.TabWord[i] == BLANK) {
+            space_count++;
+        }
+        else if ((int)input.TabWord[i] >= 48 && (int)input.TabWord[i] <= 57) {
+            if (space_count == 1) {
+                IDKicau = IDKicau * 10 + (input.TabWord[i] - '0');
+            }
+        }
+    }
 
-// addressTree getParent(addressTree root,addressTree C){
-//     // I.S. C terdefinisi
-//     // F.S. mengembalikan addressTree parent dari C
-//     if(FirstChild(root) == C){
-//         return root;
-//     }else{
-//         addressTree Q = FirstChild(root);
-//         while(Q != NULL){
-//             if(NextSibling(Q) == C){
-//                 return root;
-//             }else{
-//                 addressTree R = getParent(Q, C);
-//                 if(R != NULL){
-//                     return R;
-//                 }else{
-//                     Q = NextSibling(Q);
-//                 }
-//             }
-//         }
-//         return NULL;
-//     }
-// }
+    // user_pembalas = current_user;
+    
+    if (isIdxEff_ListKicauan(LKicau, IDKicau)) {
+        for (int i = 0; i < listLength_ListKicauan(LKicau); i++) {
+            if (ListKicauan_ELMT(LKicau, i).idKicau == IDKicau) {
+                username_dibalas = ListKicauan_ELMT(LKicau, i).author.username;
+                id_user_dibalas = getIdx_Account(LAcc, username_dibalas);
+                break;
+            }
+        }
+        tree = ListKicauan_ELMT(LKicau, IDKicau).balasan;
+        p = Root(tree);
+        if (p == NULL) {
+            printf("Belum terdapat balasan apapun pada kicauan tersebut. Yuk balas kicauan tersebut!\n");
+        }
+        else {
+            Account a = getElmt_Account(LAcc, id_user_dibalas);
+            if (!isFriends_Affection(A, id_user_dibalas, id_user_pembalas)) {
+                if (!a.publicity) {
+                    printf("Wah, kicauan tersebut dibuat oleh pengguna dengan akun privat!\n");
+                }
+                else {
+                    printTree(p, 0);
+                }
+            }
+        }
+    }
+    else {
+        printf("Tidak terdapat kicauan dengan id tersebut!\n");
+    }
 
-// ListStatik getChild(addressTree parent){
-//     ListStatik L;
-//     CreateListStatik(&L);
-//     if(FirstChild(parent)!=NULL){
-//         parent=FirstChild(parent);
-//         insertLast_ListStatik(&L,Data(parent));
-//         while (NextSibling(parent)!=NULL)
-//         {
-//             parent=NextSibling(parent);
-//             insertLast_ListStatik(&L,Data(parent));
-//         }            
-//     }
-//     return L;
-// }
+    
+}
 
-// ListStatik getAllNodes(addressTree parent){
-//     // return all the nodes inside the tree
-//     ListStatik L;
-//     CreateListStatik(&L);
-//     if(parent!=NULL){
-//         insertLast_ListStatik(&L,Data(parent));
-//         if(FirstChild(parent)!=NULL){
-//             L = concat_ListStatik(L,getAllNodes(FirstChild(parent)));
-//         }
-//         if(NextSibling(parent)!=NULL){
-//             L = concat_ListStatik(L,getAllNodes(NextSibling(parent)));
-//         }
-//     }
-//     return L;
-// }
-
-    /* ----------------------------------------------- */
-
-// void CreateListTreeStatik(ListTreeStatik *l)
-// /* I.S. l sembarang */
-// /* F.S. Terbentuk List l kosong dengan kapasitas CAPACITY */
-// /* Proses: Inisialisasi semua elemen List l dengan LISTMARK */
-// {
-//     int i;
-//     for (i = 0; i < CAPACITY; i++){
-//         LISTELMT(*l, i).root = NULL;
-//     }
-// }
-// int listLength_ListTreeStatik(ListTreeStatik l)
-// /* Mengirimkan banyaknya elemen efektif List */
-// /* Mengirimkan nol jika List kosong */
-// {
-//     int i, count;
-//     count = 0;
-//     for (i = 0 ; i < CAPACITY ; i++){
-//         if (LISTELMT(l, i).root != NULL){
-//             count++;
-//         }
-//     }
-//     return count;
-// }
-// boolean isEmpty_ListTreeStatik(ListTreeStatik l){
-//     return (listLength_ListTreeStatik(l) == 0);
-// }
-
-// void insertLast_ListTreeStatik(ListTreeStatik *l, ListTreeStatik_ElType val)
-// /* Proses: Menambahkan val sebagai elemen terakhir List */
-// /* I.S. List l boleh kosong, tetapi tidak penuh */
-// /* F.S. val adalah elemen terakhir l yang baru */
-// {
-//     LISTELMT(*l, listLength_ListTreeStatik(*l)) = val;
-// }
-// void printList_ListTreeStatik(ListTreeStatik l)
-// /* Proses : Menuliskan isi List dengan traversal, List ditulis di antara kurung 
-//    siku; antara dua elemen dipisahkan dengan separator "koma", tanpa tambahan 
-//    karakter di depan, di tengah, atau di belakang, termasuk spasi dan enter */
-// /* I.S. l boleh kosong */
-// /* F.S. Jika l tidak kosong: [e1,e2,...,en] */
-// /* Contoh : jika ada tiga elemen bernilai 1, 20, 30 akan dicetak: [1,20,30] */
-// /* Jika List kosong : menulis [] */
-// {
-//     int i;
-//     for (i = 0; i < listLength_ListTreeStatik(l); i++) {
-//         printTree(LISTELMT(l,i).root, 0);
-//         printf("\n------------------- %d -------------------\n", i+1);
-//     }   
-
-// }
+void hapusBalasan(Word input) {
+    Tree t;
+    addressTree p, q;
+    int IDKicau, IDBalasan, space_count;
+    IDKicau = IDBalasan = space_count = 0;
+    for (int i = 0; input.TabWord[i] != EndWord; i++) {
+        if (input.TabWord[i] == BLANK) {
+            space_count++;
+        }
+        else if ((int)input.TabWord[i] >= 48 && (int)input.TabWord[i] <= 57) {
+            if (space_count == 1) {
+                IDKicau = IDKicau * 10 + (input.TabWord[i] - '0');
+            }
+            else if (space_count == 2) {
+                IDBalasan = IDBalasan * 10 + (input.TabWord[i] - '0');
+            }
+        }
+    }
+    for (int i = 0; i < listLength_ListKicauan(LKicau); i++) {
+            if (ListKicauan_ELMT(LKicau, i).idKicau == IDKicau) {
+                username_dibalas = ListKicauan_ELMT(LKicau, i).author.username;
+                t = ListKicauan_ELMT(LKicau, i).balasan;
+                p = Root(t);
+                break;
+            }
+    }
+    if (isIdxEff_ListKicauan(LKicau, IDKicau)) { // IDKicau EXIST
+        q = getAddressWithId(p, IDBalasan);
+        if (q != NULL) { // PEMILIK BALASAN
+            if (User(q) == active_user) {
+                addressTree p1, p2, p3;
+                p1 = getAddressWithId(p, IDBalasan);
+                printf("%s", Pesan(p1));
+                p2 = getAddressBefore(p, p1);
+                printf("%s", Pesan(p2));
+                if (NextSibling(p1) != NULL) {
+                    if (FirstChild(p2) == p1) {
+                        FirstChild(p2) = NextSibling(p1);
+                    }
+                    else {
+                        NextSibling(p2) = NextSibling(p1);
+                    }
+                }
+                deleteTree(p1);          
+                printf("Balasan berhasil dihapus\n");
+            }
+            else {
+                printf("Hei, ini balasan punya siapa? Jangan dihapus ya!\n");
+            }
+        }
+        else { // NOT EXIST
+            printf("Balasan tidak ditemukan\n");
+        }
+    }
+    else {
+        printf("Kicauan tidak ditemukan\n");
+    }
+}

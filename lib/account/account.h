@@ -66,6 +66,6 @@ boolean nameAvailable (ListAcc L, Word U);
 boolean passAvailable (ListAcc L, Word U);
 Word getUsernamebyID (ListAcc L, int id);
 int getIdx_Username(ListAcc L, Word U);
-// boolean getPublicitybyUsername(ListAcc L, Word username);
+boolean getPublicitybyUsername(ListAcc L, Word username);
 
 #endif

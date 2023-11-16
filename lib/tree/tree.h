@@ -4,11 +4,12 @@
 #define TREE_H
 
 #include "../boolean/boolean.h"
-#include "../liststatik/liststatik.h"
-#include "../wordmachine/charmachine.h"
 #include "../wordmachine/wordmachine.h"
 #include "../matrix/matrix.h"
 #include "../datetime/datetime.h"
+#include "../account/account.h"
+#include "../affection/affection.h"
+#include "../kicauan/kicauan.h"
 
 /*  Kamus Umum */
 #define CAPACITY 100
@@ -67,24 +68,10 @@ addressTree getAddressBefore (addressTree P, addressTree R);
 
 addressTree getAddressWithId (addressTree P, int id);
 
-// int Treemachine(char string[], Matrix *m);
+void Balas(Word input, ListAcc listacc, Affection aff, ListKicauan listkicau, int id_untuk_balas);
 
-// void matrixToTree (Matrix m, int N, Tree *T);
+void Balasan(Word input);
 
-// addressTree getParent(addressTree root,addressTree C);
-
-// ListStatik getChild(addressTree parent);
-
-// ListStatik getAllNodes(addressTree parent);
-
-// void CreateListTreeStatik(ListTreeStatik *l);
-
-// int listLength_ListTreeStatik(ListTreeStatik l);
-
-// boolean isEmpty_ListTreeStatik(ListTreeStatik l);
-
-// void insertLast_ListTreeStatik(ListTreeStatik *l, ListTreeStatik_ElType val);
-
-// void printList_ListTreeStatik(ListTreeStatik l);
+void hapusBalasan(Word input);
 
 #endif

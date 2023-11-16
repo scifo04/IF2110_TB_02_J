@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "kicauan.h"
-#include "../tree/tree.h"
 
 /* MODUL UTAS */
 void CreateUtas (AddressUtas *U){

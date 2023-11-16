@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "../lib/adt.h"
+#include "../lib/balasan.c"
 
 static boolean allowexit = false;
 static ListAcc acc;
@@ -8,6 +9,7 @@ static boolean hasLogged = false;
 static Account currentuser;
 static Affection friends;
 ListKicauan Kicauan;
+int id_untuk_balas = 1;
 
 void enter() {
     printf("\n");
@@ -504,6 +506,15 @@ void readCommand (Word W) {
             } else if (W.TabWord[i] != ' '){break;}
         }
         UbahKicauan(id);
+        printf("\n");
+    } else if (wordSimilarWithoutLength(W, copyWord_Balas())) {
+        Balas(W, acc, friends, Kicauan, id_untuk_balas);
+        printf("\n");
+    } else if (wordSimilarWithoutLength(W, copyWord_Balasan())) {
+        Balasan(W);
+        printf("\n");
+    } else if (wordSimilarWithoutLength(W, copyWord_hapusBalasan())) {
+        hapusBalasan(W);
         printf("\n");
     }
 }

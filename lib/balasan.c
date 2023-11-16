@@ -1,4 +1,3 @@
-#include "tree/tree.c"
 #include "adt.h"
 
 int IDKicau, IDBalasan, id_user_dibalas, id_user_pembalas;
@@ -34,11 +33,11 @@ void Balas(Word input) {
         id_user_pembalas = getIdx_Username(LAcc, username_pembalas);
         for (int i = 0; i < listLength_ListKicauan(LKicau); i++) {
             if (ListKicauan_ELMT(LKicau, i).idKicau == IDKicau) {
-                if (ListKicauan_ELMT(LKicau, i).balasan == NULL) {
+                if (ListKicauan_ELMT(LKicau, i).Balasan == NULL) {
                     cek_NULL = true;
                 }
                 username_dibalas = ListKicauan_ELMT(LKicau, i).author.username;
-                tree = ListKicauan_ELMT(LKicau, i).balasan;
+                tree = ListKicauan_ELMT(LKicau, i).Balasan;
                 p = Root(tree);
                 break;
             }

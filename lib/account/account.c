@@ -415,11 +415,11 @@ Word getUsernamebyID (ListAcc L, int id){
 }
 
 
-// boolean getPublicitybyUsername(ListAcc L, Word username){
-//     int i;
-//     for (i = 0; i < length_Account(L); i++) {
-//         if (wordSimilar(L.buffer[i].username, username)) {
-//             return L.buffer[i].publicity;
-//         }
-//     }
-// }
+boolean getPublicitybyUsername(ListAcc L, Word username){
+    int i;
+    for (i = 0; i < length_Account(L); i++) {
+        if (wordSimilar(L.buffer[i].username, username)) {
+            return L.buffer[i].publicity;
+        }
+    }
+}
