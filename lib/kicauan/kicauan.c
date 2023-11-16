@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "kicauan.h"
+#include "../tree/tree.h"
 
 /* MODUL UTAS */
 void CreateUtas (AddressUtas *U){
@@ -18,7 +19,7 @@ void CreateTwit(Twit *K, ListKicauan kicauan, Account currentuser){
     DATETIME D; CreateDATETIME(&D); DateTime(*K) = D; 
     Word isiTwit; BacaTwit(&isiTwit); IsiTwit(*K) = isiTwit;
     Word tagar; BacaTagar(&tagar); Tagar(*K) = tagar;
-    // Balasan(*K) = CreateTreeBalasan;
+    Tree t; CreateTree(&t); Balasan(*K) = t;
     AddressUtas U; CreateUtas(&U); Utas(*K) = U;
 }
 /* Membaca Twit */

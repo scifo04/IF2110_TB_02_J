@@ -5,6 +5,7 @@
 #include "../wordmachine/wordmachine.h" 
 #include "../account/account.h"
 #include "../affection/affection.h"
+#include "../tree/tree.h"
 
 /* MODUL UTAS */
 /* *** Definisi Type Utas *** */
@@ -29,7 +30,7 @@ typedef struct {
     DATETIME datetime;
     Word isiTwit; /*Panjang maksimal 280 Karakter*/
     Word tagar;
-    //Tree Balasan;
+    Tree Balasan;
     AddressUtas Utas;
 } Twit;
 
@@ -41,7 +42,7 @@ typedef struct {
 #define DateTime(K) (K).datetime
 #define IsiTwit(K) (K).isiTwit
 #define Tagar(K) (K).tagar
-// #define Balasan(K) (K).Balasan
+#define Balasan(K) (K).Balasan
 #define Utas(K) (K).Utas
 
 /* MODUL KICAUAN DYNAMIC LIST */
