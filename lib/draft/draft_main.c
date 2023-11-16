@@ -1,19 +1,18 @@
 #include <stdio.h>
-#include "kicauan.h"
-#include "kicauan.c" //khusus shulha, nanti di hapus
-#include "../account/account.c"
-#include "../affection/affection.c"
-#include "../datetime/datetime.c"
+#include "../kicauan/kicauan.h"
+#include "../account/account.h"
+#include "../datetime/datetime.h"
 // #include "../kicauan/kicauan.c"
-#include "../pcolor/pcolor.c"
-#include "../listdin/listdin.c"
-#include "../liststatik/liststatik.c"
-#include "../matrix/matrix.c"
-#include "../queue/queue.c"
-#include "../stack/stack.c"
-#include "../datetime/time.c"
-#include "../wordmachine/wordmachine.c"
-#include "../wordmachine/charmachine.c"
+#include "../pcolor/pcolor.h"
+#include "../listdin/listdin.h"
+#include "../liststatik/liststatik.h"
+#include "../matrix/matrix.h"
+#include "../queue/queue.h"
+#include "../stack/stack.h"
+#include "../datetime/time.h"
+#include "../wordmachine/wordmachine.h"
+#include "../wordmachine/charmachine.h"
+#include "draft.h"
 
 void dummyListAccounts(ListAcc *ACC){
     CreateListAccount(ACC);
@@ -41,92 +40,50 @@ void dummyListAccounts(ListAcc *ACC){
     PICROW(account1.photo, 4, 1) = 'J';
     change_publicity(&account1);
 
-    // Account 2
-    CreateAccount(&account2);
-    readUsername(&account2);
-    readPassword(&account2);
-    readBio(&account2);
-    readPhone_Num(&account2);
-    readWeton(&account2);
-    // Set arbitrary values for photo content
-    PICROW(account2.photo, 0, 0) = 'K';
-    PICROW(account2.photo, 0, 1) = 'L';
-    PICROW(account2.photo, 1, 0) = 'M';
-    PICROW(account2.photo, 1, 1) = 'N';
-    PICROW(account2.photo, 2, 0) = 'O';
-    PICROW(account2.photo, 2, 1) = 'P';
-    PICROW(account2.photo, 3, 0) = 'Q';
-    PICROW(account2.photo, 3, 1) = 'R';
-    PICROW(account2.photo, 4, 0) = 'S';
-    PICROW(account2.photo, 4, 1) = 'T';
-    change_publicity(&account2);
-
     // Insert the accounts into the list
     insertLast_Account(ACC, account1);
-    insertLast_Account(ACC, account2);
 
     // Display the list of accounts
     displayList_Account(*ACC);
 
 }
 
-void dummyAffection(Affection *friends){
-    CreateAffection(friends);
-
-    // Assuming account indices are 0-based
-    int account1Index = 0;
-    int account2Index = 1;
-
-    // Set arbitrary values for the Affection matrix
-    // For example, let's make account 1 friends with account 2
-    convertAffection(friends, account1Index, account2Index);
-
-    // Display the Affection matrix
-    displayAffection(*friends);
-    printf("\n");
-}
 
 int main() {
     ListAcc acc;
     dummyListAccounts(&acc);
     Account currentuser=acc.buffer[0];
+    printf("Aman");
     ListKicauan kicauanList;
-    Affection friends;
-    dummyAffection(&friends);
     CreateListKicauan(&kicauanList, 10); // Assume capacity is 10, adjust as needed
 
     // Assume accounts and friends are already initialized
     // Assume currentuser is already initialized
     boolean on = true;
     while(on){
-        currentWord.TabWord[0] = '\0'; //Mengosongkan currentWord
-        currentWord.Length = 0;
-        STARTWORD();
-        printWord(currentWord);
-        if(isWordSimilar(currentWord, "KICAU")){
-            Twit newTwit;
-            CreateTwit(&newTwit, kicauanList, currentuser);
-            insertLast_ListKicauan(&kicauanList, newTwit);
-            SuccessTwit(newTwit);
-        } else if(isWordSimilar(currentWord, "KICAUAN")){
-            DisplayListKicauan(kicauanList, currentuser, friends, acc);
-        } else if(isWordSimilar(currentWord, "LIKE_KICAUAN")){
-            LikeKicauan(&kicauanList, 1, currentuser, friends, acc);
-            printf("\n");
-            LikeKicauan(&kicauanList, 1000, currentuser, friends, acc);
-        } else if(isWordSimilar(currentWord, "UBAH_KICAUAN")){
-            EditKicauan(&kicauanList, 1, currentuser, acc);
-            printf("\n");
-            EditKicauan(&kicauanList, 1000, currentuser, acc);
-        } else if(isWordSimilar(currentWord, "DONE")){
-            on=false;
-        } else {
-            printf("GAGAL KICAU\n");
+        Draft *S;
+        CreateEmpty_Draft(S, currentuser);
+        if (IsEmpty_Draft(*S)){
+            printf("Draft kosong");
+        }
+
+        if (IsFull_Draft(*S)){
+            printf("Draft penuh");
+        }
+
+        displayDraft(S, kicauanList, currentuser);
+        createDraft(S, kicauanList, currentuser);
+        displayDraft(S, kicauanList, currentuser);
+
+        if (IsEmpty_Draft(*S)){
+            printf("Draft kosong");
+        }
+
+        if (IsFull_Draft(*S)){
+            printf("Draft penuh");
+            on = false;
         }
     }
-
-    // Clean up memory
-    dealocateListKicauan(&kicauanList);
 
     return 0;
 }
