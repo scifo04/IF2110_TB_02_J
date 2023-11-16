@@ -32,6 +32,6 @@ programmain: main/main.c
 	gcc -o lib/wordmachine/charword_main lib/wordmachine/charword_main.c lib/wordmachine/charmachine.c lib/wordmachine/wordmachine.c -lm
 	clear
 	./lib/wordmachine/charword_main
-	gcc -o main/main main/main.c lib/pcolor/pcolor.c lib/account/account.c lib/affection/affection.c lib/datetime/datetime.c lib/listdin/listdin.c lib/listlinier/listlinier.c lib/liststatik/liststatik.c lib/matrix/matrix.c lib/queue/queue.c lib/stack/stack.c lib/datetime/time.c lib/wordmachine/charmachine.c lib/wordmachine/wordmachine.c lib/kicauan/kicauan.c -lm
+	gcc -o main/main main/main.c lib/pcolor/pcolor.c lib/account/account.c lib/affection/affection.c lib/datetime/datetime.c lib/listdin/listdin.c lib/listlinier/listlinier.c lib/liststatik/liststatik.c lib/matrix/matrix.c lib/queue/queue.c lib/stack/stack.c lib/datetime/time.c lib/wordmachine/charmachine.c lib/wordmachine/wordmachine.c lib/kicauan/kicauan.c lib/tree/tree.c -lm
 	clear
 	./main/main
