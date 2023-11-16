@@ -27,9 +27,9 @@ boolean IsFull_Draft(Draft S){
 /* Menambahkan X sebagai elemen Draft S. */
 /* I.S. S mungkin kosong, tabel penampung elemen stack TIDAK penuh */
 /* F.S. X menjadi TOP yang baru,TOP bertambah 1 */
-void Push(Draft *S, infotype X){
+void Pushs(Draft *S, kicauDraft X){
     if (IsFull_Draft(*S)){
-        kicauDraft *temp = (kicauDraft*)malloc(sizeof(infotype) * Cap(*S) * 2);
+        kicauDraft *temp = (kicauDraft*)malloc(sizeof(kicauDraft) * Cap(*S) * 2);
         if (temp == NULL){
             printf("Draft PENUH dan ekspansi draft GAGAL!");
             return;
@@ -46,7 +46,7 @@ void Push(Draft *S, infotype X){
     }
 
     Top(*S) += 1;
-    InfoTop(*S) = X;
+    InfoTops(*S) = X;
 }
 
 
@@ -55,7 +55,7 @@ void Push(Draft *S, infotype X){
 /* F.S. Ukuran capacity = nEff */
 void compressDraft(Draft *S) {
     int newCap = 0.5 * Cap(*S);
-    kicauDraft *temp = (kicauDraft*)malloc(sizeof(infotype) * newCap);
+    kicauDraft *temp = (kicauDraft*)malloc(sizeof(kicauDraft) * newCap);
     if (temp == NULL){
         printf("GAGAL mengalokasi memori");
         return;
@@ -77,9 +77,9 @@ void compressDraft(Draft *S) {
 /* Menghapus X dari Draft S. */
 /* I.S. S  tidak mungkin kosong */
 /* F.S. X adalah nilai elemen TOP yang lama, TOP berkurang 1 */
-void Pop(Draft *S, infotype* X){
+void Pops(Draft *S, kicauDraft* X){
     if (!IsEmpty_Draft(*S)) {
-        *X = InfoTop(*S);
+        *X = InfoTops(*S);
         Top(*S) -= 1;
     }
 
@@ -140,7 +140,7 @@ void createDraft(Draft *S, ListKicauan kicauanList, Account currentuser){
         KicauDraf(kicau) = isiDraft;
         DATETIME D; CreateDATETIME(&D); DateTime(kicau) = D;
 
-        Push(S, kicau);
+        Pushs(S, kicau);
         printf("Draf telah berhasil disimpan");
     }
     else if (isWordSimilar(currentWord, "TERBIT")){
@@ -161,7 +161,7 @@ void displayDraft(Draft *S, ListKicauan kicauanList, Account currentuser){
     else{
         kicauDraft delVal;
 
-        kicauDraft topDraft = InfoTop(*S);
+        kicauDraft topDraft = InfoTops(*S);
         printf("Ini draf terakhir anda:\n");
         printf("| ");
         TulisDATETIME(DateTime(topDraft));
@@ -180,11 +180,11 @@ void displayDraft(Draft *S, ListKicauan kicauanList, Account currentuser){
             exit(0);
         }
         else if (isWordSimilar(currentWord, "HAPUS")){
-            Pop(S, &delVal);
+            Pops(S, &delVal);
             printf("Draf telah berhasil dihapus!\n");
         }
         else if (isWordSimilar(currentWord, "UBAH")){
-            Pop(S, &delVal);
+            Pops(S, &delVal);
             kicauDraft kicauBaru;
             Word isiDraft;
 
@@ -205,7 +205,7 @@ void displayDraft(Draft *S, ListKicauan kicauanList, Account currentuser){
                 exit(0);
             }
             else if(isWordSimilar(currentWord, "SIMPAN")){
-                Push(S, kicauBaru);
+                Pushs(S, kicauBaru);
             }
             else{
                 Twit drafTwit = kicauDraftToTwit(&isiDraft, kicauanList, currentuser);
@@ -214,7 +214,7 @@ void displayDraft(Draft *S, ListKicauan kicauanList, Account currentuser){
             }
         }
         else{
-            Word isiDraft = KicauDraf(InfoTop(*S));
+            Word isiDraft = KicauDraf(InfoTops(*S));
             Twit drafTwit = kicauDraftToTwit(&isiDraft, kicauanList, currentuser);
             insertLast_ListKicauan(&kicauanList, drafTwit);
             SuccessTwit(drafTwit);
