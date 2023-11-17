@@ -60,6 +60,8 @@ boolean wordSimilarWithoutLength (Word W1, Word W2);
 boolean isWordSimilar(Word W, char *W2);
 /*mengembalikan true jika kata W sama dengan string W2*/
 
+int Akuisisi_First_Integer (Word W);
+
 void PasteWord(Word WIn, Word *WOut);
 boolean intCheck (Word W);
 boolean substring_beginning (Word W1, Word W2);

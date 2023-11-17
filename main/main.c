@@ -9,6 +9,7 @@ static Account currentuser;
 static Affection friends;
 ListKicauan Kicauan;
 int id_untuk_balas = 1;
+int idUtas;
 
 void enter() {
     printf("\n");
@@ -179,6 +180,37 @@ Word copyWord_ubahKicauan() {
     w.Length = 12;
     w.TabWord[0] = 'U'; w.TabWord[1] = 'B'; w.TabWord[2] = 'A'; w.TabWord[3] = 'H'; w.TabWord[4] = '_'; w.TabWord[5] = 'K';
     w.TabWord[6] = 'I'; w.TabWord[7] = 'C'; w.TabWord[8] = 'A'; w.TabWord[9] = 'U'; w.TabWord[10] = 'A'; w.TabWord[11] = 'N';
+    return w;
+}
+
+Word copyWord_Utas() {
+    Word w;
+    w.Length = 4;
+    w.TabWord[0] = 'U'; w.TabWord[1] = 'T'; w.TabWord[2] = 'A'; w.TabWord[3] = 'S';
+    return w;
+}
+
+Word copyWord_SambungUtas() {
+    Word w;
+    w.Length = 12;
+    w.TabWord[0] = 'S'; w.TabWord[1] = 'A'; w.TabWord[2] = 'M'; w.TabWord[3] = 'B'; w.TabWord[4] = 'U'; w.TabWord[5] = 'N';
+    w.TabWord[6] = 'G'; w.TabWord[7] = '_'; w.TabWord[8] = 'U'; w.TabWord[9] = 'T'; w.TabWord[10] = 'A'; w.TabWord[11] = 'S';
+    return w;
+}
+
+Word copyWord_HapusUtas() {
+    Word w;
+    w.Length = 10;
+    w.TabWord[0] = 'H'; w.TabWord[1] = 'A'; w.TabWord[2] = 'P'; w.TabWord[3] = 'U'; w.TabWord[4] = 'S'; w.TabWord[5] = '_';
+    w.TabWord[6] = 'U'; w.TabWord[7] = 'T'; w.TabWord[8] = 'A'; w.TabWord[9] = 'S';
+    return w;
+}
+
+Word copyWord_CetakUtas() {
+    Word w;
+    w.Length = 10;
+    w.TabWord[0] = 'C'; w.TabWord[1] = 'E'; w.TabWord[2] = 'T'; w.TabWord[3] = 'A'; w.TabWord[4] = 'K'; w.TabWord[5] = '_';
+    w.TabWord[6] = 'U'; w.TabWord[7] = 'T'; w.TabWord[8] = 'A'; w.TabWord[9] = 'S';
     return w;
 }
 
@@ -438,6 +470,12 @@ void UbahKicauan(int idKicau){
     EditKicauan(&Kicauan, idKicau, currentuser, acc);
     printf("\n");
 }
+
+// otw
+void BuatUtas(int idKicau){printf("%d\n", idKicau);}
+void SambungUtas(int idUtas, int index){printf("%d %d\n", idUtas, index);}
+void HapusUtas(int idUtas, int index){printf("%d %d\n", idUtas, index);}
+void CetakUtas(int idUtas){printf("%d\n", idUtas);}
 
 void balas(Word input, ListAcc LAcc, Affection aff, ListKicauan LKicau, int id_untuk_balas) {
     int space_count, IDKicau, IDBalas, id_user_pembalas, id_user_dibalas;
@@ -700,29 +738,11 @@ void readCommand (Word W) {
         LihatKicauan();
         printf("\n");
     } else if (wordSimilarWithoutLength(W,copyWord_sukaKicauan())) {
-        int id = 0;
-        boolean Ignore_ = false;
-        for (int i = 12; i < W.Length; i++){
-            if ((W.TabWord[i] == ' ') && Ignore_){break;}
-            if (((int) W.TabWord[i]) >= 48 && ((int) W.TabWord[i]) <= 57){
-                id = id*10;
-                id += W.TabWord[i] - '0';
-                Ignore_ = true;
-            } else if (W.TabWord[i] != ' '){break;}
-        }
+        int id = Akuisisi_First_Integer(W);
         SukaKicauan(id);
         printf("\n");
     } else if (wordSimilarWithoutLength(W,copyWord_ubahKicauan())) {
-        int id = 0;
-        boolean Ignore_ = false;
-        for (int i = 12; i < W.Length; i++){
-            if ((W.TabWord[i] == ' ') && Ignore_){break;}
-            if (((int) W.TabWord[i]) >= 48 && ((int) W.TabWord[i]) <= 57){
-                id = id*10;
-                id += W.TabWord[i] - '0';
-                Ignore_ = true;
-            } else if (W.TabWord[i] != ' '){break;}
-        }
+        int id = Akuisisi_First_Integer(W);
         UbahKicauan(id);
         printf("\n");
     } else if (wordSimilarWithoutLength(W, copyWord_Balas())) {

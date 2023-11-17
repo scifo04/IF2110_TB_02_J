@@ -7,6 +7,8 @@
 #include "../affection/affection.h"
 #include "../tree/tree.h"
 
+extern int idUtas;
+
 /* MODUL UTAS */
 /* *** Definisi Type Utas *** */
 typedef struct Node* AddressUtas;
@@ -84,7 +86,11 @@ typedef struct
 /* DEFINISI UTAS                                                    */
 /* **************************************************************** */
 
+AddressUtas newUtas (DATETIME T, Word isiTwitUtas); // Alokasi elemen, newNode
 void CreateUtas (AddressUtas *U);
+
+/* Test Kosong */
+boolean isEmpty_Utas (AddressUtas U);
 
 /* **************************************************************** */
 /* DEFINISI TWIT                                                    */

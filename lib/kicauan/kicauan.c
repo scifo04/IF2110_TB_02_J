@@ -2,9 +2,26 @@
 #include <stdlib.h>
 #include "kicauan.h"
 
+extern int idUtas;
+
 /* MODUL UTAS */
+AddressUtas newUtas (DATETIME T, Word isiUtas){ // Alokasi elemen, newNode
+    AddressUtas U;
+    U = (AddressUtas) malloc (sizeof(TwitUtas));
+    if (U != NULL){
+        waktuUtas(U) = T;
+        isiTwitUtas(U) = isiUtas;
+        Sambungan(U) = NULL;
+    }
+    return U;
+}
 void CreateUtas (AddressUtas *U){
     *U = NULL;
+}
+
+/* Test Kosong */
+boolean isEmpty_Utas (AddressUtas U){
+    return (U == NULL);
 }
 
 /* MODUL ADT SEDERHANA TWIT*/

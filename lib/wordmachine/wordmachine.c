@@ -137,6 +137,22 @@ boolean isWordSimilar(Word W, char *W2){
     return (W.TabWord[i] == '\0' && W2[i] == '\0');
 }
 
+int Akuisisi_First_Integer (Word W){
+    // contoh masukan "VHJVJGJGJasdasea 234" keluaran 234, keluaran default 0
+    int Int1 = 0;
+    boolean space = false;
+    boolean negatif = false;
+    for (int i = 0; i < W.Length; i++){
+        if ((((int) W.TabWord[i]) < 48 || ((int) W.TabWord[i]) > 57) && space){break;}
+        if (W.TabWord[i] == '-'){negatif = true; space = true;}
+        else if (((int) W.TabWord[i]) >= 48 && ((int) W.TabWord[i]) <= 57){
+            Int1 *= 10; Int1 += W.TabWord[i] - '0'; space = true;
+        }
+    }
+    if (negatif){Int1 *= -1;}
+    return Int1;
+}
+
 void PasteWord(Word WIn, Word *WOut) {
     int i;
     for (i = 0; i < WIn.Length; i++) {
