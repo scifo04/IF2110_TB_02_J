@@ -128,13 +128,13 @@ boolean wordSimilarWithoutLength (Word W1, Word W2) {
 
 boolean isWordSimilar(Word W, char *W2){
     int i = 0;
-    while (W.TabWord[i] != '\0' && W2[i] != '\0') {
+    while ((i < W.Length) && W2[i] != '\0') {
         if (W.TabWord[i] != W2[i]) {
             return false;
         }
         i++;
     }
-    return (W.TabWord[i] == '\0' && W2[i] == '\0');
+    return ((i == W.Length) && W2[i] == '\0');
 }
 
 int Akuisisi_First_Integer (Word W){
@@ -151,6 +151,25 @@ int Akuisisi_First_Integer (Word W){
     }
     if (negatif){Int1 *= -1;}
     return Int1;
+}
+
+int Akuisisi_Second_Integer (Word W){
+    int Int2 = 0;
+    int space = 0;
+    boolean negatif = false; boolean baca = false;
+    for (int i = 0; i < W.Length; i++){
+        if (((int) W.TabWord[i]) < 48 || ((int) W.TabWord[i]) > 57){
+            if (space == 2){break;}
+            baca = false;
+        }
+        if (W.TabWord[i] == '-'){if (space == 1){negatif = true;} space++; baca = true;}
+        else if (((int) W.TabWord[i]) >= 48 && ((int) W.TabWord[i]) <= 57){
+            if  (!baca){baca = true; space++;}
+            if (space == 2){Int2 *= 10; Int2 += W.TabWord[i] - '0';}
+        }
+    }
+    if (negatif){Int2 *= -1;}
+    return Int2;
 }
 
 void PasteWord(Word WIn, Word *WOut) {
