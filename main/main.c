@@ -7,7 +7,7 @@ static ListAcc acc;
 static boolean hasLogged = false;
 static Account currentuser;
 static Affection friends;
-ListKicauan Kicauan;
+static ListKicauan Kicauan;
 int id_untuk_balas = 1;
 int idUtas;
 
@@ -413,15 +413,19 @@ void SambungUtas(int idUtas, int index){printf("%d %d\n", idUtas, index);}
 void HapusUtas(int idUtas, int index){printf("%d %d\n", idUtas, index);}
 void CetakUtas(int idUtas){printf("%d\n", idUtas);}
 
-void balas(Word input, ListAcc LAcc, Affection aff, ListKicauan LKicau, int id_untuk_balas) {
+void balas(Word input, ListAcc acc, Affection friends, ListKicauan Kicauan, int id_untuk_balas) {
     int space_count, IDKicau, IDBalas, id_user_pembalas, id_user_dibalas;
     Word balasan, username_pembalas, username_dibalas;
+    boolean neg = false;
     Tree tree;
     addressTree p;
     space_count = IDKicau = IDBalas = 0;
     for (int i = 0; i < input.Length; i++) {
         if (input.TabWord[i] == BLANK) {
             space_count++;
+        }
+        else if ((int)input.TabWord[i] == 45 && space_count == 2) {
+            neg = true;
         }
         else if ((int)input.TabWord[i] >= 48 && (int)input.TabWord[i] <= 57) {
             if (space_count == 1) {
@@ -432,47 +436,54 @@ void balas(Word input, ListAcc LAcc, Affection aff, ListKicauan LKicau, int id_u
             }
         }
     }
+    if (neg) {
+        IDBalas *= -1;
+    }
     // username_pembalas = active_username;
-    if (isIdxEff_ListKicauan(LKicau, IDKicau)) { // IdKicau EXIST (ADA)
-        boolean cek_NULL = false;
-        id_user_pembalas = getIdx_Username(LAcc, username_pembalas);
-        for (int i = 0; i < listLength_ListKicauan(LKicau); i++) {
-            if (ListKicauan_ELMT(LKicau, i).idKicau == IDKicau) {
-                username_dibalas = ListKicauan_ELMT(LKicau, i).author.username;
-                tree = ListKicauan_ELMT(LKicau, i).Balasan;
+    if (isIdxEff_ListKicauan(Kicauan, IDKicau - 1)) { // IdKicau EXIST (ADA)
+        username_pembalas = currentuser.username;
+        id_user_pembalas = getIdx_Username(acc, username_pembalas);
+        for (int i = 0; i < listLength_ListKicauan(Kicauan); i++) {
+            if (ListKicauan_ELMT(Kicauan, i).idKicau == IDKicau) {
+                username_dibalas = ListKicauan_ELMT(Kicauan, i).author.username;
+                tree = ListKicauan_ELMT(Kicauan, i).Balasan;
                 p = Root(tree);
+                printTree(p, 0);
                 break;
             }
         }
         if (IDBalas == -1) {
-            id_user_dibalas = getIdx_Username(LAcc, username_dibalas);
-            if (getPublicitybyUsername(LAcc, username_dibalas) || isFriends_Affection(aff, id_user_pembalas, id_user_dibalas)) {
+            id_user_dibalas = getIdx_Username(acc, username_dibalas);
+            if (getPublicitybyUsername(acc, username_dibalas) || isFriends_Affection(friends, id_user_pembalas, id_user_dibalas)) {
                 addressTree new, old;
                 DATETIME Date;
-                CreateDATETIME(&Date);
                 printf("\nMasukkan balasan:\n");
                 STARTWORD();
                 balasan = currentWord;
-                STARTWORD();
-                username_pembalas = currentWord;
+                CreateDATETIME(&Date);
                 printf("\nSelamat! balasan telah diterbitkan!\nDetil balasan:\n");
-                printf("| ID = \n"); // ID PENGGUNA
-                printf("| \n"); // USERNAME
+                printf("| ID = %d\n", id_untuk_balas); // ID khusus untuk balasan
+                printf("| ");
+                printWord(currentuser.username);
+                printf("\n");
                 printf("| "); // DATETIME
                 TulisDATETIME(Date);
                 printf("\n| ");
-                for (int i = 0; i < balasan.Length; i++) {
-                    printf("%c", balasan.TabWord[i]);
-                }
-                new = Alokasi(id_untuk_balas, username_dibalas, Date, balasan);
-                old = getAddressWithId(p, IDKicau);
-                if (FirstChild(old) == NULL) {
-                    AddChild(&old, new);
+                printWord(balasan);
+                new = Alokasi(id_untuk_balas, currentuser.username, Date, balasan);
+                id_untuk_balas++;
+                if (p != NULL) {
+                    old = getAddressWithId(p, IDKicau);
+                    if (FirstChild(old) == NULL) {
+                        AddChild(&old, new);
+                    }
+                    else {
+                        AddSibling(&old, new);
+                    }
                 }
                 else {
-                    AddSibling(&old, new);
+                    AddChild(&p, new);
                 }
-                id_untuk_balas++;
             }
             else {
                 printf("Wah, akun tersebut merupakan akun privat dan anda belum berteman akun tersebut!\n");
@@ -480,15 +491,14 @@ void balas(Word input, ListAcc LAcc, Affection aff, ListKicauan LKicau, int id_u
         }
         else { // IDBALAS != (=1)
             if (isIdTreeElmt(p, IDBalas)) { // IdBalasan EXIST
-                if (getPublicitybyUsername(LAcc, username_dibalas) || isFriends_Affection(aff, id_user_pembalas, id_user_dibalas)) {  // Jika publik atau berteman
+                if (getPublicitybyUsername(acc, username_dibalas) || isFriends_Affection(friends, id_user_pembalas, id_user_dibalas)) {  // Jika publik atau berteman
                     addressTree new, old;
                     DATETIME Date;
-                    id_user_dibalas = getIdx_Username(LAcc, username_dibalas);
+                    id_user_dibalas = getIdx_Username(acc, username_dibalas);
                     CreateDATETIME(&Date);
                     printf("\nMasukkan balasan:\n");
                     STARTWORD();
                     balasan = currentWord;
-                    int id = 6969;
                     STARTWORD();
                     username_pembalas = currentWord;
                     printf("\nSelamat! balasan telah diterbitkan!\nDetil balasan:\n");
@@ -525,53 +535,54 @@ void balas(Word input, ListAcc LAcc, Affection aff, ListKicauan LKicau, int id_u
     }
 }
 
-// void print_balasan(Word input) {
-//     int space_count, IDKicau, id_user_dibalas;
-//     Word username_pembalas, username_dibalas;
-//     space_count = IDKicau  = 0;
+void print_balasan(Word input, ListAcc acc, Affection friends, ListKicauan Kicauan) {
+    int space_count, IDKicau, id_user_dibalas, id_user_pembalas;
+    Word username_pembalas, username_dibalas;
+    space_count = IDKicau  = 0;
 
-//     for (int i = 0; input.TabWord[i] != EndWord; i++) {
-//         if (input.TabWord[i] == BLANK) {
-//             space_count++;
-//         }
-//         else if ((int)input.TabWord[i] >= 48 && (int)input.TabWord[i] <= 57) {
-//             if (space_count == 1) {
-//                 IDKicau = IDKicau * 10 + (input.TabWord[i] - '0');
-//             }
-//         }
-//     }
+    for (int i = 0; input.TabWord[i] != EndWord; i++) {
+        if (input.TabWord[i] == BLANK) {
+            space_count++;
+        }
+        else if ((int)input.TabWord[i] >= 48 && (int)input.TabWord[i] <= 57) {
+            if (space_count == 1) {
+                IDKicau = IDKicau * 10 + (input.TabWord[i] - '0');
+            }
+        }
+    }
 
-//     // user_pembalas = current_user;
+    // user_pembalas = current_user;
     
-//     if (isIdxEff_ListKicauan(Kicauan, IDKicau)) {
-//         for (int i = 0; i < listLength_ListKicauan(Kicauan); i++) {
-//             if (ListKicauan_ELMT(Kicauan, i).idKicau == IDKicau) {
-//                 username_dibalas = ListKicauan_ELMT(Kicauan, i).author.username;
-//                 id_user_dibalas = getIdx_Account(LAcc, username_dibalas);
-//                 break;
-//             }
-//         }
-//         tree = ListKicauan_ELMT(LKicau, IDKicau).balasan;
-//         p = Root(tree);
-//         if (p == NULL) {
-//             printf("Belum terdapat balasan apapun pada kicauan tersebut. Yuk balas kicauan tersebut!\n");
-//         }
-//         else {
-//             Account a = getElmt_Account(LAcc, id_user_dibalas);
-//             if (!isFriends_Affection(A, id_user_dibalas, id_user_pembalas)) {
-//                 if (!a.publicity) {
-//                     printf("Wah, kicauan tersebut dibuat oleh pengguna dengan akun privat!\n");
-//                 }
-//                 else {
-//                     printTree(p, 0);
-//                 }
-//             }
-//         }
-//     }
-//     else {
-//         printf("Tidak terdapat kicauan dengan id tersebut!\n");
-//     }
-// }
+    if (isIdxEff_ListKicauan(Kicauan, IDKicau)) {
+        for (int i = 0; i < listLength_ListKicauan(Kicauan); i++) {
+            if (ListKicauan_ELMT(Kicauan, i).idKicau == IDKicau) {
+                username_dibalas = ListKicauan_ELMT(Kicauan, i).author.username;
+                id_user_dibalas = getIdx_Username(acc, username_dibalas);
+                break;
+            }
+        }
+        Tree tree = ListKicauan_ELMT(Kicauan, IDKicau).Balasan;
+        addressTree p = Root(tree);
+        if (p == NULL) {
+            printf("Belum terdapat balasan apapun pada kicauan tersebut. Yuk balas kicauan tersebut!\n");
+        }
+        else {
+            Account a = getElmt_Account(acc, id_user_dibalas);
+            id_user_pembalas = getIdx_Username(acc, currentuser.username);
+            if (!isFriends_Affection(friends, id_user_dibalas, id_user_pembalas)) {
+                if (!a.publicity) {
+                    printf("Wah, kicauan tersebut dibuat oleh pengguna dengan akun privat!\n");
+                }
+                else {
+                    printTree(p, 0);
+                }
+            }
+        }
+    }
+    else {
+        printf("Tidak terdapat kicauan dengan id tersebut!\n");
+    }
+}
 
 // void hapusBalasan(Word input) {
 //     Tree t;
@@ -680,6 +691,9 @@ void readCommand (Word W) {
         int id = Akuisisi_First_Integer(W);
         UbahKicauan(id);
         printf("\n");
+    } else if (wordSimilarWithoutLength(W, copyWord_Balasan())) {
+        print_balasan(W, acc, friends, Kicauan);
+        printf("\n");
     } else if (wordSimilarWithoutLength(W, copyWord_Balas())) {
         balas(W, acc, friends, Kicauan, id_untuk_balas);
         printf("\n");
@@ -702,9 +716,6 @@ void readCommand (Word W) {
         CetakUtas(id);
         printf("\n");
     }
-    // } else if (wordSimilarWithoutLength(W, copyWord_Balasan())) {
-    //     print_balasan(W);
-    //     printf("\n");
     // } else if (wordSimilarWithoutLength(W, copyWord_hapusBalasan())) {
     //     hapusBalasan(W);
     //     printf("\n");
@@ -713,6 +724,7 @@ void readCommand (Word W) {
 
 int main() {
     printf("\e[1;1H\e[2J");
+    id_untuk_balas = 1;
     boolean allowprint = false;
     CreateListAccount(&acc);
     CreateAffection(&friends);
