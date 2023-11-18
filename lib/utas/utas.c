@@ -24,16 +24,16 @@ boolean isEmpty_Utas (AddressUtas U){
     return (U == NULL);
 }
 
-int length(AddressUtas U){
+int lengthUtas(AddressUtas U){
     if (isEmpty_Utas(U)){return 0;}
-    return (1 + length(Sambungan(U)));
+    return (1 + lengthUtas(Sambungan(U)));
 }
 
 // INDEX DIMULAI DARI 1, INDEX 0 UNTUK KICAUAN UTAMA
 
 /* TAMBAH DAN HAPUS ELEMEN */
 /* ASUMSI INDEX VALID */
-void insertAt(AddressUtas *U, DATETIME D, Word IsiUtas, int idx){
+void insertAtUtas(AddressUtas *U, DATETIME D, Word IsiUtas, int idx){
     AddressUtas NewUtas = newUtas(D, IsiUtas);
     if (NewUtas != NULL){
         if (idx == 1){
@@ -48,11 +48,11 @@ void insertAt(AddressUtas *U, DATETIME D, Word IsiUtas, int idx){
     }
 }
 
-void insertLast(AddressUtas *U, DATETIME D, Word IsiUtas){
-    insertAt(U, D, IsiUtas, (length(*U) + 1));
+void insertLastUtas(AddressUtas *U, DATETIME D, Word IsiUtas){
+    insertAtUtas(U, D, IsiUtas, (lengthUtas(*U) + 1));
 }
 
-void deleteAt(AddressUtas *U, int idx){
+void deleteAtUtas(AddressUtas *U, int idx){
     AddressUtas P = *U;
     if (idx == 1){
         *U = Sambungan(*U);

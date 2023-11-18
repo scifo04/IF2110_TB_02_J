@@ -31,14 +31,14 @@ void CreateUtas (AddressUtas *U);
 /* Test Kosong */
 boolean isEmpty_Utas (AddressUtas U);
 
-int length(AddressUtas U);
+int lengthUtas(AddressUtas U);
 /* Mengirimkan banyaknya elemen list; mengirimkan 0 jika list kosong */
 
 /* TAMBAH DAN HAPUS ELEMEN */
 /* ASUMSI INDEX VALID */
-void insertAt(AddressUtas *U, DATETIME D, Word IsiUtas, int idx);
-void insertLast(AddressUtas *U, DATETIME D, Word IsiUtas);
-void deleteAt(AddressUtas *U, int idx);
+void insertAtUtas(AddressUtas *U, DATETIME D, Word IsiUtas, int idx);
+void insertLastUtas(AddressUtas *U, DATETIME D, Word IsiUtas);
+void deleteAtUtas(AddressUtas *U, int idx);
 
 void cetakUtas(AddressUtas *U, Word PembuatUtas);
 
