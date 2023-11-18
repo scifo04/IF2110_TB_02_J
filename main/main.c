@@ -413,7 +413,7 @@ void SambungUtas(int idUtas, int index){printf("%d %d\n", idUtas, index);}
 void HapusUtas(int idUtas, int index){printf("%d %d\n", idUtas, index);}
 void CetakUtas(int idUtas){printf("%d\n", idUtas);}
 
-void balas(Word input, ListAcc acc, Affection friends, ListKicauan Kicauan, int id_untuk_balas) {
+void balas (Word input, ListAcc acc, Affection friends, ListKicauan Kicauan) {
     int space_count, IDKicau, IDBalas, id_user_pembalas, id_user_dibalas;
     Word balasan, username_pembalas, username_dibalas;
     boolean neg = false;
@@ -473,6 +473,7 @@ void balas(Word input, ListAcc acc, Affection friends, ListKicauan Kicauan, int 
                 new = Alokasi(id_untuk_balas, currentuser.username, Date, balasan);
                 id_untuk_balas++;
                 if (p != NULL) {
+                    printf("NOT NULL");
                     old = getAddressWithId(p, IDKicau);
                     if (FirstChild(old) == NULL) {
                         AddChild(&old, new);
@@ -482,6 +483,7 @@ void balas(Word input, ListAcc acc, Affection friends, ListKicauan Kicauan, int 
                     }
                 }
                 else {
+                    printf("NULL");
                     AddChild(&p, new);
                 }
             }
@@ -695,7 +697,7 @@ void readCommand (Word W) {
         print_balasan(W, acc, friends, Kicauan);
         printf("\n");
     } else if (wordSimilarWithoutLength(W, copyWord_Balas())) {
-        balas(W, acc, friends, Kicauan, id_untuk_balas);
+        balas(W, acc, friends, Kicauan);
         printf("\n");
     } else if (wordSimilarWithoutLength(W, copyWord_Utas())) {
         int id = Akuisisi_First_Integer(W);
@@ -724,7 +726,6 @@ void readCommand (Word W) {
 
 int main() {
     printf("\e[1;1H\e[2J");
-    id_untuk_balas = 1;
     boolean allowprint = false;
     CreateListAccount(&acc);
     CreateAffection(&friends);
