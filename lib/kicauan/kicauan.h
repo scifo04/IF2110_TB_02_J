@@ -6,21 +6,7 @@
 #include "../account/account.h"
 #include "../affection/affection.h"
 #include "../tree/tree.h"
-
-extern int idUtas;
-
-/* MODUL UTAS */
-/* *** Definisi Type Utas *** */
-typedef struct Node* AddressUtas;
-typedef struct Node {
-  DATETIME waktuUtas;
-  Word isiTwitUtas;
-  AddressUtas Sambungan;
-} TwitUtas;
-
-#define waktuUtas(U) (U)->waktuUtas
-#define isiTwitUtas(U) (U)->isiTwitUtas
-#define Sambungan(U) (U)->Sambungan
+#include "../utas/utas.h"
 
 /* MODUL ADT SEDERHANA TWIT*/
 /* *** Definisi TYPE Twit *** */
@@ -81,16 +67,6 @@ typedef struct
 #define ListKicauan_BUFFER(l) (l).buffer
 #define ListKicauan_ELMT(l, i) (l).buffer[i]
 #define ListKicauan_CAPACITY(l) (l).capacity
-
-/* **************************************************************** */
-/* DEFINISI UTAS                                                    */
-/* **************************************************************** */
-
-AddressUtas newUtas (DATETIME T, Word isiTwitUtas); // Alokasi elemen, newNode
-void CreateUtas (AddressUtas *U);
-
-/* Test Kosong */
-boolean isEmpty_Utas (AddressUtas U);
 
 /* **************************************************************** */
 /* DEFINISI TWIT                                                    */
