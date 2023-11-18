@@ -8,77 +8,131 @@
 
 int main () {
     Tree t;
-    addressTree p, p1, p2, p3, p4, p5, p6, p7;
-    DATETIME d1, d2, d3, d4;
-    int id1, id2, id3, id4;
-    Word user1, user2, user3, user4, pesan1, pesan2, pesan3, pesan4;
-    CreateTree(&t);
-    p = Root(t);
+    addressTree p, q, r, s, u;
+    DATETIME d;
+    int input;
+    Word user, pesan;
 
-    printf("Masukkan user 1 :\n");
+    printf("Masukkan input tanpa titik koma: ");
+    scanf("%d", &input);
+
+    printf("Masukkan username: ");
     STARTWORD();
-    user1 = currentWord;
-    id1 = 1;
-    CreateDATETIME(&d1);
-    printf("Masukkan pesan 1 :\n");
-    STARTWORD();
-    pesan1 = currentWord;
-    
-    p1 = Alokasi(id1, user1, d1, pesan1);
+    user = currentWord;
+    user.TabWord[0] = ' ';
 
-    printf("Masukkan user 2 :\n");
-    STARTWORD();
-    user2 = currentWord;
-    id2 = 123;
-    CreateDATETIME(&d2);
-    printf("Masukkan pesan 2 :\n");
-    STARTWORD();
-    pesan2 = currentWord;
-    p2 = Alokasi(id2, user2, d2, pesan2);
+    switch (input) {
+        case 1: // Tree kosong
+            CreateTree(&t);
+            p = Root(t);
+            if (p == NULL) {
+                printf("Kosong");
+            }
+            break;
 
-    printf("Masukkan user 3 :\n");
-    STARTWORD();
-    user3 = currentWord;
-    id3 = 12;
-    CreateDATETIME(&d3);
-    printf("Masukkan pesan 3 :\n");
-    STARTWORD();
-    pesan3 = currentWord;
-    p3 = Alokasi(id3, user3, d3, pesan3);
+        case 2: // Alokasi berhasil
+            printf("Masukkan pesan: ");
+            STARTWORD();
+            CreateDATETIME(&d);
 
-    printf("Masukkan user 4 :\n");
-    STARTWORD();
-    user4 = currentWord;
-    id4 = 456;
-    CreateDATETIME(&d4);
-    printf("Masukkan pesan 4 :\n");
-    STARTWORD();
-    pesan4 = currentWord;
-    p4 = Alokasi(id4, user4, d4, pesan4);
+            p = Alokasi(3, user, d, currentWord);
+            printf("%d", Id(p));
+            printf("\n");
+            printWord(User(p));
+            printf("\n");
+            TulisDATETIME(Datetime(p));
+            printWord(Pesan(p));
+            break;
 
-    AddChild(&p, p1);
-    AddChild(&p, p2);
-    AddSibling(&p2, p3);
-    AddSibling(&p2, p4);
+        case 3: // AddChild
+            CreateTree(&t);
+            p = Root(t);
+            printf("Masukkan pesan: ");
+            STARTWORD();
+            CreateDATETIME(&d);
 
-    printTree(p,0);
+            q = Alokasi(3, user, d, currentWord);
+            r = Alokasi(4, user, d, currentWord);
+            AddChild(&p, q);
+            AddChild(&p, r);
+            printTree(p, 0);
+            break;
 
-    printf("\n%d\n", isIdTreeElmt(p, 456));
-    printf("%d\n\n", isIdTreeElmt(p, 2));
+        case 4: // AddSibling
+            CreateTree(&t);
+            p = Root(t);
+            printf("Masukkan pesan: ");
+            STARTWORD();
+            CreateDATETIME(&d);
 
-    p5 = getAddressWithId(p, 12); // user3
-    p6 = getAddressBefore(p, p5); // id = 123, user2
+            q = Alokasi(3, user, d, currentWord);
+            r = Alokasi(4, user, d, currentWord);
+            s = Alokasi(5, user, d, currentWord);
+            u = Alokasi(6, user, d, currentWord);
+            AddChild(&p, q);
+            AddChild(&q, r);
+            AddSibling(&q, s);
+            AddSibling(&r, u);
+            printTree(p, 0);
+            break;
+        
+        case 5: // IsIdTreeElmt
+            CreateTree(&t);
+            p = Root(t);
+            printf("Masukkan pesan: ");
+            STARTWORD();
+            CreateDATETIME(&d);
 
-    if (NextSibling(p5) != NULL) { // Untuk mengatur NextSibling atau FirstChild dari address sebelum p5
-        if(FirstChild(p6) == p5) {
-            FirstChild(p6) = NextSibling(p5);
-        }
-        else {
-            NextSibling(p6) = NextSibling(p5);
-        }
+            q = Alokasi(3, user, d, currentWord);
+            r = Alokasi(4, user, d, currentWord);
+            s = Alokasi(5, user, d, currentWord);
+            u = Alokasi(6, user, d, currentWord);
+            AddChild(&p, q);
+            AddChild(&q, r);
+            AddSibling(&q, s);
+            AddSibling(&r, u);
+            printf("%d\n", isIdTreeElmt(p, 3));
+            printf("%d", isIdTreeElmt(p, 100));
+            break;
+        
+        case 6: // getAddressBefore
+            CreateTree(&t);
+            p = Root(t);
+            printf("Masukkan pesan: ");
+            STARTWORD();
+            CreateDATETIME(&d);
+
+            q = Alokasi(3, user, d, currentWord);
+            r = Alokasi(4, user, d, currentWord);
+            s = Alokasi(5, user, d, currentWord);
+            AddChild(&p, q);
+            AddChild(&q, r);
+            AddSibling(&r, s);
+            u = getAddressBefore(p, s);
+            printTree(p, 0);
+            printf("%d\n", Id(u));
+
+            u = getAddressBefore(p, r);
+            printf("%d\n", Id(u));
+            break;
+
+        case 7: // getAddressWithId
+            CreateTree(&t);
+            p = Root(t);
+            printf("Masukkan pesan: ");
+            STARTWORD();
+            CreateDATETIME(&d);
+
+            q = Alokasi(3, user, d, currentWord);
+            r = Alokasi(4, user, d, currentWord);
+            s = Alokasi(5, user, d, currentWord);
+            AddChild(&p, q);
+            AddChild(&q, r);
+            AddSibling(&r, s);
+
+            u = getAddressWithId(p, 3);
+            printf("%d", Id(u));
     }
-    deleteTree(p5);
-    printTree(p, 0);
 
     return 0;
 }

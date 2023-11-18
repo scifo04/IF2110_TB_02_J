@@ -114,7 +114,7 @@ boolean isIdTreeElmt (addressTree P, int id){
     }
 }
 
-// int to addressTree
+// return address before Q with the root is P
 addressTree getAddressBefore (addressTree P, addressTree Q){
     if(P != NULL){
         if(NextSibling(P) == Q){
@@ -137,7 +137,7 @@ addressTree getAddressBefore (addressTree P, addressTree Q){
         return NULL;
     }
 }
-
+// Return addressTree with same input id
 addressTree getAddressWithId(addressTree P, int id) {
     if (P != NULL) {
         if (Id(P) == id) {
