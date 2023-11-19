@@ -7,15 +7,59 @@ extern int idUtas;
 int main(){
     AddressUtas U; CreateUtas(&U);
     DATETIME D; CreateDATETIME(&D);
-    Word isiUtas;
+    Word Author; Author.TabWord[0] = 'J'; Author.TabWord[1] = 'o'; Author.TabWord[2] = 'e'; Author.Length = 3;
+    Word isiUtas; isiUtas.TabWord[0] = 'L'; isiUtas.TabWord[1] = 'O'; isiUtas.TabWord[2] = 'L'; isiUtas.Length = 3;
     int X;
     scanf("%d", &X);
     switch (X) {
-    case 1:
+    case 1: // tes kosong
         printf("%d", isEmpty_Utas(U));
+        cetakUtas(U, Author);
         break;
-    case 2:
-        printf("%d", length(U));
+    case 2: // insertAtUtas
+        CreateDATETIME(&D);
+        insertAtUtas(&U, D, isiUtas, 1);
+        isiUtas.TabWord[1] = 'o';
+        insertAtUtas(&U, D, isiUtas, 1);
+        isiUtas.TabWord[2] = 'l';
+        insertAtUtas(&U, D, isiUtas, 3);
+        cetakUtas(U, Author);
+        break;
+    case 3: // insertLastUtas
+        CreateDATETIME(&D);
+        insertLastUtas(&U, D, isiUtas);
+        isiUtas.TabWord[1] = 'o';
+        insertLastUtas(&U, D, isiUtas);
+        cetakUtas(U, Author);
+        break;
+    case 4: // deleteAtUtas
+        CreateDATETIME(&D);
+        insertAtUtas(&U, D, isiUtas, 1);
+        isiUtas.TabWord[1] = 'o';
+        insertAtUtas(&U, D, isiUtas, 1);
+        isiUtas.TabWord[2] = 'l';
+        insertAtUtas(&U, D, isiUtas, 3);
+        deleteAtUtas(&U, 3);
+        cetakUtas(U, Author);
+        deleteAtUtas(&U, 1);
+        cetakUtas(U, Author);
+        deleteAtUtas(&U, 1);
+        cetakUtas(U, Author);
+        break;
+    case 5: // tes panjang
+        printf("%d", lengthUtas(U));
+        insertAtUtas(&U, D, isiUtas, 1);
+        printf("%d", lengthUtas(U));
+        insertAtUtas(&U, D, isiUtas, 1);
+        printf("%d", lengthUtas(U));
+        insertAtUtas(&U, D, isiUtas, 3);
+        printf("%d", lengthUtas(U));
+        deleteAtUtas(&U, 3);
+        printf("%d", lengthUtas(U));
+        deleteAtUtas(&U, 1);
+        printf("%d", lengthUtas(U));
+        deleteAtUtas(&U, 1);
+        printf("%d", lengthUtas(U));
         break;
     default:
         break;

@@ -65,4 +65,17 @@ void deleteAtUtas(AddressUtas *U, int idx){
     free(P);
 }
 
-void cetakUtas(AddressUtas *U, Word PembuatUtas);
+void cetakUtas(AddressUtas U, Word PembuatUtas){
+    AddressUtas P = U;
+    int idx = 1;
+    while (P != NULL){
+        printf("   | INDEX = %d\n   | ", idx);
+        printWord(PembuatUtas);
+        printf("\n   | ");
+        TulisDATETIME(waktuUtas(P));
+        printf("\n   | ");
+        printWord(isiTwitUtas(P));
+        printf("\n\n");
+        P = Sambungan(P); idx++;
+    }
+}

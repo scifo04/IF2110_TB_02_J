@@ -40,6 +40,6 @@ void insertAtUtas(AddressUtas *U, DATETIME D, Word IsiUtas, int idx);
 void insertLastUtas(AddressUtas *U, DATETIME D, Word IsiUtas);
 void deleteAtUtas(AddressUtas *U, int idx);
 
-void cetakUtas(AddressUtas *U, Word PembuatUtas);
+void cetakUtas(AddressUtas U, Word PembuatUtas);
 
 #endif
