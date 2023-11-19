@@ -4,6 +4,8 @@
 #include "../boolean/boolean.h"
 #include "../wordmachine/wordmachine.h"
 #include "../datetime/datetime.h"
+#include "../account/account.h"
+#include "../affection/affection.h"
 
 /*  Kamus Umum */
 #define CAPACITY 100
@@ -55,6 +57,8 @@ void printSiblings(addressTree P);
 void printChild(addressTree P);
 
 void printTree (addressTree P, int h);
+
+void printTreeBalasan (addressTree p, int h, ListAcc acc, Affection aff, int current_user_id);
 
 boolean isIdTreeElmt(addressTree P, int id);
 

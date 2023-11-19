@@ -102,6 +102,68 @@ void printTree(addressTree P, int h){
     }
 }
 
+void printTreeBalasan (addressTree p, int h, ListAcc acc, Affection aff, int current_user_id) {
+        if(p != NULL){
+            if (getPublicitybyUsername(acc, User(p)) || isFriends_Affection(aff, current_user_id, Id(p))) {
+                int i;
+                printf("\n");
+                for(i = 0; i < h; i++){
+                    printf("    ");
+                }
+                printf("| %d", Id(p));
+
+                printf("\n");
+                for(i = 0; i < h; i++){
+                    printf("    ");
+                }
+                printf("| ");
+                printWord(User(p));
+
+                printf("\n");
+                for(i = 0; i < h; i++){
+                    printf("    ");
+                }
+                printf("| ");
+                TulisDATETIME(Datetime(p));
+
+                printf("\n");
+                for(i = 0; i < h; i++){
+                    printf("    ");
+                }
+                printf("| ");
+                printWord(Pesan(p));
+                printf("\n");
+
+                printTreeBalasan(FirstChild(p), h + 1, acc, aff, current_user_id);
+                printTreeBalasan(NextSibling(p), h, acc, aff, current_user_id);
+            }
+            else {
+                int i;
+                printf("\n");
+                for(i = 0; i < h; i++){
+                    printf("    ");
+                }
+                printf("| %d", Id(p));
+
+                printf("\n");
+                for(i = 0; i < h; i++){
+                    printf("    ");
+                }
+                printf("| PRIVAT\n");
+                for(i = 0; i < h; i++){
+                    printf("    ");
+                }
+                printf("| PRIVAT\n");
+                for(i = 0; i < h; i++){
+                    printf("    ");
+                }
+                printf("| PRIVAT\n");
+                printTreeBalasan(FirstChild(p), h + 1, acc, aff, current_user_id);
+                printTreeBalasan(NextSibling(p), h, acc, aff, current_user_id);
+            }
+    }
+}
+
 boolean isIdTreeElmt (addressTree P, int id){
     if(P != NULL){
         if(Id(P) == id){
