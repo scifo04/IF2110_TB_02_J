@@ -5,11 +5,11 @@
 /* MODUL ADT SEDERHANA TWIT*/
 
 /* Konstruktor: Membentuk Twit dari komponen-komponennya*/
-void CreateTwit(Twit *K, ListKicauan kicauan, Account currentuser){
+void CreateTwit(Twit *K, ListKicauan kicauan, Word currentusername){
     ID(*K) = listLength_ListKicauan(kicauan)+1; /*Bingung. ListKicauan adalah suatu variabel global di main.*/
     IDUtas(*K) = -1; /*Secara default, Twit bukanlah Utas, kecuali ditandai sebagai Utas*/
     Like(*K) = 0;
-    Author(*K) = currentuser; /*Bingung. Misal Account adalah variabel global yang selalu di-update di main. */
+    Author(*K) = currentusername; /*Bingung. Misal Account adalah variabel global yang selalu di-update di main. */
     DATETIME D; CreateDATETIME(&D); DateTime(*K) = D; 
     Word isiTwit; BacaTwit(&isiTwit); IsiTwit(*K) = isiTwit;
     Word tagar; BacaTagar(&tagar); Tagar(*K) = tagar;
@@ -51,7 +51,7 @@ void BacaTagar(Word *tagar){
 void DetailTwit(Twit K){
     printf("| ID = %d\n", ID(K));
     printf("| ");
-    printWord(Author(K).username);
+    printWord(Author(K));
     printf("\n");
     printf("| ");
     TulisDATETIME(DateTime(K));
@@ -80,9 +80,9 @@ void SuccessTwit(Twit K){
 milik teman, ataupun milik akun publik, (baca: semua selain privat)*/
 void LikeKicauan(ListKicauan *l, int idKicauan, Account currentuser, Affection friends, ListAcc accounts){
     if(isIdxEff_ListKicauan(*l, idKicauan-1)){ 
-        if(Author(ListKicauan_ELMT(*l, idKicauan-1)).publicity == true){ //Akun publik
+        if(getPublicitybyUsername(accounts, Author(ListKicauan_ELMT(*l, idKicauan-1)))){ //Akun publik
             Like(ListKicauan_ELMT(*l, idKicauan-1))++;
-        } else if(isFriends_Affection(friends, getIdx_Account(accounts, Author(ListKicauan_ELMT(*l, idKicauan-1))), getIdx_Account(accounts, currentuser))){ //Akun milik sendiri atau teman
+        } else if(isFriends_Affection(friends, getIdx_Username(accounts, Author(ListKicauan_ELMT(*l, idKicauan-1))), getIdx_Account(accounts, currentuser))){ //Akun milik sendiri atau teman
             Like(ListKicauan_ELMT(*l, idKicauan-1))++;
         } else {
             printf("Wah, kicauan tersebut dibuat oleh akun privat! Ikuti akun itu dulu ya\n");
@@ -94,7 +94,7 @@ void LikeKicauan(ListKicauan *l, int idKicauan, Account currentuser, Affection f
 /*Pengguna hanya dapat mengubah miliknya sendiri*/
 void EditKicauan(ListKicauan *l, int idKicauan, Account currentuser, ListAcc accounts){
     if(isIdxEff_ListKicauan(*l, idKicauan-1)){ 
-        if(getIdx_Account(accounts, Author(ListKicauan_ELMT(*l, idKicauan-1))) == getIdx_Account(accounts, currentuser)){
+        if(getIdx_Username(accounts, Author(ListKicauan_ELMT(*l, idKicauan-1))) == getIdx_Account(accounts, currentuser)){
             Twit *K = &ListKicauan_ELMT(*l, idKicauan-1);
             Word isiTwit; BacaTwit(&isiTwit); IsiTwit(*K) = isiTwit;
             Word tagar; BacaTagar(&tagar); Tagar(*K) = tagar;
@@ -113,7 +113,7 @@ void EditKicauan(ListKicauan *l, int idKicauan, Account currentuser, ListAcc acc
 void CreateListKicauan(ListKicauan *l, int capacity){
     if (capacity > 0) {
         ListKicauan_CAPACITY(*l) = capacity;
-        ListKicauan_BUFFER(*l) = malloc(ListKicauan_CAPACITY(*l)*sizeof(ElKicauanType));
+        ListKicauan_BUFFER(*l) = (ElKicauanType*)malloc(ListKicauan_CAPACITY(*l)*sizeof(ElKicauanType));
         ListKicauan_NEFF(*l) = 0;
     }
 }
@@ -160,7 +160,7 @@ void DisplayListKicauan(ListKicauan l, Account currentuser, Affection friends, L
     } else {
         int i; boolean found=false;
         for(i = ListKicauan_NEFF(l); i > 0;i--){
-            if(isFriends_Affection(friends, getIdx_Account(accounts, Author(ListKicauan_ELMT(l, i-1))), getIdx_Account(accounts, currentuser))){
+            if(isFriends_Affection(friends, getIdx_Username(accounts, Author(ListKicauan_ELMT(l, i-1))), getIdx_Account(accounts, currentuser))){
                 found=true;
                 DetailTwit(ListKicauan_ELMT(l, i-1));
                 printf("\n");
@@ -194,7 +194,7 @@ void insertLast_ListKicauan(ListKicauan *l, ElKicauanType val){
         expandListKicauan(l,50);
     }
     ListKicauan_ELMT(*l, ListKicauan_NEFF(*l)) = val;
-    ListKicauan_NEFF(*l) += 1; 
+    ListKicauan_NEFF(*l) += 1;
 }
 
 /* ********* MENGUBAH UKURAN ARRAY ********* */

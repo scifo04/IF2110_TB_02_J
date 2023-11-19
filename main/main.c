@@ -354,7 +354,7 @@ void Hapus_Teman () {
 void Kicau(){
     if (hasLogged){
         Twit newTwit;
-        CreateTwit(&newTwit, Kicauan, currentuser);
+        CreateTwit(&newTwit, Kicauan, currentuser.username);
         insertLast_ListKicauan(&Kicauan, newTwit);
         SuccessTwit(newTwit);
     } else {printf("Weh, login dulu dong!!!\n");}
@@ -383,7 +383,7 @@ void BuatUtas(int idKicau){
         printf("\nWeh, login dulu dong!!!\n");
     } else if (!isIdxEff_ListKicauan(Kicauan, (idKicau - 1))){
         printf("\nKicauan tidak ditemukan\n");
-    } else if (!wordSimilar(Author(ListKicauan_ELMT(Kicauan, (idKicau - 1))).username, currentuser.username)){
+    } else if (!wordSimilar(Author(ListKicauan_ELMT(Kicauan, (idKicau - 1))), currentuser.username)){
         printf("\nKicauan ini bukan milik anda!\n");
     } else {
         IDUtas(ListKicauan_ELMT(Kicauan, (idKicau - 1))) = idUtas; idUtas++;
@@ -401,23 +401,74 @@ void BuatUtas(int idKicau){
     }
 }
 
-void SambungUtas(int IdUtas, int index){printf("%d %d\n", IdUtas, index);}
-void HapusUtas(int IdUtas, int index){printf("%d %d\n", IdUtas, index);}
-void CetakUtas(int IdUtas){
-    boolean found = false;
-    int i = ListKicauan_NEFF(Kicauan);
-    while (!found && (i > 0)){
-        i--; if (IDUtas(ListKicauan_ELMT(Kicauan, i)) == IdUtas){found = true;}
-    }
-    if (!found){
-        printf("Utas tidak ditemukan!\n\n");
-    } else if (!((Author(ListKicauan_ELMT(Kicauan, i)).publicity) || (isFriends_Affection(friends, getIdx_Account(acc, Author(ListKicauan_ELMT(Kicauan, i))), getIdx_Account(acc, currentuser))))){ // bukan publik atau teman
-        printf("\nAkun yang membuat utas ini adalah akun privat! Ikuti dahulu akun ini untuk melihat utasnya!\n\n");
+void SambungUtas(int IdUtas, int index){
+    if (!hasLogged){
+        printf("\nWeh, login dulu dong!!!\n");
     } else {
-        printf("\n | ID = %d\n | ", (i + 1)); printWord(Author(ListKicauan_ELMT(Kicauan, i)).username);
-        printf("\n | "); TulisDATETIME(DateTime(ListKicauan_ELMT(Kicauan, i)));
-        printf("\n | "); printWord(IsiTwit(ListKicauan_ELMT(Kicauan, i))); printf("\n\n");
-        cetakUtas(Utas(ListKicauan_ELMT(Kicauan, i)), Author(ListKicauan_ELMT(Kicauan, i)).username);
+        boolean found = false;
+        DATETIME WaktuUtas;
+        int i = ListKicauan_NEFF(Kicauan);
+        while (!found && (i > 0)){
+            i--; if (IDUtas(ListKicauan_ELMT(Kicauan, i)) == IdUtas){found = true;}
+        }
+        if (!found){
+            printf("\nUtas tidak ditemukan!\n");
+        } else if (!wordSimilar(Author(ListKicauan_ELMT(Kicauan, i)), currentuser.username)){
+            printf("\nAnda tidak bisa menyambung utas ini!\n");
+        } else if (index <= 0){
+            printf("\nTidak bisa disisipkan pada kicauan utama!\n");
+        } else if (index > (lengthUtas(Utas(ListKicauan_ELMT(Kicauan, i))) + 1)){
+            printf("\nIndex terlalu tinggi!\n");
+        } else {
+            printf("\nMasukkan kicauan:\n");
+            STARTWORD(); CreateDATETIME(&WaktuUtas); insertAtUtas(&Utas(ListKicauan_ELMT(Kicauan, i)), WaktuUtas, currentWord, index);
+        }
+    }
+}
+
+void HapusUtas(int IdUtas, int index){
+    if (!hasLogged){
+        printf("\nWeh, login dulu dong!!!\n");
+    } else {
+        boolean found = false;
+        int i = ListKicauan_NEFF(Kicauan);
+        while (!found && (i > 0)){
+            i--; if (IDUtas(ListKicauan_ELMT(Kicauan, i)) == IdUtas){found = true;}
+        }
+        if (!found){
+            printf("\nUtas tidak ditemukan!\n");
+        } else if (!wordSimilar(Author(ListKicauan_ELMT(Kicauan, i)), currentuser.username)){
+            printf("\nAnda tidak bisa menghapus kicauan dalam utas ini!\n");
+        } else if (index <= 0){
+            printf("\nAnda tidak bisa menghapus kicauan utama!\n");
+        } else if (index > lengthUtas(Utas(ListKicauan_ELMT(Kicauan, i)))){
+            printf("\nKicauan sambungan dengan index %d tidak ditemukan pada utas!\n", index);
+        } else {
+            deleteAtUtas(&Utas(ListKicauan_ELMT(Kicauan, i)), index);
+            printf("\nKicauan sambungan berhasil dihapus!\n");
+        }
+    }
+}
+
+void CetakUtas(int IdUtas){
+    if (!hasLogged){
+        printf("\nWeh, login dulu dong!!!\n\n");
+    } else {
+        boolean found = false;
+        int i = ListKicauan_NEFF(Kicauan);
+        while (!found && (i > 0)){
+            i--; if (IDUtas(ListKicauan_ELMT(Kicauan, i)) == IdUtas){found = true;}
+        }
+        if (!found){
+            printf("\nUtas tidak ditemukan!\n\n");
+        } else if (!((getPublicitybyUsername(acc, Author(ListKicauan_ELMT(Kicauan, i)))) || (isFriends_Affection(friends, getIdx_Username(acc, Author(ListKicauan_ELMT(Kicauan, i))), getIdx_Account(acc, currentuser))))){ // bukan publik atau teman
+            printf("\nAkun yang membuat utas ini adalah akun privat! Ikuti dahulu akun ini untuk melihat utasnya!\n\n");
+        } else {
+            printf("\n | ID = %d\n | ", (i + 1)); printWord(Author(ListKicauan_ELMT(Kicauan, i)));
+            printf("\n | "); TulisDATETIME(DateTime(ListKicauan_ELMT(Kicauan, i)));
+            printf("\n | "); printWord(IsiTwit(ListKicauan_ELMT(Kicauan, i))); printf("\n\n");
+            cetakUtas(Utas(ListKicauan_ELMT(Kicauan, i)), Author(ListKicauan_ELMT(Kicauan, i)));
+        }
     }
 }
 
@@ -454,7 +505,7 @@ void balas (Word input, ListAcc acc, Affection friends, ListKicauan Kicauan) {
         id_user_pembalas = getIdx_Username(acc, username_pembalas);
         for (i = 0; i < listLength_ListKicauan(Kicauan); i++) {
             if (ListKicauan_ELMT(Kicauan, i).idKicau == IDKicau) {
-                username_dibalas = ListKicauan_ELMT(Kicauan, i).author.username;
+                username_dibalas = ListKicauan_ELMT(Kicauan, i).author;
                 tree = ListKicauan_ELMT(Kicauan, i).Balasan;
                 p = Root(tree);
                 break;
@@ -550,7 +601,7 @@ void print_balasan(Word input, ListAcc acc, Affection friends, ListKicauan Kicau
     if (isIdxEff_ListKicauan(Kicauan, IDKicau - 1)) {
         for (i = 0; i < listLength_ListKicauan(Kicauan); i++) {
             if (ListKicauan_ELMT(Kicauan, i).idKicau == IDKicau) {
-                username_dibalas = ListKicauan_ELMT(Kicauan, i).author.username;
+                username_dibalas = ListKicauan_ELMT(Kicauan, i).author;
                 id_user_dibalas = getIdx_Username(acc, username_dibalas);
                 tree = ListKicauan_ELMT(Kicauan, i).Balasan;
                 p = Root(tree);
@@ -738,6 +789,7 @@ int main() {
     boolean allowprint = false;
     CreateListAccount(&acc);
     CreateAffection(&friends);
+    CreateListKicauan(&Kicauan, 50);
     while (true) {
         inisialisasi();
         while (true) {

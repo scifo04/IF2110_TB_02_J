@@ -14,7 +14,7 @@ typedef struct {
     int idKicau;
     int like;
     int idUtas;
-    Account author; // username
+    Word author; // username
     DATETIME datetime;
     Word isiTwit; /*Panjang maksimal 280 Karakter*/
     Word tagar;
@@ -73,7 +73,7 @@ typedef struct
 /* **************************************************************** */
 
 /* Konstruktor: Membentuk Twit dari komponen-komponennya*/
-void CreateTwit(Twit *K, ListKicauan kicauan, Account currentuser);
+void CreateTwit(Twit *K, ListKicauan kicauan, Word currentusername);
 
 /* Membaca Twit */
 /* Twit yang dimasukkan terpotong secara otomatis dengan jumlah karakter maksimum 280.
