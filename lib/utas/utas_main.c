@@ -4,14 +4,12 @@
 
 extern int idUtas;
 
-int main(){
+int main(int argc, char *argv[]){
     AddressUtas U; CreateUtas(&U);
     DATETIME D; CreateDATETIME(&D);
     Word Author; Author.TabWord[0] = 'J'; Author.TabWord[1] = 'o'; Author.TabWord[2] = 'e'; Author.Length = 3;
     Word isiUtas; isiUtas.TabWord[0] = 'L'; isiUtas.TabWord[1] = 'O'; isiUtas.TabWord[2] = 'L'; isiUtas.Length = 3;
-    int X;
-    scanf("%d", &X);
-    switch (X) {
+    switch (argv[1][0] - '0') {
     case 1: // tes kosong
         printf("%d", isEmpty_Utas(U));
         cetakUtas(U, Author);
