@@ -1,8 +1,6 @@
 #include <stdlib.h>
 #include "utas.h"
 
-extern int idUtas;
-
 /* MODUL UTAS */
 AddressUtas newUtas (DATETIME T, Word isiUtas){ // Alokasi elemen, newNode
     AddressUtas U;
@@ -69,13 +67,9 @@ void cetakUtas(AddressUtas U, Word PembuatUtas){
     AddressUtas P = U;
     int idx = 1;
     while (P != NULL){
-        printf("   | INDEX = %d\n   | ", idx);
-        printWord(PembuatUtas);
-        printf("\n   | ");
-        TulisDATETIME(waktuUtas(P));
-        printf("\n   | ");
-        printWord(isiTwitUtas(P));
-        printf("\n\n");
+        printf("   | INDEX = %d\n   | ", idx); printWord(PembuatUtas);
+        printf("\n   | "); TulisDATETIME(waktuUtas(P));
+        printf("\n   | "); printWord(isiTwitUtas(P)); printf("\n\n");
         P = Sambungan(P); idx++;
     }
 }

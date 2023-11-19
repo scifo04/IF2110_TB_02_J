@@ -61,7 +61,6 @@ void deleteTree(addressTree P) {
         deleteTree(FirstChild(P));
         NextSibling(P) = NULL;
         FirstChild(P) = NULL;
-        P = NULL;
         free(P);
     }
 }

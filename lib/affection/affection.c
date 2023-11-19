@@ -15,7 +15,7 @@ void CreateAffection (Affection *A) {
 }
 
 boolean isFriends_Affection (Affection A, int idx1, int idx2) {
-    return ((A).status[idx1][idx2] == 1 && (A).status[idx2][idx1] == 1);
+    return (((A).status[idx1][idx2] == 1) && ((A).status[idx2][idx1] == 1));
 }
 
 void convertAffection (Affection *A, int idx1, int idx2) {

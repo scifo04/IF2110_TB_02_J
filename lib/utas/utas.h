@@ -4,8 +4,6 @@
 #include "../datetime/datetime.h"
 #include "../wordmachine/wordmachine.h"
 
-extern int idUtas;
-
 /* MODUL UTAS */
 /* *** Definisi Type Utas *** */
 typedef struct Node* AddressUtas;

@@ -156,7 +156,7 @@ Tapi kayanya nanti bikin file khusus deh readconfig.c*/
 
 void DisplayListKicauan(ListKicauan l, Account currentuser, Affection friends, ListAcc accounts){
     if(isEmpty_ListKicauan(l)){
-        printf("Tidak ada kicauan yang dapat ditampilkan");
+        printf("Tidak ada kicauan yang dapat ditampilkan\n");
     } else {
         int i; boolean found=false;
         for(i = ListKicauan_NEFF(l); i > 0;i--){
@@ -167,7 +167,7 @@ void DisplayListKicauan(ListKicauan l, Account currentuser, Affection friends, L
             }
         }
         if(!found){
-            printf("Tidak ada kicauan yang dapat ditampilkan");
+            printf("Tidak ada kicauan yang dapat ditampilkan\n");
         }
     }
 }

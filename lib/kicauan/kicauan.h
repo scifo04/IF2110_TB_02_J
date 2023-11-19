@@ -14,7 +14,7 @@ typedef struct {
     int idKicau;
     int like;
     int idUtas;
-    Account author;
+    Account author; // username
     DATETIME datetime;
     Word isiTwit; /*Panjang maksimal 280 Karakter*/
     Word tagar;
