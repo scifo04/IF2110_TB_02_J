@@ -581,7 +581,10 @@ void print_balasan(Word input, ListAcc acc, Affection friends, ListKicauan Kicau
 void hapusBalasan(Word input, ListAcc acc, Affection friends, ListKicauan Kicauan) {
     Tree t;
     addressTree p, q;
+<<<<<<< HEAD
     Word username_dibalas;
+=======
+>>>>>>> 3fdfce270b50aaba99c04c326a58963d9ea697d3
     int IDKicau, IDBalasan, space_count, i;
     IDKicau = IDBalasan = space_count = 0;
     for (i = 0; input.TabWord[i] != EndWord; i++) {
@@ -597,9 +600,8 @@ void hapusBalasan(Word input, ListAcc acc, Affection friends, ListKicauan Kicaua
             }
         }
     }
-    for (int i = 0; i < listLength_ListKicauan(Kicauan); i++) {
+    for (i = 0; i < listLength_ListKicauan(Kicauan); i++) {
             if (ListKicauan_ELMT(Kicauan, i).idKicau == IDKicau) {
-                username_dibalas = ListKicauan_ELMT(Kicauan, i).author.username;
                 t = ListKicauan_ELMT(Kicauan, i).Balasan;
                 p = Root(t);
                 break;
