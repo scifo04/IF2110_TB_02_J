@@ -56,10 +56,10 @@ Address newNode(ELFRType x);
 /* Mengembalikan alamat sebuah Node hasil alokasi dengan info = x,
 atau NIL jika alokasi gagal */
 
-boolean isEmpty(QueueFR q);
+boolean isEmptyQueueFR(QueueFR q);
 /* Mengirim true jika q kosong: ADDR_HEAD(q)=NIL and ADDR_TAIL(q)=NIL */
 
-int length(QueueFR q);
+int length_QueueFR(QueueFR q);
 /* Mengirimkan banyaknya elemen QueueFR. Mengirimkan 0 jika q kosong */
 
 /*** Kreator ***/
@@ -76,7 +76,7 @@ void deQueueFR(QueueFR *q, ELFRType *x);
 /* I.S. q tidak mungkin kosong */
 /* F.S. x = nilai elemen HEAD pd I.S., HEAD "mundur" */
 
-int indexOf(QueueFR q, int idRequester);
+int indexOfQueueFR(QueueFR q, int idRequester);
 /* Mengembalikan indeks idRequester di suatu QueueFR*/
 
 /* Operasi Tambahan */
@@ -91,7 +91,7 @@ void displayFriendRequests (QueueFR Q, ListAcc acc);
 */
 
 void CreateFriendRequest(FriendRequest *friendReq, int idRequester, int idRequested, Affection friends);
-/* Membuat Tiper FriendRequest baru*/
+/* Membuat Tipe FriendRequest baru*/
 
 void addFriend(QueueFR qSelf, QueueFR *qRequested, ListAcc acc, Account currentuser, Affection friends);
 /* Menambahkan teman */

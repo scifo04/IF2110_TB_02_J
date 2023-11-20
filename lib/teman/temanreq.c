@@ -5,11 +5,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "temanreq.h"
-//numpang
-// #include "../account/account.c"
-// #include "../wordmachine/wordmachine.c"
-// #include "../wordmachine/charmachine.c"
-// #include "../affection/affection.c"
 
 /* ********* Prototype ********* */
 /* Prototype manajemen memori */
@@ -25,7 +20,7 @@ Address newRequest(ELFRType x){
     return a;
 }
 
-boolean isEmpty(QueueFR q){
+boolean isEmptyQueueFR(QueueFR q){
     return ADDR_HEAD(q)==NULL && ADDR_TAIL(q)==NULL;
 }
 
@@ -53,20 +48,26 @@ void CreateQueueFR(QueueFR *q){
 /*** Primitif EnQueueFR/DeQueueFR ***/
 void enQueueFR(QueueFR *q, ELFRType x){
     Address loc = ADDR_HEAD(*q);
+    Address prec = NULL;
     Address p = newRequest(x);
     if(p!=NULL){
-        if (isEmpty(*q)){
+        if (isEmptyQueueFR(*q)){
             ADDR_HEAD(*q)= p;
         }
         else if(POPULARITYN(p)>POPULARITYN(loc)){ // cek indeks pertama
             NEXT(p)=loc;
             ADDR_HEAD(*q)= p;
+
         } else  { // cek indeks setelah pertama dan seterusnya
-            while( POPULARITYN(p)<POPULARITYN(NEXT(loc)) && NEXT(loc)!=NULL){
+            while(POPULARITYN(p)<=POPULARITYN(loc) && NEXT(loc)!=NULL){
+                prec = loc;
                 loc = NEXT(loc);  
             }
-            NEXT(p)=NEXT(loc);
-            NEXT(loc)=p;
+            if(NEXT(loc)==NULL){NEXT(loc)=p;}
+            else {
+                NEXT(prec)=p;
+                NEXT(p)=loc;
+            }
         }
     }
 }
@@ -78,7 +79,7 @@ void deQueueFR(QueueFR *q, ELFRType *x){
     free(p);
 }
 
-int indexOf(QueueFR q, int idRequester) {
+int indexOfQueueFR(QueueFR q, int idRequester) {
     Address a;
     int i = 0;
     a = ADDR_HEAD(q);
@@ -96,21 +97,25 @@ int indexOf(QueueFR q, int idRequester) {
 
 /* Daftar Permintaan Pertemanan*/
 void displayFriendRequests (QueueFR q, ListAcc acc){
-    int requests; Word name;
-    if(isEmpty(q)){
+    int requests, idRequester; Word name;
+    if(isEmptyQueueFR(q)){
         printf("Tidak ada permintaan pertemanan untuk Anda.\n");
     } else{
         requests = length_QueueFR(q);
         printf("Terdapat %d permintaan pertemanan untuk Anda.\n", requests);
         printf("\n");
         Address a = ADDR_HEAD(q);
-        while(NEXT(a)!=NULL){
-            name = getUsernamebyID(acc, ID_REQUESTERN(a));
+        while(a != NULL){
+            idRequester = ID_REQUESTERN(a);
+            printf("idreq = %d\n",  idRequester);
+            name = getUsernamebyID(acc, idRequester);
             printf("| ");
             printWord(name);
             printf("\n");
             printf("| Jumlah teman: %d\n", POPULARITYN(a));
             printf("\n");
+
+            a = NEXT(a);
         }
     }   
 }
@@ -130,7 +135,7 @@ void addFriend(QueueFR qSelf, QueueFR *qRequested, ListAcc acc, Account currentu
 
     /* ALGORITMA */
     /* Check if friend request QueueFR of currentacc is empty */
-    if(!isEmpty(qSelf)){
+    if(!isEmptyQueueFR(qSelf)){
         printf("Terdapat permintaan pertemanan yang belum Anda setujui. Silakan kosongkan daftar permintaan pertemanan untuk Anda terlebih dahulu.\n");
     } else {
         /* Insert username of friend to be requested*/
@@ -144,7 +149,7 @@ void addFriend(QueueFR qSelf, QueueFR *qRequested, ListAcc acc, Account currentu
             /* Check if request has actually been sent*/
             idRequested = getIdx_Username(acc, nameReq);
             idRequester = getIdx_Account(acc, currentuser);
-            if(indexOf(*qRequested, idRequester)!=-1){
+            if(indexOfQueueFR(*qRequested, idRequester)!=-1){
                 CreateFriendRequest(&FR, idRequester, idRequested, friends);
                 enQueueFR(qRequested, FR);
 
@@ -166,7 +171,7 @@ void addFriend(QueueFR qSelf, QueueFR *qRequested, ListAcc acc, Account currentu
 
 /* Setujui Pertemanan */
 void processRequest(QueueFR *q, Affection friends, ListAcc acc){
-    if(isEmpty(*q)){
+    if(isEmptyQueueFR(*q)){
         printf("Tidak terdapat permintaan pertemanan untuk Anda.\n");
     } else{
         /*Menampilkan Permintaan Pertemanan Teratas*/

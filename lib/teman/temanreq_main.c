@@ -4,7 +4,6 @@
 #include "../account/account.c"
 #include "../affection/affection.c"
 #include "../datetime/datetime.c"
-#include "../kicauan/kicauan.c"
 #include "../pcolor/pcolor.c"
 #include "../listdin/listdin.c"
 #include "../liststatik/liststatik.c"
@@ -15,7 +14,7 @@
 #include "../wordmachine/wordmachine.c"
 #include "../wordmachine/charmachine.c"
 
-void dummyListAccounts(ListAcc *ACC){
+void createDummyListAccountsFR(ListAcc *ACC){
     CreateListAccount(ACC);
 
     // Create and add three accounts to the list
@@ -40,6 +39,7 @@ void dummyListAccounts(ListAcc *ACC){
     PICROW(account1.photo, 4, 0) = 'I';
     PICROW(account1.photo, 4, 1) = 'J';
     change_publicity(&account1);
+    insertLast_Account(ACC, account1);
 
     // Account 2
     CreateAccount(&account2);
@@ -49,78 +49,76 @@ void dummyListAccounts(ListAcc *ACC){
     readPhone_Num(&account2);
     readWeton(&account2);
     // Set arbitrary values for photo content
-    PICROW(account2.photo, 0, 0) = 'K';
-    PICROW(account2.photo, 0, 1) = 'L';
-    PICROW(account2.photo, 1, 0) = 'M';
-    PICROW(account2.photo, 1, 1) = 'N';
-    PICROW(account2.photo, 2, 0) = 'O';
-    PICROW(account2.photo, 2, 1) = 'P';
-    PICROW(account2.photo, 3, 0) = 'Q';
-    PICROW(account2.photo, 3, 1) = 'R';
-    PICROW(account2.photo, 4, 0) = 'S';
-    PICROW(account2.photo, 4, 1) = 'T';
+    PICROW(account2.photo, 0, 0) = 'A';
+    PICROW(account2.photo, 0, 1) = 'B';
+    PICROW(account2.photo, 1, 0) = 'C';
+    PICROW(account2.photo, 1, 1) = 'D';
+    PICROW(account2.photo, 2, 0) = 'E';
+    PICROW(account2.photo, 2, 1) = 'F';
+    PICROW(account2.photo, 3, 0) = 'G';
+    PICROW(account2.photo, 3, 1) = 'H';
+    PICROW(account2.photo, 4, 0) = 'I';
+    PICROW(account2.photo, 4, 1) = 'J';
     change_publicity(&account2);
-
-    // Insert the accounts into the list
-    insertLast_Account(ACC, account1);
     insertLast_Account(ACC, account2);
+
+    // Account 3
+    CreateAccount(&account3);
+    readUsername(&account3);
+    readPassword(&account3);
+    readBio(&account3);
+    readPhone_Num(&account3);
+    readWeton(&account3);
+    // Set arbitrary values for photo content
+    PICROW(account3.photo, 0, 0) = 'A';
+    PICROW(account3.photo, 0, 1) = 'B';
+    PICROW(account3.photo, 1, 0) = 'C';
+    PICROW(account3.photo, 1, 1) = 'D';
+    PICROW(account3.photo, 2, 0) = 'E';
+    PICROW(account3.photo, 2, 1) = 'F';
+    PICROW(account3.photo, 3, 0) = 'G';
+    PICROW(account3.photo, 3, 1) = 'H';
+    PICROW(account3.photo, 4, 0) = 'I';
+    PICROW(account3.photo, 4, 1) = 'J';
+    change_publicity(&account3);
+    insertLast_Account(ACC, account3);
 
     // Display the list of accounts
     displayList_Account(*ACC);
-
 }
 
-void dummyAffection(Affection *friends){
-    CreateAffection(friends);
-
-    // Assuming account indices are 0-based
-    int account1Index = 0;
-    int account2Index = 1;
-
-    // Set arbitrary values for the Affection matrix
-    // For example, let's make account 1 friends with account 2
-    convertAffection(friends, account1Index, account2Index);
-
-    // Display the Affection matrix
-    displayAffection(*friends);
-    printf("\n");
-}
 
 int main() {
-    ListAcc acc;
-    dummyListAccounts(&acc);
-    Account currentuser=acc.buffer[0];
-    Affection friends;
-    dummyAffection(&friends);
+    // Inisialisasi Dummy
+    ListAcc accounts; createDummyListAccountsFR(&accounts);
+    Account currentuser=accounts.buffer[0];
+    Affection friends; CreateAffection(&friends);
 
-    // Initialize QueueFR
-    // QueueFR friendRequests;
-    // CreateQueueFR(&friendRequests);
+    // Inisialisasi Queue dan Eltype Queue (FriendRequest)
+    QueueFR friendRequests; CreateQueueFR(&friendRequests);
+    FriendRequest FR1, FR2;
+    CreateFriendRequest(&FR1, 1, 3, friends);
+    CreateFriendRequest(&FR2, 2, 3, friends);
+    ELFRType val;
 
-    QueueFR qself, qRequested;
+    printf("Is the queue empty: %s\n", isEmptyQueueFR(friendRequests) ? "true" : "false");
+    printf("Queue length: %d\n", length_QueueFR(friendRequests));
+    printf("\n");
 
-    boolean on = true;
-    while(on){
-        currentWord.TabWord[0] = '\0'; //Mengosongkan currentWord
-        currentWord.Length = 0;
-        STARTWORD();
-        printWord(currentWord);
-        if(isWordSimilar(currentWord, "TAMBAH_TEMAN")){
-            qself = currentuser.friend_requests;
-            qRequested = acc[1].friend_requests;
-            addFriend(qSelf, &qRequested, acc, currentuser, friends);
-        } else if(isWordSimilar(currentWord, "DAFTAR_PERMINTAAN_PERTEMANAN")){
-            qself = currentuser.friend_requests;
-            displayFriendRequests(qself, acc);
-        } else if(isWordSimilar(currentWord, "SETUJUI_PERTEMANAN")){
-            qself = currentuser.friend_requests;
-            processRequest(&qself, friends, acc);
-        } else if(isWordSimilar(currentWord, "DONE")){
-            on=false;
-        } else {
-            printf("GAGAL KICAU\n");
-        }
-    }
+    enQueueFR(&friendRequests, FR1);
+    enQueueFR(&friendRequests, FR2);
+    printf("Friend Requests after Enqueue:\n");
+    displayFriendRequests(friendRequests, accounts);
+    printf("\n");
+
+    printf("Is the queue empty after enqueuing: %s\n", isEmptyQueueFR(friendRequests) ? "true" : "false");
+    printf("Queue length after enqueuing: %d\n", length_QueueFR(friendRequests));
+    printf("\n");
+
+    deQueueFR(&friendRequests, &val);
+    printf("Friend Requests after Dequeue:\n");
+    displayFriendRequests(friendRequests, accounts);
+    printf("\n");
 
     return 0;
 }
