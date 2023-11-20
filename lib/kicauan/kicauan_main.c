@@ -1,24 +1,17 @@
+// Driver ADT List Dinamis Kicauan dengan Elemen Bertipe Struct Twit
+
 #include <stdio.h>
 #include "kicauan.h"
 #include "../account/account.h"
-#include "../affection/affection.h"
-#include "../datetime/datetime.h"
-// #include "../kicauan/kicauan.h"
-#include "../pcolor/pcolor.h"
-#include "../listdin/listdin.h"
-#include "../liststatik/liststatik.h"
-#include "../matrix/matrix.h"
-#include "../queue/queue.h"
-#include "../stack/stack.h"
-#include "../datetime/time.h"
 #include "../wordmachine/wordmachine.h"
 #include "../wordmachine/charmachine.h"
+#include "../affection/affection.h"
 
-void dummyListAccounts(ListAcc *ACC){
+void createDummyListAccounts(ListAcc *ACC){
     CreateListAccount(ACC);
 
     // Create and add three accounts to the list
-    Account account1, account2, account3;
+    Account account1, account2;
 
     // Account 1
     CreateAccount(&account1);
@@ -39,6 +32,7 @@ void dummyListAccounts(ListAcc *ACC){
     PICROW(account1.photo, 4, 0) = 'I';
     PICROW(account1.photo, 4, 1) = 'J';
     change_publicity(&account1);
+    insertLast_Account(ACC, account1);
 
     // Account 2
     CreateAccount(&account2);
@@ -48,84 +42,166 @@ void dummyListAccounts(ListAcc *ACC){
     readPhone_Num(&account2);
     readWeton(&account2);
     // Set arbitrary values for photo content
-    PICROW(account2.photo, 0, 0) = 'K';
-    PICROW(account2.photo, 0, 1) = 'L';
-    PICROW(account2.photo, 1, 0) = 'M';
-    PICROW(account2.photo, 1, 1) = 'N';
-    PICROW(account2.photo, 2, 0) = 'O';
-    PICROW(account2.photo, 2, 1) = 'P';
-    PICROW(account2.photo, 3, 0) = 'Q';
-    PICROW(account2.photo, 3, 1) = 'R';
-    PICROW(account2.photo, 4, 0) = 'S';
-    PICROW(account2.photo, 4, 1) = 'T';
+    PICROW(account1.photo, 0, 0) = 'A';
+    PICROW(account1.photo, 0, 1) = 'B';
+    PICROW(account1.photo, 1, 0) = 'C';
+    PICROW(account1.photo, 1, 1) = 'D';
+    PICROW(account1.photo, 2, 0) = 'E';
+    PICROW(account1.photo, 2, 1) = 'F';
+    PICROW(account1.photo, 3, 0) = 'G';
+    PICROW(account1.photo, 3, 1) = 'H';
+    PICROW(account1.photo, 4, 0) = 'I';
+    PICROW(account1.photo, 4, 1) = 'J';
     change_publicity(&account2);
-
-    // Insert the accounts into the list
-    insertLast_Account(ACC, account1);
     insertLast_Account(ACC, account2);
 
     // Display the list of accounts
     displayList_Account(*ACC);
-
 }
 
-void dummyAffection(Affection *friends){
-    CreateAffection(friends);
+void createDummyTwit(Twit *twit, int idKicau, Word author) {
+    twit->idKicau = idKicau;
+    twit->like = 0;
+    twit->idUtas = -1;
 
-    // Assuming account indices are 0-based
-    int account1Index = 0;
-    int account2Index = 1;
+    twit->author = author;
 
-    // Set arbitrary values for the Affection matrix
-    // For example, let's make account 1 friends with account 2
-    convertAffection(friends, account1Index, account2Index);
+    DATETIME D; CreateDATETIME(&D); twit->datetime = D; 
 
-    // Display the Affection matrix
-    displayAffection(*friends);
-    printf("\n");
+    twit->isiTwit.TabWord[0] = 'D'; twit->isiTwit.TabWord[1] = 'u'; twit->isiTwit.TabWord[2] = 'm';  twit->isiTwit.TabWord[3] = 'm'; twit->isiTwit.TabWord[4] = 'y'; 
+    twit->isiTwit.Length = 5;
+
+    twit->tagar.TabWord[0] = 'D';
+    twit->tagar.Length = 1;
 }
 
-int main() {
-    ListAcc acc;
-    dummyListAccounts(&acc);
-    Account currentuser=acc.buffer[0];
-    ListKicauan kicauanList;
-    Affection friends;
-    dummyAffection(&friends);
-    CreateListKicauan(&kicauanList, 10); // Assume capacity is 10, adjust as needed
+int main(){
+    // Inisialisasi Dummy
+    ListAcc accounts; createDummyListAccounts(&accounts);
+    Account currentuser = accounts.buffer[0];
+    Affection friends; CreateAffection(&friends);
+    int lenKicauan; Twit K1, K2, K3; IdxType index1, index2;
 
-    // Assume accounts and friends are already initialized
-    // Assume currentuser is already initialized
-    boolean on = true;
-    while(on){
-        currentWord.TabWord[0] = '\0'; //Mengosongkan currentWord
-        currentWord.Length = 0;
-        STARTWORD();
-        printWord(currentWord);
-        if(isWordSimilar(currentWord, "KICAU")){
-            Twit newTwit;
-            CreateTwit(&newTwit, kicauanList, currentuser);
-            insertLast_ListKicauan(&kicauanList, newTwit);
-            SuccessTwit(newTwit);
-        } else if(isWordSimilar(currentWord, "KICAUAN")){
-            DisplayListKicauan(kicauanList, currentuser, friends, acc);
-        } else if(isWordSimilar(currentWord, "LIKE_KICAUAN")){
-            LikeKicauan(&kicauanList, 1, currentuser, friends, acc);
-            printf("\n");
-            LikeKicauan(&kicauanList, 1000, currentuser, friends, acc);
-        } else if(isWordSimilar(currentWord, "UBAH_KICAUAN")){
-            EditKicauan(&kicauanList, 1, currentuser, acc);
-            printf("\n");
-            EditKicauan(&kicauanList, 1000, currentuser, acc);
-        } else if(isWordSimilar(currentWord, "DONE")){
-            on=false;
-        } else {
-            printf("GAGAL KICAU\n");
-        }
-    }
+    // Tes ADT List Dinamis Kicauan
+    ListKicauan Kicauan;
+    CreateListKicauan(&Kicauan, 2);
+    /*----------------------------------------------------------------------------------------------------*/
+     // Test Test Validasi
+    lenKicauan = listLength_ListKicauan(Kicauan);
+    printf("List Length: %d\n", lenKicauan);
 
-    // Clean up memory
-    dealocateListKicauan(&kicauanList);
+    // Test index valid
+    index1 = 1;
+    index2 = 15;
+    printf("Index %d is valid: %s\n", index1, isIdxValid_ListKicauan(Kicauan, index1) ? "true" : "false");
+    printf("Index %d is valid: %s\n", index2, isIdxValid_ListKicauan(Kicauan, index2) ? "true" : "false");
+
+    // Test index efektif
+    printf("Index %d is effective: %s\n", index1, isIdxEff_ListKicauan(Kicauan, index1) ? "true" : "false");
+    printf("Index %d is effective: %s\n", index2, isIdxEff_ListKicauan(Kicauan, index2) ? "true" : "false");
+
+    // Test if the list is empty
+    printf("Is the list empty: %s\n", isEmpty_ListKicauan(Kicauan) ? "true" : "false");
+
+    // Test if the list is full
+    printf("Is the list full: %s\n", isFull_ListKicauan(Kicauan) ? "true" : "false");
+
+    createDummyTwit(&K1, lenKicauan+1, currentuser.username);
+    insertLast_ListKicauan(&Kicauan, K1);
+
+    // Menampilkan list kicauan
+    printf("List Kicauan:\n");
+    DisplayListKicauan(Kicauan, currentuser, friends, accounts);
+
+    /*----------------------------------------------------------------------------------------------------*/
+
+    // Test Test Validasi
+    lenKicauan = listLength_ListKicauan(Kicauan);
+    printf("List Length: %d\n", lenKicauan);
+
+    // Test index valid
+    index1 = 1;
+    index2 = 15;
+    printf("Index %d is valid: %s\n", index1, isIdxValid_ListKicauan(Kicauan, index1) ? "true" : "false");
+    printf("Index %d is valid: %s\n", index2, isIdxValid_ListKicauan(Kicauan, index2) ? "true" : "false");
+
+    // Test index efektif
+    printf("Index %d is effective: %s\n", index1, isIdxEff_ListKicauan(Kicauan, index1) ? "true" : "false");
+    printf("Index %d is effective: %s\n", index2, isIdxEff_ListKicauan(Kicauan, index2) ? "true" : "false");
+
+    // Test if the list is empty
+    printf("Is the list empty: %s\n", isEmpty_ListKicauan(Kicauan) ? "true" : "false");
+
+    // Test if the list is full
+    printf("Is the list full: %s\n", isFull_ListKicauan(Kicauan) ? "true" : "false");
+
+    createDummyTwit(&K2, listLength_ListKicauan(Kicauan)+1, currentuser.username);
+    insertLast_ListKicauan(&Kicauan, K2);
+
+    // Menyalin list kicauan
+    ListKicauan copiedKicauan;
+    copyList_ListKicauan(Kicauan, &copiedKicauan);
+    printf("\nCopied List Kicauan:\n");
+    DisplayListKicauan(copiedKicauan,currentuser, friends, accounts);
+
+    /*----------------------------------------------------------------------------------------------------*/
+
+     // Test Test Validasi
+    lenKicauan = listLength_ListKicauan(Kicauan);
+    printf("List Length: %d\n", lenKicauan);
+
+    // Test index valid
+    index1 = 1;
+    index2 = 15;
+    printf("Index %d is valid: %s\n", index1, isIdxValid_ListKicauan(Kicauan, index1) ? "true" : "false");
+    printf("Index %d is valid: %s\n", index2, isIdxValid_ListKicauan(Kicauan, index2) ? "true" : "false");
+
+    // Test index efektif
+    printf("Index %d is effective: %s\n", index1, isIdxEff_ListKicauan(Kicauan, index1) ? "true" : "false");
+    printf("Index %d is effective: %s\n", index2, isIdxEff_ListKicauan(Kicauan, index2) ? "true" : "false");
+
+    // Test if the list is empty
+    printf("Is the list empty: %s\n", isEmpty_ListKicauan(Kicauan) ? "true" : "false");
+
+    // Test if the list is full
+    printf("Is the list full: %s\n", isFull_ListKicauan(Kicauan) ? "true" : "false");
+
+    createDummyTwit(&K3, listLength_ListKicauan(Kicauan)+1, currentuser.username);
+    insertLast_ListKicauan(&Kicauan, K3);
+
+     // Mengubah ukuran list kicauan
+    expandListKicauan(&Kicauan, 2);
+    printf("\nExpanded List Kicauan:\n");
+    DisplayListKicauan(Kicauan, currentuser, friends, accounts);
+
+    /*----------------------------------------------------------------------------------------------------*/
+     // Test Test Validasi
+    lenKicauan = listLength_ListKicauan(Kicauan);
+    printf("List Length: %d\n", lenKicauan);
+
+    // Test index valid
+    index1 = 1;
+    index2 = 15;
+    printf("Index %d is valid: %s\n", index1, isIdxValid_ListKicauan(Kicauan, index1) ? "true" : "false");
+    printf("Index %d is valid: %s\n", index2, isIdxValid_ListKicauan(Kicauan, index2) ? "true" : "false");
+
+    // Test index efektif
+    printf("Index %d is effective: %s\n", index1, isIdxEff_ListKicauan(Kicauan, index1) ? "true" : "false");
+    printf("Index %d is effective: %s\n", index2, isIdxEff_ListKicauan(Kicauan, index2) ? "true" : "false");
+
+    // Test if the list is empty
+    printf("Is the list empty: %s\n", isEmpty_ListKicauan(Kicauan) ? "true" : "false");
+
+    // Test if the list is full
+    printf("Is the list full: %s\n", isFull_ListKicauan(Kicauan) ? "true" : "false");
+
+    // Dealokasi list kicauan
+    dealocateListKicauan(&Kicauan);
+    printf("\nSetelah Dealokasi List Kicauan:\n");
+    DisplayListKicauan(Kicauan, currentuser, friends, accounts);
+
+    // Test if the list is empty
+    printf("Is the list empty: %s\n", isEmpty_ListKicauan(Kicauan) ? "true" : "false");
 
     return 0;
 }
