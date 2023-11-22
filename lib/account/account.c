@@ -95,6 +95,7 @@ void CreateAccount (Account *A) {
     (*A).weton.Length = 0;
     (*A).photo = CreateBlankPicture();
     (*A).publicity = true;
+    CreateQueueFR(&(*A).requests);
 }
 
 void readUsername(Account *A) {
@@ -300,6 +301,7 @@ void setElmt_Account (ListAcc *L, int idx, Account A) {
     (((*L).buffer)[idx]).weton = A.weton;
     (((*L).buffer)[idx]).photo = A.photo;
     (((*L).buffer)[idx]).publicity = A.publicity;
+    (((*L).buffer)[idx]).requests = A.requests;
 }
 
 void insertFirst_Account (ListAcc *L, Account A) {
@@ -420,6 +422,104 @@ boolean getPublicitybyUsername(ListAcc L, Word username){
     for (i = 0; i < length_Account(L); i++) {
         if (wordSimilar(L.buffer[i].username, username)) {
             return L.buffer[i].publicity;
+        }
+    }
+}
+
+/* Daftar Permintaan Pertemanan*/
+void displayFriendRequests (QueueFR q, ListAcc acc){
+    int requests, idRequester; Word name;
+    if(isEmptyQueueFR(q)){
+        printf("Tidak ada permintaan pertemanan untuk Anda.\n");
+    } else{
+        requests = length_QueueFR(q);
+        printf("Terdapat %d permintaan pertemanan untuk Anda.\n", requests);
+        printf("\n");
+        Address a = ADDR_HEAD(q);
+        while(a != NULL){
+            idRequester = ID_REQUESTERN(a);
+            printf("idreq = %d\n",  idRequester);
+            name = getElmt_Account(acc, idRequester).username;
+            printf("| ");
+            printWord(name);
+            printf("\n");
+            printf("| Jumlah teman: %d\n", POPULARITYN(a));
+            printf("\n");
+
+            a = NEXT(a);
+        }
+    }   
+}
+
+void CreateFriendRequest(FriendRequest *FR, int idRequester, int idRequested, Affection friends){
+    ID_REQUESTER(*FR) = idRequester;
+    ID_REQUESTED(*FR) = idRequested;
+    POPULARITY(*FR) = countFriends_Affection(friends, idRequester);
+}
+
+/* Tambah Teman*/
+void addFriend(Word name, int id, QueueFR *qRequested, ListAcc acc, Account currentuser, Affection friends){
+    /* KAMUS LOKAL */
+    FriendRequest FR;
+
+    /* ALGORITMA */
+    if(indexOfQueueFR(*qRequested, getIdx_Account(acc,currentuser))==-1){
+        CreateFriendRequest(&FR, getIdx_Account(acc,currentuser), id, friends);
+        enQueueFR(&(*qRequested), FR);
+
+        printf("Permintaan pertemanan kepada ");
+        printWord(name);
+        printf(" telah dikirim. Tunggu beberapa saat hingga permintaan Anda disetujui.");
+    } else {
+        printf("Anda sudah mengirimkan permintaan pertemanan kepada ");
+        printWord(name);
+        printf(". Silakan tunggu hingga permintaan Anda disetujui.");
+    }
+}
+
+/* Setujui Pertemanan */
+void processRequest(QueueFR *q, Affection *friends, ListAcc acc){
+    if(isEmptyQueueFR(*q)){
+        printf("Tidak terdapat permintaan pertemanan untuk Anda.\n");
+    } else{
+        /*Menampilkan Permintaan Pertemanan Teratas*/
+        FriendRequest topRequest; int idRequested, idRequester;
+        deQueueFR(q, &topRequest);
+        idRequester = ID_REQUESTER(topRequest);
+        idRequested = ID_REQUESTED(topRequest);
+        Word name = getElmt_Account(acc, idRequester).username;
+        printf("Permintaan pertemanan teratas dari ");
+        printWord(name);
+        printf("\n");
+        printf("\n");
+
+        printf("| ");
+        printWord(name);
+        printf("\n");
+        printf("| Jumlah teman: %d\n", POPULARITY(topRequest));
+        printf("\n");
+
+        /* Pilihan Persetujuan */
+        Word choice;
+        printf("Apakah Anda ingin menyetujui permintaan pertemanan ini? (YA/TIDAK) \n");
+        STARTWORD();
+        choice = currentWord;
+
+        /* Proses Persetujuan */
+        if(isWordSimilar(choice, "YA")){
+            convertAffection(&(*friends), idRequester, idRequested);
+
+            printf("Permintaan pertemanan dari ");
+            printWord(name);
+            printf(" telah disetujui. Selamat! Anda telah berteman dengan ");
+            printWord(name);
+            printf(".\n");
+        } else if(isWordSimilar(choice, "TIDAK")){
+            printf("Permintaan pertemanan dari ");
+            printWord(name);
+            printf(" telah ditolak.");
+        } else {
+            printf("Masukkan salah.\n");
         }
     }
 }

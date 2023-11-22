@@ -7,7 +7,6 @@
 
 // #include "../adt.h"
 #include "../boolean/boolean.h"
-#include "../account/account.h"
 #include "../wordmachine/wordmachine.h"
 #include "../affection/affection.h"
 
@@ -78,25 +77,4 @@ void deQueueFR(QueueFR *q, ELFRType *x);
 
 int indexOfQueueFR(QueueFR q, int idRequester);
 /* Mengembalikan indeks idRequester di suatu QueueFR*/
-
-/* Operasi Tambahan */
-void displayFriendRequests (QueueFR Q, ListAcc acc);
-/* Mencetak isi QueueFR Q ke layar */
-/* I.S. Q terdefinisi, mungkin kosong */
-/* F.S. Q tercetak ke layar dengan format:
-<time-1> <elemen-1>
-...
-<time-n> <elemen-n>
-#
-*/
-
-void CreateFriendRequest(FriendRequest *friendReq, int idRequester, int idRequested, Affection friends);
-/* Membuat Tipe FriendRequest baru*/
-
-void addFriend(QueueFR qSelf, QueueFR *qRequested, ListAcc acc, Account currentuser, Affection friends);
-/* Menambahkan teman */
-
-/* Setujui Pertemanan */
-void processRequest(QueueFR *q, Affection friends, ListAcc acc);
-
 #endif

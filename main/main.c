@@ -8,6 +8,7 @@ static boolean hasLogged = false;
 static Account currentuser;
 static Affection friends;
 static ListKicauan Kicauan;
+static QueueFR requests;
 int id_untuk_balas;
 int idUtas = 1; // ID Utas selanjutnya kalau ada yang buat, auto increment dari 1
 
@@ -351,6 +352,54 @@ void Hapus_Teman () {
     }
 }
 
+void Tambah_Teman() {
+    if (hasLogged) {
+        if (isEmptyQueueFR(currentuser.requests)) {
+            Word nameReq;
+            printf("Masukkan nama pengguna: \n");
+            STARTWORD();
+            printf("\n");
+            nameReq = currentWord;
+            int idReq = getIdx_Username(acc, nameReq);
+            if (nameAvailable(acc,nameReq) && !isFriends_Affection(friends,getIdx_Account(acc,currentuser),idReq)) {
+                addFriend(nameReq,idReq,&(acc.buffer[idReq]).requests,acc,currentuser,friends);
+            } else if (isFriends_Affection(friends,getIdx_Account(acc,currentuser),idReq)) {
+                printf("Pengguna bernama ");
+                printWord(nameReq);
+                printf(" sudah menjadi teman anda. You can't be more than just friends.....\n");
+            } else {
+                printf("Pengguna bernama ");
+                printWord(nameReq);
+                printf(" tidak ditemukan.\n");
+            }
+        } else {
+            printf("Terdapat permintaan pertemanan yang belum Anda setujui. Silakan kosongkan daftar permintaan pertemanan untuk Anda terlebih dahulu.\n");
+        }
+    } else {
+        printf("Weh, login dulu dong!\n");
+    }
+}
+void Daftar_Permintaan_Pertemanan() {
+    if (hasLogged) {
+        displayQueueFR(currentuser.requests);
+        displayFriendRequests(currentuser.requests,acc);
+    }
+}
+void Setujui_Pertemanan() {
+    if (hasLogged) {
+        if (!isEmptyQueueFR(currentuser.requests)) {
+            processRequest(&currentuser.requests,&friends,acc);
+            setElmt_Account(&acc, getIdx_Account(acc,currentuser), currentuser);
+        } else {
+            printf("Tidak terdapat permintaan pertemanan untuk anda\n");
+        }
+    }
+}
+void FrList() {
+    if (hasLogged) {
+        displayAffection(friends);
+    }
+}
 void Kicau(){
     if (hasLogged){
         Twit newTwit;
@@ -741,6 +790,18 @@ void readCommand (Word W) {
     } else if (isWordSimilar(W, "HAPUS_TEMAN")) {
         Hapus_Teman();
         printf("\n");
+    } else if (isWordSimilar(W, "TAMBAH_TEMAN")) {
+        Tambah_Teman();
+        printf("\n");
+    } else if (isWordSimilar(W, "DAFTAR_PERMINTAAN_PERTEMANAN")) {
+        Daftar_Permintaan_Pertemanan();
+        printf("\n");
+    } else if (isWordSimilar(W, "SETUJUI_PERTEMANAN")) {
+        Setujui_Pertemanan();
+        printf("\n");
+    } else if (isWordSimilar(W, "FRLIST")) {
+        FrList();
+        printf("\n");
     } else if (isWordSimilar(W, "KICAU")) {
         Kicau();
         printf("\n");
@@ -789,6 +850,7 @@ int main() {
     boolean allowprint = false;
     CreateListAccount(&acc);
     CreateAffection(&friends);
+    CreateQueueFR(&requests);
     CreateListKicauan(&Kicauan, 50);
     while (true) {
         inisialisasi();

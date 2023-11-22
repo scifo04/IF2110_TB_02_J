@@ -4,6 +4,8 @@
 #include "../boolean/boolean.h"
 #include "../wordmachine/wordmachine.h"
 #include "../pcolor/pcolor.h"
+#include "../teman/temanreq.h"
+#include "../affection/affection.h"
 
 typedef struct {
     char content[5][20];
@@ -17,6 +19,7 @@ typedef struct {
     Word weton;
     Pics photo;
     boolean publicity;
+    QueueFR requests;
 } Account;
 
 typedef struct {
@@ -67,5 +70,23 @@ boolean passAvailable (ListAcc L, Word U);
 Word getUsernamebyID (ListAcc L, int id);
 int getIdx_Username(ListAcc L, Word U);
 boolean getPublicitybyUsername(ListAcc L, Word username);
+/* Operasi Tambahan */
+void displayFriendRequests (QueueFR Q, ListAcc acc);
+/* Mencetak isi QueueFR Q ke layar */
+/* I.S. Q terdefinisi, mungkin kosong */
+/* F.S. Q tercetak ke layar dengan format:
+<time-1> <elemen-1>
+...
+<time-n> <elemen-n>
+#
+*/
 
+void CreateFriendRequest(FriendRequest *friendReq, int idRequester, int idRequested, Affection friends);
+/* Membuat Tipe FriendRequest baru*/
+
+void addFriend(Word name, int id, QueueFR *qRequested, ListAcc acc, Account currentuser, Affection friends);
+/* Menambahkan teman */
+
+/* Setujui Pertemanan */
+void processRequest(QueueFR *q, Affection *friends, ListAcc acc);
 #endif
