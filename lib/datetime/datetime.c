@@ -18,7 +18,7 @@ void TulisDATETIME(DATETIME D) {
 }
 
 void TulisDATETIMEFILE(DATETIME D, FILE *file){
-    fprintf(file, "%d/%d/%d %02d:%02d:%02d", Day(D), Month(D), Year(D), Hour(Time(D)), Minute(Time(D)), Second(Time(D)));
+    fprintf(file, "%d/%d/%d %02d:%02d:%02d\n", Day(D), Month(D), Year(D), Hour(Time(D)), Minute(Time(D)), Second(Time(D)));
 }
 
 // boolean DLT(DATETIME D1, DATETIME D2) {

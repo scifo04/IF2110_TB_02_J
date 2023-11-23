@@ -80,9 +80,9 @@ int main () {
             break;
         case 11:
             CreateListAccount(&L);
-            CopyWord_Any(&W,"pasta");
-            CopyWord_Any(&W2,"4823048932");
-            CopyWord_Any(&W3,"Pahing");
+            W = CopyWord_Any("pasta");
+            W2 = CopyWord_Any("4823048932");
+            W3 = CopyWord_Any("Pahing");
             A.username = W;
             A.password = W;
             A.bio = W;
@@ -100,9 +100,9 @@ int main () {
             break;
         case 12:
             CreateListAccount(&L);
-            CopyWord_Any(&W,"pasta");
-            CopyWord_Any(&W2,"4823048932");
-            CopyWord_Any(&W3,"Pahing");
+            W = CopyWord_Any("pasta");
+            W2 = CopyWord_Any("4823048932");
+            W3 = CopyWord_Any("Pahing");
             A.username = W;
             A.password = W;
             A.bio = W;
@@ -117,9 +117,9 @@ int main () {
             break;
         case 13:
             CreateListAccount(&L);
-            CopyWord_Any(&W,"pasta");
-            CopyWord_Any(&W2,"4823048932");
-            CopyWord_Any(&W3,"Pahing");
+            W = CopyWord_Any("pasta");
+            W2 = CopyWord_Any("4823048932");
+            W3 = CopyWord_Any("Pahing");
             A.username = W;
             A.password = W;
             A.bio = W;
@@ -130,11 +130,11 @@ int main () {
                 L.NEff += 1;
             }
             CreateAccount(&B);
-            CopyWord_Any(&B.username,"aspal");
-            CopyWord_Any(&B.password,"aspal");
-            CopyWord_Any(&B.bio,"aspal");
-            CopyWord_Any(&B.phone_num,"2423234234");
-            CopyWord_Any(&B.weton,"Pahing");
+            B.username = CopyWord_Any("aspal");
+            B.password = CopyWord_Any("aspal");
+            B.bio = CopyWord_Any("aspal");
+            B.phone_num = CopyWord_Any("2423234234");
+            B.weton = CopyWord_Any("Pahing");
             L.buffer[6] = B;
             L.NEff += 1;
             int c = getIdx_Account(L,B);
@@ -146,9 +146,9 @@ int main () {
             }
         case 14:
             CreateListAccount(&L);
-            CopyWord_Any(&W,"pasta");
-            CopyWord_Any(&W2,"4823048932");
-            CopyWord_Any(&W3,"Pahing");
+            W = CopyWord_Any("pasta");
+            W2 = CopyWord_Any("4823048932");
+            W3 = CopyWord_Any("Pahing");
             A.username = W;
             A.password = W;
             A.bio = W;
@@ -159,11 +159,11 @@ int main () {
                 L.NEff += 1;
             }
             CreateAccount(&B);
-            CopyWord_Any(&B.username,"aspal");
-            CopyWord_Any(&B.password,"aspal");
-            CopyWord_Any(&B.bio,"aspal");
-            CopyWord_Any(&B.phone_num,"2423234234");
-            CopyWord_Any(&B.weton,"Pahing");
+            B.username = CopyWord_Any("aspal");
+            B.password = CopyWord_Any("aspal");
+            B.bio = CopyWord_Any("aspal");
+            B.phone_num = CopyWord_Any("2423234234");
+            B.weton = CopyWord_Any("Pahing");
             setElmt_Account(&L,3,B);
             displayAccount(getElmt_Account(L,3));
             printf("\n");
@@ -172,9 +172,9 @@ int main () {
             break;
         case 15:
             CreateListAccount(&L);
-            CopyWord_Any(&W,"pasta");
-            CopyWord_Any(&W2,"4823048932");
-            CopyWord_Any(&W3,"Pahing");
+            W = CopyWord_Any("pasta");
+            W2 = CopyWord_Any("4823048932");
+            W3 = CopyWord_Any("Pahing");
             A.username = W;
             A.password = W;
             A.bio = W;
@@ -185,11 +185,11 @@ int main () {
                 L.NEff += 1;
             }
             CreateAccount(&B);
-            CopyWord_Any(&B.username,"aspal");
-            CopyWord_Any(&B.password,"aspal");
-            CopyWord_Any(&B.bio,"aspal");
-            CopyWord_Any(&B.phone_num,"2423234234");
-            CopyWord_Any(&B.weton,"Pahing");
+            B.username = CopyWord_Any("aspal");
+            B.password = CopyWord_Any("aspal");
+            B.bio = CopyWord_Any("aspal");
+            B.phone_num = CopyWord_Any("2423234234");
+            B.weton = CopyWord_Any("Pahing");
             insertLast_Account(&L,B);
             displayAccount(getElmt_Account(L,6));
             printf("\n");
@@ -198,9 +198,9 @@ int main () {
             break;
         case 16:
             CreateListAccount(&L);
-            CopyWord_Any(&W,"pasta");
-            CopyWord_Any(&W2,"4823048932");
-            CopyWord_Any(&W3,"Pahing");
+            W = CopyWord_Any("pasta");
+            W2 = CopyWord_Any("4823048932");
+            W3 = CopyWord_Any("Pahing");
             A.username = W;
             A.password = W;
             A.bio = W;
@@ -211,20 +211,20 @@ int main () {
                 L.NEff += 1;
             }
             CreateAccount(&B);
-            CopyWord_Any(&B.username,"aspal");
-            CopyWord_Any(&B.password,"aspal");
-            CopyWord_Any(&B.bio,"aspal");
-            CopyWord_Any(&B.phone_num,"2423234234");
-            CopyWord_Any(&B.weton,"Pahing");
+            B.username = CopyWord_Any("aspal");
+            B.password = CopyWord_Any("aspal");
+            B.bio = CopyWord_Any("aspal");
+            B.phone_num = CopyWord_Any("2423234234");
+            B.weton = CopyWord_Any("Pahing");
             insertLast_Account(&L,B);
             displayList_Account(L);
             printf("\n");
             break;
         case 17:
             CreateListAccount(&L);
-            CopyWord_Any(&W,"pasta");
-            CopyWord_Any(&W2,"4823048932");
-            CopyWord_Any(&W3,"Pahing");
+            W = CopyWord_Any("pasta");
+            W2 = CopyWord_Any("4823048932");
+            W3 = CopyWord_Any("Pahing");
             A.username = W;
             A.password = W;
             A.bio = W;
@@ -235,14 +235,14 @@ int main () {
                 L.NEff += 1;
             }
             CreateAccount(&B);
-            CopyWord_Any(&B.username,"aspal");
-            CopyWord_Any(&B.password,"aspal");
-            CopyWord_Any(&B.bio,"aspal");
-            CopyWord_Any(&B.phone_num,"2423234234");
-            CopyWord_Any(&B.weton,"Pahing");
+            B.username = CopyWord_Any("aspal");
+            B.password = CopyWord_Any("aspal");
+            B.bio = CopyWord_Any("aspal");
+            B.phone_num = CopyWord_Any("2423234234");
+            B.weton = CopyWord_Any("Pahing");
             insertLast_Account(&L,B);
             Word bruh;
-            CopyWord_Any(&bruh,"aspal");
+            bruh = CopyWord_Any("aspal");
             if (nameAvailable(L,bruh)) {
                 printf("TRUE\n");
             } else {
@@ -251,9 +251,9 @@ int main () {
             break;
         case 18:
             CreateListAccount(&L);
-            CopyWord_Any(&W,"pasta");
-            CopyWord_Any(&W2,"4823048932");
-            CopyWord_Any(&W3,"Pahing");
+            W = CopyWord_Any("pasta");
+            W2 = CopyWord_Any("4823048932");
+            W3 = CopyWord_Any("Pahing");
             A.username = W;
             A.password = W;
             A.bio = W;
@@ -264,14 +264,14 @@ int main () {
                 L.NEff += 1;
             }
             CreateAccount(&B);
-            CopyWord_Any(&B.username,"aspal");
-            CopyWord_Any(&B.password,"aspal");
-            CopyWord_Any(&B.bio,"aspal");
-            CopyWord_Any(&B.phone_num,"2423234234");
-            CopyWord_Any(&B.weton,"Pahing");
+            B.username = CopyWord_Any("aspal");
+            B.password = CopyWord_Any("aspal");
+            B.bio = CopyWord_Any("aspal");
+            B.phone_num = CopyWord_Any("2423234234");
+            B.weton = CopyWord_Any("Pahing");
             insertLast_Account(&L,B);
             Word bruh2;
-            CopyWord_Any(&bruh2,"aspal");
+            bruh2 = CopyWord_Any("aspal");
             if (passAvailable(L,bruh2)) {
                 printf("TRUE\n");
             } else {
@@ -280,9 +280,9 @@ int main () {
             break;
         case 19:
             CreateListAccount(&L);
-            CopyWord_Any(&W,"pasta");
-            CopyWord_Any(&W2,"4823048932");
-            CopyWord_Any(&W3,"Pahing");
+            W = CopyWord_Any("pasta");
+            W2 = CopyWord_Any("4823048932");
+            W3 = CopyWord_Any("Pahing");
             A.username = W;
             A.password = W;
             A.bio = W;
@@ -293,14 +293,14 @@ int main () {
                 L.NEff += 1;
             }
             CreateAccount(&B);
-            CopyWord_Any(&B.username,"aspal");
-            CopyWord_Any(&B.password,"aspal");
-            CopyWord_Any(&B.bio,"aspal");
-            CopyWord_Any(&B.phone_num,"2423234234");
-            CopyWord_Any(&B.weton,"Pahing");
+            B.username = CopyWord_Any("aspal");
+            B.password = CopyWord_Any("aspal");
+            B.bio = CopyWord_Any("aspal");
+            B.phone_num = CopyWord_Any("2423234234");
+            B.weton = CopyWord_Any("Pahing");
             insertLast_Account(&L,B);
             Word bruh3;
-            CopyWord_Any(&bruh3,"aspal");
+            bruh3 = CopyWord_Any("aspal");
             int e =  getIdx_Username(L,bruh3);
             if (e == 6) {
                 printf("TRUE\n");
@@ -310,9 +310,9 @@ int main () {
             break;
         case 20:
             CreateListAccount(&L);
-            CopyWord_Any(&W,"pasta");
-            CopyWord_Any(&W2,"4823048932");
-            CopyWord_Any(&W3,"Pahing");
+            W = CopyWord_Any("pasta");
+            W2 = CopyWord_Any("4823048932");
+            W3 = CopyWord_Any("Pahing");
             A.username = W;
             A.password = W;
             A.bio = W;
@@ -323,11 +323,11 @@ int main () {
                 L.NEff += 1;
             }
             CreateAccount(&B);
-            CopyWord_Any(&B.username,"aspal");
-            CopyWord_Any(&B.password,"aspal");
-            CopyWord_Any(&B.bio,"aspal");
-            CopyWord_Any(&B.phone_num,"2423234234");
-            CopyWord_Any(&B.weton,"Pahing");
+            B.username = CopyWord_Any("aspal");
+            B.password = CopyWord_Any("aspal");
+            B.bio = CopyWord_Any("aspal");
+            B.phone_num = CopyWord_Any("2423234234");
+            B.weton = CopyWord_Any("Pahing");
             insertLast_Account(&L,B);
             Word bruh4 = getUsernamebyID(L,6);
             printWord(bruh4);
@@ -339,9 +339,9 @@ int main () {
             }
         case 21:
             CreateListAccount(&L);
-            CopyWord_Any(&W,"pasta");
-            CopyWord_Any(&W2,"4823048932");
-            CopyWord_Any(&W3,"Pahing");
+            W = CopyWord_Any("pasta");
+            W2 = CopyWord_Any("4823048932");
+            W3 = CopyWord_Any("Pahing");
             A.username = W;
             A.password = W;
             A.bio = W;
@@ -352,11 +352,11 @@ int main () {
                 L.NEff += 1;
             }
             CreateAccount(&B);
-            CopyWord_Any(&B.username,"aspal");
-            CopyWord_Any(&B.password,"aspal");
-            CopyWord_Any(&B.bio,"aspal");
-            CopyWord_Any(&B.phone_num,"2423234234");
-            CopyWord_Any(&B.weton,"Pahing");
+            B.username = CopyWord_Any("aspal");
+            B.password = CopyWord_Any("aspal");
+            B.bio = CopyWord_Any("aspal");
+            B.phone_num = CopyWord_Any("2423234234");
+            B.weton = CopyWord_Any("Pahing");
             insertLast_Account(&L,B);
             if (!getPublicitybyUsername(L,B.username)^getPublicitybyUsername(L,getElmt_Account(L,6).username)) {
                 printf("TRUE\n");
