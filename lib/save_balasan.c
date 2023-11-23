@@ -33,19 +33,17 @@ void displayBalasan(FILE *file, addressTree p, addressTree root, ListKicauan LKi
     }
 }
 
-void save_balasan(ListKicauan LKicau) {
+void save_balasan(ListKicauan LKicau, Word FILEBALAS) {
     FILE *file;
     int i, count = 0;
     addressTree p, q, r;
-    file = fopen("file.txt", "w");
+    file = fopen(FILEBALAS.TabWord, "w");
 
-    printf("%d\n", count);
     for (int j = 0; j < listLength_ListKicauan(LKicau); j++) {
         if (Root(ListKicauan_ELMT(LKicau, j).Balasan) != NULL) {
             count++;
         }
     }
-    printf("%d\n", count);
     if (count == 0) {
         fprintf(file, "%d", count);
     }
