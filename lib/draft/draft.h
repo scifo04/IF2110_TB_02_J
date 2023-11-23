@@ -31,13 +31,15 @@ typedef struct {
 } Draft;
 
 /* Definisi akses dengan Selektor : Set dan Get */
+#define DBuffer(S) (S).buffer
 #define Top(S) (S).TOP
 #define InfoTops(S) (S).buffer[(S).TOP]
 #define Cap(S) (S).capacity
+#define DAuthor(S) (S).author
 
 /* ************ Prototype ************ */
 /* *** Konstruktor/Kreator *** */
-void CreateEmpty_Draft(Draft *S, Word currentuser);
+void CreateEmpty_Draft(Draft *S, Word currentuser, int draftSize);
 /* I.S. sembarang; */
 /* F.S. Membuat sebuah stack S yang kosong berkapasitas 0 */
 /* Ciri stack kosong : TOP bernilai Nil */
@@ -74,7 +76,7 @@ void compressDraft(Draft *S);
         Jika TERBIT maka kicau langsung diterbitkan
         JIKA HAPUS maka operasi sebelumnya diabaikan
 */
-void createDraft(Draft *S, ListKicauan kicauanList, Word currentuser);
+void createDraft(Draft *S, ListKicauan *kicauanList, Word currentuser);
 
 /* ************ Menampilkan Draft Kicau ************ */
 /* Menampilkan draft terbaru (time-based) dan melakukan operasi KEMBALI atau HAPUS atau UBAH atau TERBIT  */
@@ -89,6 +91,8 @@ void BacaDraft(Word *isiTwit);
 
 Twit twitDraftToTwit(Word *W, ListKicauan kicauanList, Word currentuser);
 
-void displayDraft(Draft *S, ListKicauan kicauanList, Word currentuser);
+void displayDraft(Draft *S, ListKicauan *kicauanList, Word currentuser);
+
+Draft copyDraft(Draft S, Draft *T);
 
 #endif

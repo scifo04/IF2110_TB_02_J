@@ -9,12 +9,13 @@ static Account currentuser;
 static Affection friends;
 static ListKicauan Kicauan;
 static QueueFR requests;
+static Word file_balasan;
+static Word file_draf;
+static Word file_kicauan;
+static Word file_pengguna;
+static Word file_utas;
 int id_untuk_balas;
 int idUtas = 1; // ID Utas selanjutnya kalau ada yang buat, auto increment dari 1
-
-void enter() {
-    printf("\n");
-}
 
 void inisialisasi() {
     Word word_inpute;
@@ -23,15 +24,21 @@ void inisialisasi() {
     printf("|  |_)  | |  |  |  | |  |_)  |    |  |_)  | |  | |  |_)  |    \n");
     printf("|   _  <  |  |  |  | |      /     |   _  <  |  | |      /     \n");
     printf("|  |_)  | |  `--'  | |  |\\  \\----.|  |_)  | |  | |  |\\  \\----.\n");
-    printf("|______/   \\______/  | _| `._____||______/  |__| | _| `._____|\n");
-    enter();
-    printf("Selamat datang di BurBir.\n");
-    enter();
-    printf("Aplikasi untuk studi kualitatif mengenai perilaku manusia dengan menggunakan metode (pengambilan data berupa) Focused Group Discussion kedua di zamannya.\n");
-    enter();
+    printf("|______/   \\______/  | _| `._____||______/  |__| | _| `._____|\n\n");
+    printf("Selamat datang di BurBir.\n\n");
+    printf("Aplikasi untuk studi kualitatif mengenai perilaku manusia dengan menggunakan metode (pengambilan data berupa) Focused Group Discussion kedua di zamannya.\n\n");
     printf("Silahkan masukan folder konfigurasi untuk dimuat: ");
     STARTWORD();
-    word_inpute = currentWord;
+    word_inpute = concatWordStart("./", currentWord);
+    file_balasan = concatWordEnd(word_inpute, "/balasan.config");
+    file_draf = concatWordEnd(word_inpute, "/draf.config");
+    file_kicauan = concatWordEnd(word_inpute, "/kicauan.config");
+    file_pengguna = concatWordEnd(word_inpute, "/pengguna.config");
+    file_utas = concatWordEnd(word_inpute, "/utas.config");
+    /* CONTOH TULIS FILE
+    FILE *aaa = fopen(file_utas.TabWord, "w");
+    fwrite("vdsvadsas", 1, 9, aaa); 1: ukuran byte data (char itu 1, int itu 4, dst) 9: banyak elemen
+    fclose(aaa);*/ //jangan lupa close
 }
 
 void load (Word W);

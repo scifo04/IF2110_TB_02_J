@@ -223,3 +223,38 @@ boolean substring_beginning (Word W1, Word W2) {
     }
     return check;
 }
+
+Word concatWordStart(char* A, Word B){
+    Word C; C.Length = 0;
+    int i = 0;
+    while (A[i] != '\0'){
+        if (C.Length < NMax){
+            C.TabWord[C.Length] = A[i];
+            C.Length++;
+        }
+        i++;
+    }
+    int L = C.Length;
+    for (i = 0; i < B.Length; i++) {
+        if (C.Length < NMax){
+            C.TabWord[i + L] = B.TabWord[i]; C.Length++;
+        }
+    }
+    if (C.Length < NMax){C.TabWord[C.Length] = '\0';}
+    return C;
+}
+
+Word concatWordEnd(Word A, char *B){
+    Word C;
+    PasteWord(A, &C);
+    int i = 0;
+    while (B[i] != '\0'){
+        if (C.Length < NMax){
+            C.TabWord[C.Length] = B[i];
+            C.Length++;
+        }
+        i++;
+    }
+    if (C.Length < NMax){C.TabWord[C.Length] = '\0';}
+    return C;
+}
