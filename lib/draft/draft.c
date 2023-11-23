@@ -211,7 +211,7 @@ void displayDraft(Draft *S, ListKicauan *kicauanList, Word currentuser){
                 DATETIME D; CreateDATETIME(&D); dateTwitDraft(kicauBaru) = D; 
                 Pushs(S, kicauBaru);
             }
-            else{ // TERBIT
+            else if(isWordSimilar(currentWord, "TERBIT")){ // TERBIT
                 Twit drafTwit = twitDraftToTwit(&isiDraft, *kicauanList, currentuser);
                 insertLast_ListKicauan(kicauanList, drafTwit);
                 SuccessTwit(drafTwit);
@@ -219,7 +219,7 @@ void displayDraft(Draft *S, ListKicauan *kicauanList, Word currentuser){
                 Pops(S, &delVal);
             }
         }
-        else{
+        else if(isWordSimilar(currentWord, "TERBIT")){
             Word isiDraft = isiTwitDraft(InfoTops(*S));
             Twit drafTwit = twitDraftToTwit(&isiDraft, *kicauanList, currentuser);
             insertLast_ListKicauan(kicauanList, drafTwit);

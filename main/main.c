@@ -403,6 +403,7 @@ void BuatDraft(){
             createDraft(&myDraft, &Kicauan, currentuser.username);
         }
     }
+    else {printf("Weh, login dulu dong!!!\n\n");}
 }
 
 void LihatDraft(){
@@ -414,6 +415,7 @@ void LihatDraft(){
             displayDraft(&myDraft, &Kicauan, currentuser.username);
         }
     }
+    else {printf("Weh, login dulu dong!!!\n\n");}
 }
 
 void BuatUtas(int idKicau){
@@ -812,18 +814,18 @@ void Save() {
     printWord(currentWord);
     printf("\n");
     struct stat folderStats;
-    if (stat(folderPath, &folderStats) == 0 && S_ISDIR(folderStats.st_mode)) {
-        printf("Folder exists.\n");
-    } else {
-        printf("Folder does not exist. Making a new folder...\n");
-        if (mkdir(folderPath,0777) == 0) {
-            printf("Folder created successfully\n");
-        } else {
-            printf("FAIL\n");
-        }
-    }
+    // if (stat(folderPath, &folderStats) == 0 && S_ISDIR(folderStats.st_mode)) {
+    //     printf("Folder exists.\n");
+    // } else {
+    //     printf("Folder does not exist. Making a new folder...\n");
+    //     if (mkdir(folderPath,0777) == 0) {
+    //         printf("Folder created successfully\n");
+    //     } else {
+    //         printf("FAIL\n");
+    //     }
+    // }
 
-    save_pengguna(folderPath);
+    // save_pengguna(folderPath);
     // save_kicauan();
     // save_balasan();
     // save_draf();
