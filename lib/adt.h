@@ -17,5 +17,6 @@
 #include "wordmachine/charmachine.h"
 #include "teman/temanreq.h"
 #include "tree/tree.h"
+#include "draft/draft.h"
 
 #endif

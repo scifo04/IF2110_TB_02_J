@@ -10,6 +10,7 @@ static boolean hasLogged = false;
 static Account currentuser;
 static Affection friends;
 static ListKicauan Kicauan;
+static Draft myDraft;
 static QueueFR requests;
 static Word file_balasan;
 static Word file_draf;
@@ -390,6 +391,29 @@ void UbahKicauan(int idKicau){
     if (hasLogged){
         EditKicauan(&Kicauan, idKicau, currentuser, acc);
     } else {printf("Weh, login dulu dong!!!\n");}
+}
+
+void BuatDraft(){
+    if (hasLogged){
+        if (!wordSimilar(myDraft.author, currentuser.username)){
+            CreateEmpty_Draft(&myDraft, currentuser.username, 50);
+            createDraft(&myDraft, &Kicauan, currentuser.username);
+        }
+        else{
+            createDraft(&myDraft, &Kicauan, currentuser.username);
+        }
+    }
+}
+
+void LihatDraft(){
+    if (hasLogged){
+        if (!wordSimilar(myDraft.author, currentuser.username)){
+            printf("Yah, anda belum memiliki draf apapun! Buat dulu ya :D\n");
+        }
+        else{
+            displayDraft(&myDraft, &Kicauan, currentuser.username);
+        }
+    }
 }
 
 void BuatUtas(int idKicau){
@@ -947,6 +971,12 @@ void readCommand (Word W) {
         printf("\n");
     } else if (wordSimilarWithoutLength(W, CopyWord_Any("HAPUS_BALASAN"))) {
         hapusBalasan(W, acc, friends, Kicauan);
+        printf("\n");
+    } else if (wordSimilarWithoutLength(W, CopyWord_Any("BUAT_DRAF"))) {
+        BuatDraft();
+        printf("\n");
+    } else if (wordSimilarWithoutLength(W, CopyWord_Any("LIHAT_DRAF"))){
+        LihatDraft();
         printf("\n");
     } else if (wordSimilarWithoutLength(W, CopyWord_Any("UTAS"))) {
         int id = Akuisisi_First_Integer(W);

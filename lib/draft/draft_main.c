@@ -100,8 +100,10 @@ int main(){
         case 1:
             // Draft kosong belum dibuat
             // res -> false, false : top = 0 dan cap = 0
+            printf("Cap %d", Cap(myDraft));
             printf("Is the draft empty: %s\n", IsEmpty_Draft(myDraft) ? "true" : "false");
             printf("Is the draft full: %s\n", IsFull_Draft(myDraft) ? "true" : "false");
+            printf("Cap %d", Cap(myDraft));
             displayDraft(&myDraft, &Kicauan, currentuser.username);
             break;
 
