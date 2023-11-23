@@ -68,4 +68,8 @@ void PasteWord(Word WIn, Word *WOut);
 boolean intCheck (Word W);
 boolean substring_beginning (Word W1, Word W2);
 
+Word concatWordStart(char* A, Word B);
+Word concatWordEnd(Word A, char *B);
+/* Untuk save/load */
+
 #endif

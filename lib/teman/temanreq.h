@@ -77,4 +77,6 @@ void deQueueFR(QueueFR *q, ELFRType *x);
 
 int indexOfQueueFR(QueueFR q, int idRequester);
 /* Mengembalikan indeks idRequester di suatu QueueFR*/
+
+void displayQueueFR(QueueFR q);
 #endif
