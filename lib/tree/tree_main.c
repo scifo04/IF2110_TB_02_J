@@ -12,6 +12,8 @@ int main () {
     DATETIME d;
     int input;
     Word user, pesan;
+    ListAcc LAcc;
+    Affection aff;
 
     printf("Masukkan input tanpa titik koma: ");
     scanf("%d", &input);
@@ -131,7 +133,13 @@ int main () {
             AddSibling(&r, s);
 
             u = getAddressWithId(p, 3);
-            printf("%d", Id(u));
+            printf("%d\n", Id(u));
+
+            u = getAddressWithId(p, 4);
+            printf("%d\n", Id(u));
+
+            u = getAddressWithId(p, 5);
+            printf("%d\n", Id(u));
     }
 
     return 0;

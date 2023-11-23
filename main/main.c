@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "../lib/adt.h"
+#include "../lib/save_balasan.c"
 
 static boolean allowexit = false;
 static ListAcc acc;
@@ -120,6 +121,14 @@ Word copyWord_CetakUtas() {
     w.Length = 10;
     w.TabWord[0] = 'C'; w.TabWord[1] = 'E'; w.TabWord[2] = 'T'; w.TabWord[3] = 'A'; w.TabWord[4] = 'K'; w.TabWord[5] = '_';
     w.TabWord[6] = 'U'; w.TabWord[7] = 'T'; w.TabWord[8] = 'A'; w.TabWord[9] = 'S';
+    return w;
+}
+
+Word copyWord_save_balasan() {
+    Word w;
+    w.Length = 12;
+    w.TabWord[0] = 'S'; w.TabWord[1] = 'A'; w.TabWord[2] = 'V'; w.TabWord[3] = 'E'; w.TabWord[4] = '_'; w.TabWord[5] = 'B';
+    w.TabWord[6] = 'A'; w.TabWord[7] = 'L'; w.TabWord[8] = 'A'; w.TabWord[9] = 'S'; w.TabWord[10] = 'A'; w.TabWord[11] = 'N';
     return w;
 }
 
@@ -635,6 +644,63 @@ void balas (Word input, ListAcc acc, Affection friends, ListKicauan Kicauan) {
     }
 }
 
+void printTreeBalasan (addressTree p, int h, ListAcc acc, Affection aff, int current_user_id) {
+    if(p != NULL){
+        if (getPublicitybyUsername(acc, User(p)) || isFriends_Affection(aff, current_user_id, Id(p))) {
+            int i;
+            printf("\n");
+            for (i = 0; i < h; i++){
+                printf("    ");
+            }
+            printf("| %d", Id(p)); printf("\n");
+
+            for(i = 0; i < h; i++){
+                printf("    ");
+            }
+            printf("| "); printWord(User(p));
+
+            printf("\n");
+            for(i = 0; i < h; i++){
+                printf("    ");
+            }
+            printf("| "); TulisDATETIME(Datetime(p)); printf("\n");
+
+            for (i = 0; i < h; i++){
+                printf("    ");
+            }
+            printf("| "); printWord(Pesan(p)); printf("\n");
+
+            printTreeBalasan(FirstChild(p), h + 1, acc, aff, current_user_id);
+            printTreeBalasan(NextSibling(p), h, acc, aff, current_user_id);
+        }
+        else {
+            int i;
+            printf("\n");
+            for(i = 0; i < h; i++){
+                printf("    ");
+            }
+            printf("| %d", Id(p)); printf("\n");
+
+            for (i = 0; i < h; i++){
+                printf("    ");
+            }
+            printf("| PRIVAT\n");
+
+            for(i = 0; i < h; i++){
+                printf("    ");
+            }
+            printf("| PRIVAT\n");
+
+            for(i = 0; i < h; i++){
+                printf("    ");
+            }
+            printf("| PRIVAT\n");
+            printTreeBalasan(FirstChild(p), h + 1, acc, aff, current_user_id);
+            printTreeBalasan(NextSibling(p), h, acc, aff, current_user_id);
+            }
+    }
+}
+
 void print_balasan(Word input, ListAcc acc, Affection friends, ListKicauan Kicauan) {
     int space_count, IDKicau, id_user_dibalas, current_user_id, i;
     Word username_dibalas;
@@ -762,6 +828,7 @@ void hapusBalasan(Word input, ListAcc acc, Affection friends, ListKicauan Kicaua
     }
 }
 
+
 void readCommand (Word W) {
     if (isWordSimilar(W, "EXIT")) {
         allowexit = true;
@@ -848,6 +915,8 @@ void readCommand (Word W) {
     } else if (wordSimilarWithoutLength(W, copyWord_CetakUtas())) {
         int id = Akuisisi_First_Integer(W);
         CetakUtas(id);
+    } else if (wordSimilar(W, copyWord_save_balasan())) {
+        save_balasan(Kicauan);
     }
 }
 

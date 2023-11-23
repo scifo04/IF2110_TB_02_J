@@ -58,8 +58,6 @@ void printChild(addressTree P);
 
 void printTree (addressTree P, int h);
 
-void printTreeBalasan (addressTree p, int h, ListAcc acc, Affection aff, int current_user_id);
-
 boolean isIdTreeElmt(addressTree P, int id);
 
 addressTree getAddressBefore (addressTree P, addressTree R);
