@@ -64,4 +64,7 @@ addressTree getAddressBefore (addressTree P, addressTree R);
 
 addressTree getAddressWithId (addressTree P, int id);
 
+addressTree getChildAddress (addressTree p, addressTree q);
+
+addressTree getParent(addressTree root,addressTree C);
 #endif

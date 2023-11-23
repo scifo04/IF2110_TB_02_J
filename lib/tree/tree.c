@@ -156,3 +156,27 @@ addressTree getAddressWithId(addressTree P, int id) {
         return NULL;
     }
 }
+
+addressTree getParent (addressTree root, addressTree p){
+    if (FirstChild(root) == p) {
+        return root;
+    }
+    else {
+        addressTree q = FirstChild(root);
+        while (q != NULL) {
+            if (NextSibling(q) == p){
+                return root;
+            }
+            else {
+                addressTree r = getParent(q, p);
+                if (r != NULL) {
+                    return r;
+                }
+                else {
+                    p = NextSibling(q);
+                }
+            }
+        }
+        return NULL;
+    }
+}
