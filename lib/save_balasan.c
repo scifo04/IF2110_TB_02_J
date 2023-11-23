@@ -3,17 +3,6 @@
 #include "kicauan/kicauan.h"
 #include "datetime/datetime.h"
 
-
-void fprintf_time(FILE *file, TIME T) {
-    fprintf(file, "%02d:%02d:%02d", Hour(T), Minute(T), Second(T));
-}
-
-void fprintf_datetime(FILE *file, DATETIME D) {
-    fprintf(file, "%d/%d/%d ", Day(D), Month(D), Year(D));
-    fprintf_time(file, Time(D));
-    fprintf(file, "\n");
-}
-
 int countElmtTree(addressTree p) {
     if (p != NULL) {
         return 1 + countElmtTree(FirstChild(p)) + countElmtTree(NextSibling(p));
@@ -38,7 +27,7 @@ void displayBalasan(FILE *file, addressTree p, addressTree root, ListKicauan LKi
             fprintf(file, "%c", User(p).TabWord[k]);
         }
         fprintf(file, "\n");
-        fprintf_datetime(file, Datetime(p));
+        TulisDATETIMEFILE(Datetime(p), file);
         displayBalasan(file, FirstChild(p), root, LKicau, i);
         displayBalasan(file, NextSibling(p), root, LKicau, i);
     }

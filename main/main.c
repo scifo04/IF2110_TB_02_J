@@ -40,6 +40,21 @@ void inisialisasi() {
 
 void load (Word W);
 
+void save_kicauan(){
+    FILE *tweeter = fopen(file_kicauan.TabWord, "w");
+    if (tweeter != NULL){
+        fprintf(tweeter, "%d\n", ListKicauan_NEFF(Kicauan));
+        for (int i = 0; i < ListKicauan_NEFF(Kicauan); i++){
+            fprintf(tweeter, "%d\n", ID(ListKicauan_ELMT(Kicauan, i)));
+            fprintWord(IsiTwit(ListKicauan_ELMT(Kicauan, i)), tweeter);
+            fprintf(tweeter, "%d\n", Like(ListKicauan_ELMT(Kicauan, i)));
+            fprintWord(Author(ListKicauan_ELMT(Kicauan, i)), tweeter);
+            TulisDATETIMEFILE(DateTime(ListKicauan_ELMT(Kicauan, i)), tweeter);
+        }
+    }
+    fclose(tweeter);
+}
+
 // DAFTAR
 void Daftar () {
     Account A;
