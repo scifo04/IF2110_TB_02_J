@@ -1,6 +1,7 @@
 #ifndef DATETIME_H
 #define DATETIME_H
 
+#include <stdio.h>
 #include "../boolean/boolean.h"
 #include "time.h"
 #include <time.h>
@@ -19,6 +20,7 @@ typedef struct {
 
 void CreateDATETIME(DATETIME *D);
 void TulisDATETIME(DATETIME D);
+void TulisDATETIMEFILE(DATETIME D, FILE *file);
 
 // boolean DLT(DATETIME D1, DATETIME D2);
 // boolean DGT(DATETIME D1, DATETIME D2);

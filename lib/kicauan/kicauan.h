@@ -17,7 +17,6 @@ typedef struct {
     Word author; // username
     DATETIME datetime;
     Word isiTwit; /*Panjang maksimal 280 Karakter*/
-    Word tagar;
     Tree Balasan;
     AddressUtas Utas;
 } Twit;
@@ -29,7 +28,6 @@ typedef struct {
 #define Author(K) (K).author
 #define DateTime(K) (K).datetime
 #define IsiTwit(K) (K).isiTwit
-#define Tagar(K) (K).tagar
 #define Balasan(K) (K).Balasan
 #define Utas(K) (K).Utas
 
@@ -79,9 +77,6 @@ void CreateTwit(Twit *K, ListKicauan kicauan, Word currentusername);
 /* Twit yang dimasukkan terpotong secara otomatis dengan jumlah karakter maksimum 280.
 Twit tidak boleh berisi spasi*/
 void BacaTwit(Word *isiTwit);
-
-/*Menambahkan tagar pada Twit*/
-void BacaTagar(Word *tagar);
 
 /* Detail Twit*/
 void DetailTwit(Twit K);
