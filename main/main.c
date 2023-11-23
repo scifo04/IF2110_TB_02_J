@@ -55,6 +55,31 @@ void save_kicauan(){
     fclose(tweeter);
 }
 
+void save_utas(){
+    FILE *notthreads = fopen(file_utas.TabWord, "w");
+    if (notthreads != NULL){
+        fprintf(notthreads, "%d\n", (idUtas - 1));
+        for (int i = 1; i < idUtas; i++){
+            int j;
+            for(j = 0; j < ListKicauan_NEFF(Kicauan); j++){ // cari twit dengan id utas i
+                if (IDUtas(ListKicauan_ELMT(Kicauan, j)) == i){break;}
+            }
+            if (j < ListKicauan_NEFF(Kicauan)){
+                fprintf(notthreads, "%d\n", ID(ListKicauan_ELMT(Kicauan, j)));
+                AddressUtas Utas_Traversal = Utas(ListKicauan_ELMT(Kicauan, j));
+                int LU = lengthUtas(Utas_Traversal); fprintf(notthreads, "%d\n", LU);
+                for (int k = 0; k < LU; k++){
+                    fprintWord(isiTwitUtas(Utas_Traversal), notthreads);
+                    fprintWord(Author(ListKicauan_ELMT(Kicauan, j)), notthreads);
+                    TulisDATETIMEFILE(waktuUtas(Utas_Traversal), notthreads);
+                    Utas_Traversal = Sambungan(Utas_Traversal);
+                }
+            }
+        }
+    }
+    fclose(notthreads);
+}
+
 // DAFTAR
 void Daftar () {
     Account A;
