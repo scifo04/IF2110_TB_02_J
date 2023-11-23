@@ -12,7 +12,6 @@ void CreateTwit(Twit *K, ListKicauan kicauan, Word currentusername){
     Author(*K) = currentusername;
     DATETIME D; CreateDATETIME(&D); DateTime(*K) = D; 
     Word isiTwit; BacaTwit(&isiTwit); IsiTwit(*K) = isiTwit;
-    Word tagar; BacaTagar(&tagar); Tagar(*K) = tagar;
     Tree t; CreateTree(&t); Balasan(*K) = t;
     AddressUtas U; CreateUtas(&U); Utas(*K) = U;
 }
@@ -37,16 +36,6 @@ void BacaTwit(Word *isiTwit){
     }
 }
 
-/*Membaca Tagar*/
-void BacaTagar(Word *tagar){
-    currentWord.TabWord[0] = '\0'; //Mengosongkan currentWord
-    currentWord.Length = 0;
-    printf("Masukkan tagar: \n");
-    STARTWORD();
-    printf("\n");
-    *tagar = currentWord;
-}
-
 /* Detail Twit*/
 void DetailTwit(Twit K){
     printf("| ID = %d\n", ID(K));
@@ -58,9 +47,6 @@ void DetailTwit(Twit K){
     printf("\n");
     printf("| ");
     printWord(IsiTwit(K));
-    printf("\n");
-    printf("| #");
-    printWord(Tagar(K));
     printf("\n");
     printf("| Disukai = %d\n", Like(K));
 }
@@ -104,7 +90,6 @@ void EditKicauan(ListKicauan *l, int idKicauan, Account currentuser, ListAcc acc
         if(getIdx_Username(accounts, Author(ListKicauan_ELMT(*l, idKicauan-1))) == getIdx_Account(accounts, currentuser)){
             Twit *K = &ListKicauan_ELMT(*l, idKicauan-1);
             Word isiTwit; BacaTwit(&isiTwit); IsiTwit(*K) = isiTwit;
-            Word tagar; BacaTagar(&tagar); Tagar(*K) = tagar;
             DATETIME newDatetime; CreateDATETIME(&newDatetime); DateTime(*K) = newDatetime; 
 
             printf("Selamat! kicauan telah diterbitkan!\n");

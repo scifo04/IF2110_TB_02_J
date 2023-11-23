@@ -35,10 +35,6 @@ void inisialisasi() {
     file_kicauan = concatWordEnd(word_inpute, "/kicauan.config");
     file_pengguna = concatWordEnd(word_inpute, "/pengguna.config");
     file_utas = concatWordEnd(word_inpute, "/utas.config");
-    /* CONTOH TULIS FILE
-    FILE *aaa = fopen(file_utas.TabWord, "w");
-    fwrite("vdsvadsas", 1, 9, aaa); 1: ukuran byte data (char itu 1, int itu 4, dst) 9: banyak elemen
-    fclose(aaa);*/ //jangan lupa close
 }
 
 void load (Word W);
@@ -441,10 +437,10 @@ void BuatUtas(int idKicau){
         printf("\nKicauan tidak ditemukan\n");
     } else if (!wordSimilar(Author(ListKicauan_ELMT(Kicauan, (idKicau - 1))), currentuser.username)){
         printf("\nKicauan ini bukan milik anda!\n");
+    } else if (Utas(ListKicauan_ELMT(Kicauan, (idKicau - 1))) != NULL){
+        printf("\nTidak boleh ada dua utas yang memiliki kicauan utama yang sama!!!\n");
     } else {
         IDUtas(ListKicauan_ELMT(Kicauan, (idKicau - 1))) = idUtas; idUtas++;
-        // buat utas baru, yang lama dihapus
-        while (Utas(ListKicauan_ELMT(Kicauan, (idKicau - 1))) != NULL){deleteAtUtas(&Utas(ListKicauan_ELMT(Kicauan, (idKicau - 1))), 1);}
         printf("\nUtas berhasil dibuat!\n\nMasukkan kicauan:\n");
         STARTWORD(); DATETIME WaktuUtas; CreateDATETIME(&WaktuUtas); insertLastUtas(&Utas(ListKicauan_ELMT(Kicauan, (idKicau - 1))), WaktuUtas, currentWord);
         printf("\nApakah Anda ingin melanjutkan utas ini? (YA/TIDAK) "); STARTWORD();
