@@ -16,7 +16,7 @@ void displayBalasan(FILE *file, addressTree p, addressTree root, ListKicauan LKi
             fprintf(file, "-1 %d\n", Id(p));
         }
         else {
-            q = getAddressBefore(root, p);
+            q = getParent(root, p);
             fprintf(file, "%d %d\n", Id(q), Id(p));
         }
         for (int k = 0; k < Pesan(p).Length; k++) {
