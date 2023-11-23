@@ -7,6 +7,8 @@
 #include "../wordmachine/wordmachine.h"
 #include "../wordmachine/charmachine.h"
 #include "../affection/affection.h"
+#include <unistd.h>
+
 
 void createDummyListAccounts(ListAcc *ACC){
     CreateListAccount(ACC);
@@ -71,9 +73,6 @@ void createDummyTwit(Twit *twit, int idKicau, Word author) {
 
     twit->isiTwit.TabWord[0] = 'D'; twit->isiTwit.TabWord[1] = 'u'; twit->isiTwit.TabWord[2] = 'm';  twit->isiTwit.TabWord[3] = 'm'; twit->isiTwit.TabWord[4] = 'y'; 
     twit->isiTwit.Length = 5;
-
-    twit->tagar.TabWord[0] = 'D';
-    twit->tagar.Length = 1;
 }
 
 int main(){
@@ -88,71 +87,77 @@ int main(){
     CreateListKicauan(&Kicauan, 2);
     /*----------------------------------------------------------------------------------------------------*/
      // Test Test Validasi
-    lenKicauan = listLength_ListKicauan(Kicauan);
-    printf("List Length: %d\n", lenKicauan);
 
-    Draft myDraft;
-    Word tempTwit;
+    Draft myDraft, tempDraft;
+    twitDraft kicau, delVal;
+    Word isiDraft;;
 
 
-    currentWord.TabWord[0] = '\0'; //Mengosongkan currentWord
-    currentWord.Length = 0;
-    STARTWORD();
+    int cases;
+    scanf("%d", &cases);
 
-    if(isWordSimilar(currentWord, "1")){
-        // Draft kosong belum dibuat
-        // res -> false, false : top = 0 dan cap = 0
-        printf("Is the draft empty: %s\n", IsEmpty_Draft(myDraft) ? "true" : "false");
-        printf("Is the draft full: %s\n", IsFull_Draft(myDraft) ? "true" : "false");
-        displayDraft(&myDraft, &Kicauan, currentuser.username);
-    }
-    else if (isWordSimilar(currentWord, "2")){
-        // Draft kosong dibuat
-        // res -> Yah, anda belum memiliki draf apapun! Buat dulu ya :D
-        CreateEmpty_Draft(&myDraft, currentuser.username, 1);
-        printf("Is the draft empty: %s\n", IsEmpty_Draft(myDraft) ? "true" : "false");
-        printf("Is the draft full: %s\n", IsFull_Draft(myDraft) ? "true" : "false");
+    switch (cases){
+        case 1:
+            // Draft kosong belum dibuat
+            // res -> false, false : top = 0 dan cap = 0
+            printf("Is the draft empty: %s\n", IsEmpty_Draft(myDraft) ? "true" : "false");
+            printf("Is the draft full: %s\n", IsFull_Draft(myDraft) ? "true" : "false");
+            displayDraft(&myDraft, &Kicauan, currentuser.username);
+            break;
 
-        displayDraft(&myDraft, &Kicauan, currentuser.username);
-    }
-    else{
-            // Draft kosong
+        case 2:
+            // Draft kosong dibuat
+            // res -> Yah, anda belum memiliki draf apapun! Buat dulu ya :D
             CreateEmpty_Draft(&myDraft, currentuser.username, 1);
-            displayDraft(&myDraft, &Kicauan, currentuser.username);
-
-            createDraft(&myDraft, &Kicauan, currentuser.username);
-            createDraft(&myDraft, &Kicauan, currentuser.username);
-            createDraft(&myDraft, &Kicauan, currentuser.username);
-            createDraft(&myDraft, &Kicauan, currentuser.username);
-            createDraft(&myDraft, &Kicauan, currentuser.username);
-            createDraft(&myDraft, &Kicauan, currentuser.username);
-            createDraft(&myDraft, &Kicauan, currentuser.username);
-            createDraft(&myDraft, &Kicauan, currentuser.username);
-            createDraft(&myDraft, &Kicauan, currentuser.username);
-            createDraft(&myDraft, &Kicauan, currentuser.username);
-            createDraft(&myDraft, &Kicauan, currentuser.username);
-            createDraft(&myDraft, &Kicauan, currentuser.username);
+            printf("Is the draft empty: %s\n", IsEmpty_Draft(myDraft) ? "true" : "false");
+            printf("Is the draft full: %s\n", IsFull_Draft(myDraft) ? "true" : "false");
 
             displayDraft(&myDraft, &Kicauan, currentuser.username);
+            break;
+        case 3:
+            // Compressing
+            CreateEmpty_Draft(&myDraft, currentuser.username, 4);
+            printf("%d\n", Cap(myDraft));
 
-            displayDraft(&myDraft, &Kicauan, currentuser.username);
-            displayDraft(&myDraft, &Kicauan, currentuser.username);
-            displayDraft(&myDraft, &Kicauan, currentuser.username);
-            displayDraft(&myDraft, &Kicauan, currentuser.username);
-            displayDraft(&myDraft, &Kicauan, currentuser.username);
-            displayDraft(&myDraft, &Kicauan, currentuser.username);
-            displayDraft(&myDraft, &Kicauan, currentuser.username);
-            displayDraft(&myDraft, &Kicauan, currentuser.username);
-            displayDraft(&myDraft, &Kicauan, currentuser.username);
-            displayDraft(&myDraft, &Kicauan, currentuser.username);
-            displayDraft(&myDraft, &Kicauan, currentuser.username);
-            displayDraft(&myDraft, &Kicauan, currentuser.username);
-            displayDraft(&myDraft, &Kicauan, currentuser.username);
-            displayDraft(&myDraft, &Kicauan, currentuser.username);
-            displayDraft(&myDraft, &Kicauan, currentuser.username);
 
+            isiDraft.Length = 2;
+            isiDraft.TabWord[0] = 'H'; isiDraft.TabWord[1] = 'i';
+            isiTwitDraft(kicau) = isiDraft;
+            DATETIME D1; CreateDATETIME(&D1); dateTwitDraft(kicau) = D1;
+            Pushs(&myDraft, kicau);
+
+            printf("%d to ", Cap(myDraft));
+            Pops(&myDraft, &delVal);
+            printf("%d\n", Cap(myDraft));
+            break;
+        case 4:
+            // multiple terbit
+            CreateEmpty_Draft(&myDraft, currentuser.username, 4);
+
+            isiDraft.Length = 2;
+            isiDraft.TabWord[0] = 'H'; isiDraft.TabWord[1] = 'i';
+            isiTwitDraft(kicau) = isiDraft;
+            DATETIME D2; CreateDATETIME(&D2); dateTwitDraft(kicau) = D2;
+            Pushs(&myDraft, kicau);
+            CreateDATETIME(&D2); dateTwitDraft(kicau) = D2;
+            Pushs(&myDraft, kicau);
+
+
+            isiDraft = isiTwitDraft(InfoTops(myDraft));
+            Twit drafTwit = twitDraftToTwit(&isiDraft, Kicauan, currentuser.username);
+            insertLast_ListKicauan(&Kicauan, drafTwit);
+            SuccessTwit(drafTwit);
+            Pops(&myDraft, &delVal);
+            
+
+            sleep(2);
+            isiDraft = isiTwitDraft(InfoTops(myDraft));
+            drafTwit = twitDraftToTwit(&isiDraft, Kicauan, currentuser.username);
+            insertLast_ListKicauan(&Kicauan, drafTwit);
+            SuccessTwit(drafTwit);
+            Pops(&myDraft, &delVal);
+            break;
     }
-
 
 
     return 0;

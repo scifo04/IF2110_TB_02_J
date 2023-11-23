@@ -28,6 +28,9 @@ programmain: main/main.c
 	./lib/queue/queue_main
 	gcc -o lib/stack/stack_main lib/stack/stack_main.c lib/stack/stack.c -lm
 	clear
+	./lib/draft/draft_main
+	gcc -o lib/draft/draft_main lib/draft_main.c draft.c lib/kicauan/kicauan.c lib/account/account.c lib/wordmachine/wordmachine.c lib/wordmachine/charmachine.c lib/affection/affection.c lib/datetime/datetime.c lib/datetime/time.c lib/utas/utas.c lib/tree/tree.c lib/pcolor/pcolor.c lib/teman/temanreq.c -lm
+	clear
 	./lib/stack/stack_main
 	gcc -o lib/teman/temanreq_main lib/teman/temanreq_main.c lib/teman/temanreq.c lib/wordmachine/wordmachine.c lib/wordmachine/charmachine.c lib/affection/affection.c -lm
 	clear
