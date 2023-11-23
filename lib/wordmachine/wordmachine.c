@@ -180,6 +180,21 @@ void PasteWord(Word WIn, Word *WOut) {
     (*WOut).Length = WIn.Length;
 }
 
+int strilen(char *c) {
+    int i = 0;
+    while (c[i] != '\0') {
+        i += 1;
+    }
+    return i;
+}
+
+void CopyWord_Any (Word *W, char *c) {
+    (*W).Length = strilen(c);
+    for (int i = 0; i < (*W).Length; i++) {
+        (*W).TabWord[i] = c[i];
+    }
+}
+
 boolean intCheck (Word W) {
     boolean check = true;
     for (int i = 0; i < W.Length; i++) {

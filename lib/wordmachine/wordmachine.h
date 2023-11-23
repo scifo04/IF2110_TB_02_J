@@ -62,8 +62,10 @@ boolean isWordSimilar(Word W, char *W2);
 
 int Akuisisi_First_Integer (Word W);
 int Akuisisi_Second_Integer (Word W);
+void CopyWord_Any (Word *W, char *c);
 /* untuk command-command yang ada tambahan int di belakangnya */
 
+int strilen (char *c);
 void PasteWord(Word WIn, Word *WOut);
 boolean intCheck (Word W);
 boolean substring_beginning (Word W1, Word W2);
