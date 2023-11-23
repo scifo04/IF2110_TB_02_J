@@ -9,14 +9,13 @@
 #include "pcolor/pcolor.h"
 #include "listdin/listdin.h"
 #include "liststatik/liststatik.h"
+#include "draft/draft.h"
 #include "matrix/matrix.h"
 #include "queue/queue.h"
-#include "stack/stack.h"
 #include "datetime/time.h"
 #include "wordmachine/wordmachine.h"
 #include "wordmachine/charmachine.h"
 #include "teman/temanreq.h"
 #include "tree/tree.h"
-#include "draft/draft.h"
 
 #endif

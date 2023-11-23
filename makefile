@@ -26,9 +26,6 @@ programmain: main/main.c
 	gcc -o lib/queue/queue_main lib/queue/queue_main.c lib/queue/queue.c -lm
 	clear
 	./lib/queue/queue_main
-	gcc -o lib/stack/stack_main lib/stack/stack_main.c lib/stack/stack.c -lm
-	clear
-	./lib/stack/stack_main
 	gcc -o lib/draft/draft_main lib/draft/draft_main.c lib/draft/draft.c lib/kicauan/kicauan.c lib/account/account.c lib/wordmachine/wordmachine.c lib/wordmachine/charmachine.c lib/affection/affection.c lib/datetime/datetime.c lib/datetime/time.c lib/utas/utas.c lib/tree/tree.c lib/pcolor/pcolor.c lib/teman/temanreq.c -lm
 	clear
 	./lib/draft/draft_main
@@ -38,6 +35,6 @@ programmain: main/main.c
 	gcc -o lib/wordmachine/charword_main lib/wordmachine/charword_main.c lib/wordmachine/charmachine.c lib/wordmachine/wordmachine.c -lm
 	clear
 	./lib/wordmachine/charword_main
-	gcc -o main/main main/main.c lib/pcolor/pcolor.c lib/account/account.c lib/affection/affection.c lib/datetime/datetime.c lib/listdin/listdin.c lib/listlinier/listlinier.c lib/liststatik/liststatik.c lib/matrix/matrix.c lib/queue/queue.c lib/stack/stack.c lib/datetime/time.c lib/teman/temanreq.c lib/wordmachine/charmachine.c lib/wordmachine/wordmachine.c lib/kicauan/kicauan.c lib/utas/utas.c lib/tree/tree.c -lm
+	gcc -o main/main main/main.c lib/pcolor/pcolor.c lib/account/account.c lib/affection/affection.c lib/datetime/datetime.c lib/listdin/listdin.c lib/listlinier/listlinier.c lib/liststatik/liststatik.c lib/matrix/matrix.c lib/queue/queue.c lib/draft/draft.c lib/datetime/time.c lib/teman/temanreq.c lib/wordmachine/charmachine.c lib/wordmachine/wordmachine.c lib/kicauan/kicauan.c lib/utas/utas.c lib/tree/tree.c -lm
 	clear
 	./main/main
