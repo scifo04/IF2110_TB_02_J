@@ -9,7 +9,7 @@ void CreateTwit(Twit *K, ListKicauan kicauan, Word currentusername){
     ID(*K) = listLength_ListKicauan(kicauan)+1; /*Bingung. ListKicauan adalah suatu variabel global di main.*/
     IDUtas(*K) = -1; /*Secara default, Twit bukanlah Utas, kecuali ditandai sebagai Utas*/
     Like(*K) = 0;
-    Author(*K) = currentusername; /*Bingung. Misal Account adalah variabel global yang selalu di-update di main. */
+    Author(*K) = currentusername;
     DATETIME D; CreateDATETIME(&D); DateTime(*K) = D; 
     Word isiTwit; BacaTwit(&isiTwit); IsiTwit(*K) = isiTwit;
     Word tagar; BacaTagar(&tagar); Tagar(*K) = tagar;
@@ -74,7 +74,6 @@ void SuccessTwit(Twit K){
 
 /* MODUL KICAUAN DYNAMIC LIST */
 
-
 /* ********** FITUR ********** */
 /*Pengguna dapat menyukai suatu Twit dengan indeks yang valid, milik pengguna sendiri,
 milik teman, ataupun milik akun publik, (baca: semua selain privat)*/
@@ -82,8 +81,16 @@ void LikeKicauan(ListKicauan *l, int idKicauan, Account currentuser, Affection f
     if(isIdxEff_ListKicauan(*l, idKicauan-1)){ 
         if(getPublicitybyUsername(accounts, Author(ListKicauan_ELMT(*l, idKicauan-1)))){ //Akun publik
             Like(ListKicauan_ELMT(*l, idKicauan-1))++;
+            printf("Selamat! kicauan telah disukai!\n");
+            printf("Detail Kicauan:\n");
+            DetailTwit(ListKicauan_ELMT(*l, idKicauan-1));
+            printf("\n");
         } else if(isFriends_Affection(friends, getIdx_Username(accounts, Author(ListKicauan_ELMT(*l, idKicauan-1))), getIdx_Account(accounts, currentuser))){ //Akun milik sendiri atau teman
             Like(ListKicauan_ELMT(*l, idKicauan-1))++;
+            printf("Selamat! kicauan telah disukai!\n");
+            printf("Detail Kicauan:\n");
+            DetailTwit(ListKicauan_ELMT(*l, idKicauan-1));
+            printf("\n");
         } else {
             printf("Wah, kicauan tersebut dibuat oleh akun privat! Ikuti akun itu dulu ya\n");
         }
@@ -98,7 +105,12 @@ void EditKicauan(ListKicauan *l, int idKicauan, Account currentuser, ListAcc acc
             Twit *K = &ListKicauan_ELMT(*l, idKicauan-1);
             Word isiTwit; BacaTwit(&isiTwit); IsiTwit(*K) = isiTwit;
             Word tagar; BacaTagar(&tagar); Tagar(*K) = tagar;
+            DATETIME newDatetime; CreateDATETIME(&newDatetime); DateTime(*K) = newDatetime; 
 
+            printf("Selamat! kicauan telah diterbitkan!\n");
+            printf("Detail Kicauan:\n");
+            DetailTwit(*K);
+            printf("\n");
         } else {
             printf("Kicauan dengan ID = %d bukan milikmu!\n", idKicauan);
         }
