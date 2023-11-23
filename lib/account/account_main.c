@@ -4,13 +4,13 @@
 #include "../wordmachine/wordmachine.h"
 
 int main () {
-    Word Legi = copyWord_Legi();
-    Word Pon = copyWord_Kliwon();
-    Word Wage = copyWord_Wage();
-    Word Kliwon = copyWord_Kliwon();
-    Word Pahing = copyWord_Pahing();
-    Word YA = copyWord_YA();
-    Word TIDAK = copyWord_TIDAK();
+    Word Legi = CopyWord_Any("Legi");
+    Word Pon = CopyWord_Any("Pon");
+    Word Wage = CopyWord_Any("Wage");
+    Word Kliwon = CopyWord_Any("Kliwon");
+    Word Pahing = CopyWord_Any("Pahing");
+    Word YA = CopyWord_Any("YA");
+    Word TIDAK = CopyWord_Any("TIDAK");
     Account A,B;
     Word W,W2,W3;
     ListAcc L;
