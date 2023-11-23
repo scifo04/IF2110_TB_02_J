@@ -1,18 +1,8 @@
 #include <stdio.h>
 #include "temanreq.h"
-#include "temanreq.c" //khusus shulha, nanti di hapus
-#include "../account/account.c"
-#include "../affection/affection.c"
-#include "../datetime/datetime.c"
-#include "../pcolor/pcolor.c"
-#include "../listdin/listdin.c"
-#include "../liststatik/liststatik.c"
-#include "../matrix/matrix.c"
-#include "../queue/queue.c"
-#include "../stack/stack.c"
-#include "../datetime/time.c"
-#include "../wordmachine/wordmachine.c"
-#include "../wordmachine/charmachine.c"
+#include "../wordmachine/wordmachine.h"
+#include "../affection/affection.h"
+#include "../account/account.h"
 
 void createDummyListAccountsFR(ListAcc *ACC){
     CreateListAccount(ACC);
@@ -101,24 +91,34 @@ int main() {
     CreateFriendRequest(&FR2, 2, 3, friends);
     ELFRType val;
 
-    printf("Is the queue empty: %s\n", isEmptyQueueFR(friendRequests) ? "true" : "false");
-    printf("Queue length: %d\n", length_QueueFR(friendRequests));
-    printf("\n");
+    int r;
+    scanf("%d",&r);
 
-    enQueueFR(&friendRequests, FR1);
-    enQueueFR(&friendRequests, FR2);
-    printf("Friend Requests after Enqueue:\n");
-    displayFriendRequests(friendRequests, accounts);
-    printf("\n");
+    switch (r) {
+        case 1:
+            printf("Is the queue empty: %s\n", isEmptyQueueFR(friendRequests) ? "true" : "false");
+            printf("Queue length: %d\n", length_QueueFR(friendRequests));
+            printf("\n");
 
-    printf("Is the queue empty after enqueuing: %s\n", isEmptyQueueFR(friendRequests) ? "true" : "false");
-    printf("Queue length after enqueuing: %d\n", length_QueueFR(friendRequests));
-    printf("\n");
+        case 2:
+            enQueueFR(&friendRequests, FR1);
+            enQueueFR(&friendRequests, FR2);
+            printf("Friend Requests after Enqueue:\n");
+            displayFriendRequests(friendRequests, accounts);
+            printf("\n");
 
-    deQueueFR(&friendRequests, &val);
-    printf("Friend Requests after Dequeue:\n");
-    displayFriendRequests(friendRequests, accounts);
-    printf("\n");
+            printf("Is the queue empty after enqueuing: %s\n", isEmptyQueueFR(friendRequests) ? "true" : "false");
+            printf("Queue length after enqueuing: %d\n", length_QueueFR(friendRequests));
+            printf("\n");
+
+        case 3:
+            enQueueFR(&friendRequests, FR1);
+            enQueueFR(&friendRequests, FR2);
+            deQueueFR(&friendRequests, &val);
+            printf("Friend Requests after Dequeue:\n");
+            displayFriendRequests(friendRequests, accounts);
+            printf("\n");
+    }
 
     return 0;
 }
