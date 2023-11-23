@@ -140,7 +140,24 @@ int main () {
 
             u = getAddressWithId(p, 5);
             printf("%d\n", Id(u));
-    }
+        
+        case 8: // getParent
+            CreateTree(&t);
+            p = Root(t);
+            printf("Masukkan pesan: ");
+            STARTWORD();
+            CreateDATETIME(&d);
 
+            q = Alokasi(3, user, d, currentWord);
+            r = Alokasi(4, user, d, currentWord);
+            s = Alokasi(5, user, d, currentWord);
+            AddChild(&p, q);
+            AddChild(&q, r);
+            AddChild(&r, s);
+
+            printTree(p, 0);
+            u = getParent(p, s);
+            printf("%d", Id(u));
+    }
     return 0;
 }
