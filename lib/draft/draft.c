@@ -68,8 +68,6 @@ void compressDraft(Draft *S) {
 
     CreateEmpty_Draft(S, DAuthor(temp), newCap);
 
-    printf("Top di %d", Top(temp));
-
     for (int i = 0; i <= Top(temp); i++) {
         (*S).buffer[i] = temp.buffer[i];
     }
@@ -93,8 +91,6 @@ void Pops(Draft *S, twitDraft* X){
     float eff = (float)(Top(*S) + 2) / Cap(*S);
 
     if (eff <= 0.25){
-        printf("Compressing.... %f\n", eff);
-        printf("%d %d", (Top(*S) + 2), Cap(*S));
         compressDraft(S);
     }
 }
@@ -125,7 +121,6 @@ Twit twitDraftToTwit(Word *W, ListKicauan kicauan, Word currentuser){
     Author(K) = currentuser; /*Bingung. Misal Account adalah variabel global yang selalu di-update di main. */
     DATETIME D; CreateDATETIME(&D); DateTime(K) = D; 
     IsiTwit(K) = *W;
-    Word tagar; currentWord.TabWord[0] = '\0'; currentWord.Length = 0; Tagar(K) = currentWord;
     Tree t; CreateTree(&t); Balasan(K) = t;
     AddressUtas U; CreateUtas(&U); Utas(K) = U;
 
@@ -202,7 +197,6 @@ void displayDraft(Draft *S, ListKicauan *kicauanList, Word currentuser){
             BacaDraft(&isiDraft);
 
             isiTwitDraft(kicauBaru) = isiDraft;
-            DATETIME D; CreateDATETIME(&D); dateTwitDraft(kicauBaru) = D; 
 
             // ubah word nya dan waktu
             printf("Apakah anda ingin menghapus, menyimpan, atau menerbitkan draf ini?\n");
@@ -214,6 +208,7 @@ void displayDraft(Draft *S, ListKicauan *kicauanList, Word currentuser){
                 return;
             }
             else if(isWordSimilar(currentWord, "SIMPAN")){
+                DATETIME D; CreateDATETIME(&D); dateTwitDraft(kicauBaru) = D; 
                 Pushs(S, kicauBaru);
             }
             else{ // TERBIT
