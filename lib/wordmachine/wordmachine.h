@@ -47,6 +47,7 @@ void CopyWord();
           Jika panjang kata melebihi NMax, maka sisa kata "dipotong" */
 
 void printWord(Word W);
+void fprintWord(Word W, FILE *file);
 
 char ToLowerCase (char a);
 // untuk wordSimilarCI
@@ -64,6 +65,8 @@ int Akuisisi_First_Integer (Word W);
 int Akuisisi_Second_Integer (Word W);
 /* untuk command-command yang ada tambahan int di belakangnya */
 
+Word CopyWord_Any (char *c);
+int strilen (char *c);
 void PasteWord(Word WIn, Word *WOut);
 boolean intCheck (Word W);
 boolean substring_beginning (Word W1, Word W2);

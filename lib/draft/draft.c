@@ -8,9 +8,11 @@
 
 /* ************ Prototype ************ */
 /* *** Konstruktor/Kreator *** */
-void CreateEmpty_Draft(Draft *S, Word currentusername){
+void CreateEmpty_Draft(Draft *S, Word currentusername, int draftSize){
     Top(*S) = Nil;
     Author(*S) = currentusername;
+    Cap(*S) = draftSize;
+    DBuffer(*S) = (twitDraft*)malloc(draftSize * sizeof(twitDraft));
 }
 
 /* ************ Predikat Untuk test keadaan KOLEKSI ************ */
@@ -30,19 +32,22 @@ boolean IsFull_Draft(Draft S){
 /* F.S. X menjadi TOP yang baru,TOP bertambah 1 */
 void Pushs(Draft *S, twitDraft X){
     if (IsFull_Draft(*S)){
-        twitDraft *temp = (twitDraft*)malloc(sizeof(twitDraft) * Cap(*S) * 2);
-        if (temp == NULL){
-            printf("Memory allocation failed! The draft is Full");
-            return;
-        }
-        int i;
-        for (i = 0; i < Top(*S); i++){
-            temp[i] = S->buffer[i];
-        }
+        printf("WOW FULL\n");
 
-        free(S->buffer);
-        S->buffer = temp;
-        S->capacity *= 2;
+        Draft temp;
+        copyDraft(*S, &temp);
+
+        free(DBuffer(*S));
+
+        CreateEmpty_Draft(S, DAuthor(temp), Cap(temp) * 2);
+        DBuffer(*S) = realloc(DBuffer(*S), Cap(temp) * 2 * sizeof(twitDraft));
+
+        for (int i = 0; i <= Top(temp); i++) {
+            (*S).buffer[i] = temp.buffer[i];
+        }
+        Top(*S) = Top(temp);
+
+        free(DBuffer(temp));
     }
 
     Top(*S) += 1;
@@ -55,21 +60,22 @@ void Pushs(Draft *S, twitDraft X){
 /* F.S. Ukuran capacity 1/2 cap lama */
 void compressDraft(Draft *S) {
     int newCap = 0.5 * Cap(*S);
-    twitDraft *temp = (twitDraft*)malloc(sizeof(twitDraft) * newCap);
-    if (temp == NULL){
-        printf("GAGAL mengalokasi memori");
-        return;
+
+    Draft temp;
+    copyDraft(*S, &temp);
+
+    free(DBuffer(*S));
+
+    CreateEmpty_Draft(S, DAuthor(temp), newCap);
+
+    printf("Top di %d", Top(temp));
+
+    for (int i = 0; i <= Top(temp); i++) {
+        (*S).buffer[i] = temp.buffer[i];
     }
+    Top(*S) = Top(temp);
 
-    int i;
-    for (i = 0; i <= Top(*S); i++){
-        temp[i] = S->buffer[i];
-    }
-
-    free(S->buffer);
-
-    S->buffer = temp;
-    Cap(*S) = newCap;
+    free(DBuffer(temp));
 }
 
 
@@ -83,8 +89,12 @@ void Pops(Draft *S, twitDraft* X){
         Top(*S) -= 1;
     }
 
-    float eff = (Top(*S) + 1) / Cap(*S);
+
+    float eff = (float)(Top(*S) + 2) / Cap(*S);
+
     if (eff <= 0.25){
+        printf("Compressing.... %f\n", eff);
+        printf("%d %d", (Top(*S) + 2), Cap(*S));
         compressDraft(S);
     }
 }
@@ -95,39 +105,36 @@ void BacaDraft(Word *isiTwit){
     currentWord.TabWord[0] = '\0'; //Mengosongkan currentWord
     currentWord.Length = 0;
     STARTWORD();
-    printWord(currentWord);
-    if(isWordSimilar(currentWord, "")){ //W mungkin tidak berisi apa-apa
-        while(isWordSimilar(currentWord, "")){
-            printf("Draf tidak boleh hanya berisi spasi!\n");
-            printf("Masukkan draf: \n");
-            STARTWORD();
-            printf("\n");
-            *isiTwit = currentWord;
-        }
-    }else {
-        *isiTwit = currentWord;
+    while(currentWord.Length <= 1){
+        printf("Draf tidak boleh hanya berisi spasi!\n");
+        printf("Masukkan draf: \n");
+        currentWord.TabWord[0] = '\0'; //Mengosongkan currentWord
+        currentWord.Length = 0;
+        STARTWORD();
     }
+    *isiTwit = currentWord;
 }
 
 
 Twit twitDraftToTwit(Word *W, ListKicauan kicauan, Word currentuser){
-    Twit *K;
+    Twit K;
 
-    ID(*K) = listLength_ListKicauan(kicauan)+1; /*Bingung. ListKicauan adalah suatu variabel global di main.*/
-    IDUtas(*K) = -1; /*Secara default, Twit bukanlah Utas, kecuali ditandai sebagai Utas*/
-    Like(*K) = 0;
-    Author(*K) = currentuser; /*Bingung. Misal Account adalah variabel global yang selalu di-update di main. */
-    DATETIME D; CreateDATETIME(&D); dateTwitDraft(*K) = D; 
-    IsiTwit(*K) = *W;
-    Word tagar; currentWord.TabWord[0] = '\0'; currentWord.Length = 0; Tagar(*K) = currentWord;
-    Tree t; CreateTree(&t); Balasan(*K) = t;
-    AddressUtas U; CreateUtas(&U); Utas(*K) = U;
+    ID(K) = listLength_ListKicauan(kicauan) + 1;
+    IDUtas(K) = -1; /*Secara default, Twit bukanlah Utas, kecuali ditandai sebagai Utas*/
+    Like(K) = 0;
+    Author(K) = currentuser; /*Bingung. Misal Account adalah variabel global yang selalu di-update di main. */
+    DATETIME D; CreateDATETIME(&D); DateTime(K) = D; 
+    IsiTwit(K) = *W;
+    Word tagar; currentWord.TabWord[0] = '\0'; currentWord.Length = 0; Tagar(K) = currentWord;
+    Tree t; CreateTree(&t); Balasan(K) = t;
+    AddressUtas U; CreateUtas(&U); Utas(K) = U;
 
-    return *K;
+
+    return K;
 }
 
-void createDraft(Draft *S, ListKicauan kicauanList, Word currentuser){
-    twitDraft kicau;
+void createDraft(Draft *S, ListKicauan *kicauanList, Word currentuser){
+    twitDraft kicau, delVal;
     Word isiDraft;
     
     BacaDraft(&isiDraft);
@@ -135,21 +142,22 @@ void createDraft(Draft *S, ListKicauan kicauanList, Word currentuser){
     currentWord.TabWord[0] = '\0'; //Mengosongkan currentWord
     currentWord.Length = 0;
     STARTWORD();
-    printWord(currentWord);
     if(isWordSimilar(currentWord, "HAPUS")){
-        printf("Draf telah berhasil dihapus");
+        printf("Draf telah berhasil dihapus\n");
     }
     else if (isWordSimilar(currentWord, "SIMPAN")){
         isiTwitDraft(kicau) = isiDraft;
         DATETIME D; CreateDATETIME(&D); dateTwitDraft(kicau) = D;
 
         Pushs(S, kicau);
-        printf("Draf telah berhasil disimpan");
+
+        printf("Draf telah berhasil disimpan\n");
     }
     else if (isWordSimilar(currentWord, "TERBIT")){
-        Twit drafTwit = twitDraftToTwit(&isiDraft, kicauanList, currentuser);
-        insertLast_ListKicauan(&kicauanList, drafTwit);
+        Twit drafTwit = twitDraftToTwit(&isiDraft, *kicauanList, currentuser);
+        insertLast_ListKicauan(kicauanList, drafTwit);
         SuccessTwit(drafTwit);
+        Pops(S, &delVal);
     }
     else{
         return;
@@ -157,7 +165,7 @@ void createDraft(Draft *S, ListKicauan kicauanList, Word currentuser){
 }
 
 
-void displayDraft(Draft *S, ListKicauan kicauanList, Word currentuser){
+void displayDraft(Draft *S, ListKicauan *kicauanList, Word currentuser){
     if (IsEmpty_Draft(*S)){
         printf("Yah, anda belum memiliki draf apapun! Buat dulu ya :D\n");
     }
@@ -178,9 +186,8 @@ void displayDraft(Draft *S, ListKicauan kicauanList, Word currentuser){
         currentWord.TabWord[0] = '\0'; //Mengosongkan currentWord
         currentWord.Length = 0;
         STARTWORD();
-        printWord(currentWord);
         if(isWordSimilar(currentWord, "KEMBALI")){
-            exit(0);
+            return;
         }
         else if (isWordSimilar(currentWord, "HAPUS")){
             Pops(S, &delVal);
@@ -203,24 +210,38 @@ void displayDraft(Draft *S, ListKicauan kicauanList, Word currentuser){
             currentWord.TabWord[0] = '\0'; //Mengosongkan currentWord
             currentWord.Length = 0;
             STARTWORD();
-            printWord(currentWord);
             if(isWordSimilar(currentWord, "HAPUS")){
-                exit(0);
+                return;
             }
             else if(isWordSimilar(currentWord, "SIMPAN")){
                 Pushs(S, kicauBaru);
             }
-            else{
-                Twit drafTwit = twitDraftToTwit(&isiDraft, kicauanList, currentuser);
-                insertLast_ListKicauan(&kicauanList, drafTwit);
+            else{ // TERBIT
+                Twit drafTwit = twitDraftToTwit(&isiDraft, *kicauanList, currentuser);
+                insertLast_ListKicauan(kicauanList, drafTwit);
                 SuccessTwit(drafTwit);
+
+                Pops(S, &delVal);
             }
         }
         else{
             Word isiDraft = isiTwitDraft(InfoTops(*S));
-            Twit drafTwit = twitDraftToTwit(&isiDraft, kicauanList, currentuser);
-            insertLast_ListKicauan(&kicauanList, drafTwit);
+            Twit drafTwit = twitDraftToTwit(&isiDraft, *kicauanList, currentuser);
+            insertLast_ListKicauan(kicauanList, drafTwit);
             SuccessTwit(drafTwit);
+
+            Pops(S, &delVal);
         }
     }
+}
+
+
+void copyDraft(Draft S, Draft *T){
+    CreateEmpty_Draft(T, S.author, Cap(S));
+
+    for (int i = 0; i <= Top(S); i++){
+        (*T).buffer[i] = (S).buffer[i];
+    }
+
+    Top(*T) = Top(S);
 }

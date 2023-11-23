@@ -29,6 +29,9 @@ programmain: main/main.c
 	gcc -o lib/stack/stack_main lib/stack/stack_main.c lib/stack/stack.c -lm
 	clear
 	./lib/stack/stack_main
+	gcc -o lib/teman/temanreq_main lib/teman/temanreq_main.c lib/teman/temanreq.c lib/wordmachine/wordmachine.c lib/wordmachine/charmachine.c lib/affection/affection.c -lm
+	clear
+	./lib/teman/temanreq_main
 	gcc -o lib/wordmachine/charword_main lib/wordmachine/charword_main.c lib/wordmachine/charmachine.c lib/wordmachine/wordmachine.c -lm
 	clear
 	./lib/wordmachine/charword_main

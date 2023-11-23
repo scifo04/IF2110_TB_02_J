@@ -9,10 +9,9 @@ void CreateTwit(Twit *K, ListKicauan kicauan, Word currentusername){
     ID(*K) = listLength_ListKicauan(kicauan)+1; /*Bingung. ListKicauan adalah suatu variabel global di main.*/
     IDUtas(*K) = -1; /*Secara default, Twit bukanlah Utas, kecuali ditandai sebagai Utas*/
     Like(*K) = 0;
-    Author(*K) = currentusername; /*Bingung. Misal Account adalah variabel global yang selalu di-update di main. */
+    Author(*K) = currentusername;
     DATETIME D; CreateDATETIME(&D); DateTime(*K) = D; 
     Word isiTwit; BacaTwit(&isiTwit); IsiTwit(*K) = isiTwit;
-    Word tagar; BacaTagar(&tagar); Tagar(*K) = tagar;
     Tree t; CreateTree(&t); Balasan(*K) = t;
     AddressUtas U; CreateUtas(&U); Utas(*K) = U;
 }
@@ -37,16 +36,6 @@ void BacaTwit(Word *isiTwit){
     }
 }
 
-/*Membaca Tagar*/
-void BacaTagar(Word *tagar){
-    currentWord.TabWord[0] = '\0'; //Mengosongkan currentWord
-    currentWord.Length = 0;
-    printf("Masukkan tagar: \n");
-    STARTWORD();
-    printf("\n");
-    *tagar = currentWord;
-}
-
 /* Detail Twit*/
 void DetailTwit(Twit K){
     printf("| ID = %d\n", ID(K));
@@ -58,9 +47,6 @@ void DetailTwit(Twit K){
     printf("\n");
     printf("| ");
     printWord(IsiTwit(K));
-    printf("\n");
-    printf("| #");
-    printWord(Tagar(K));
     printf("\n");
     printf("| Disukai = %d\n", Like(K));
 }
@@ -74,7 +60,6 @@ void SuccessTwit(Twit K){
 
 /* MODUL KICAUAN DYNAMIC LIST */
 
-
 /* ********** FITUR ********** */
 /*Pengguna dapat menyukai suatu Twit dengan indeks yang valid, milik pengguna sendiri,
 milik teman, ataupun milik akun publik, (baca: semua selain privat)*/
@@ -82,8 +67,16 @@ void LikeKicauan(ListKicauan *l, int idKicauan, Account currentuser, Affection f
     if(isIdxEff_ListKicauan(*l, idKicauan-1)){ 
         if(getPublicitybyUsername(accounts, Author(ListKicauan_ELMT(*l, idKicauan-1)))){ //Akun publik
             Like(ListKicauan_ELMT(*l, idKicauan-1))++;
+            printf("Selamat! kicauan telah disukai!\n");
+            printf("Detail Kicauan:\n");
+            DetailTwit(ListKicauan_ELMT(*l, idKicauan-1));
+            printf("\n");
         } else if(isFriends_Affection(friends, getIdx_Username(accounts, Author(ListKicauan_ELMT(*l, idKicauan-1))), getIdx_Account(accounts, currentuser))){ //Akun milik sendiri atau teman
             Like(ListKicauan_ELMT(*l, idKicauan-1))++;
+            printf("Selamat! kicauan telah disukai!\n");
+            printf("Detail Kicauan:\n");
+            DetailTwit(ListKicauan_ELMT(*l, idKicauan-1));
+            printf("\n");
         } else {
             printf("Wah, kicauan tersebut dibuat oleh akun privat! Ikuti akun itu dulu ya\n");
         }
@@ -97,8 +90,12 @@ void EditKicauan(ListKicauan *l, int idKicauan, Account currentuser, ListAcc acc
         if(getIdx_Username(accounts, Author(ListKicauan_ELMT(*l, idKicauan-1))) == getIdx_Account(accounts, currentuser)){
             Twit *K = &ListKicauan_ELMT(*l, idKicauan-1);
             Word isiTwit; BacaTwit(&isiTwit); IsiTwit(*K) = isiTwit;
-            Word tagar; BacaTagar(&tagar); Tagar(*K) = tagar;
+            DATETIME newDatetime; CreateDATETIME(&newDatetime); DateTime(*K) = newDatetime; 
 
+            printf("Selamat! kicauan telah diterbitkan!\n");
+            printf("Detail Kicauan:\n");
+            DetailTwit(*K);
+            printf("\n");
         } else {
             printf("Kicauan dengan ID = %d bukan milikmu!\n", idKicauan);
         }

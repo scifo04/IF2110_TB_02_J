@@ -51,7 +51,7 @@ Address addrTail; /* alamat penambahan */
 
 /* ********* Prototype ********* */
 /* Prototype manajemen memori */
-Address newNode(ELFRType x);
+Address newRequest(ELFRType x);
 /* Mengembalikan alamat sebuah Node hasil alokasi dengan info = x,
 atau NIL jika alokasi gagal */
 

@@ -2,78 +2,6 @@
 #include "account.h"
 
 // DEFINED WORDS
-Word copyWord_Pahing () {
-    Word W;
-    (W).TabWord[0] = 'P';
-    (W).TabWord[1] = 'a';
-    (W).TabWord[2] = 'h';
-    (W).TabWord[3] = 'i';
-    (W).TabWord[4] = 'n';
-    (W).TabWord[5] = 'g';
-    (W).Length = 6;
-    return W;
-}
-
-Word copyWord_Legi () {
-    Word W;
-    (W).TabWord[0] = 'L';
-    (W).TabWord[1] = 'e';
-    (W).TabWord[2] = 'g';
-    (W).TabWord[3] = 'i';
-    (W).Length = 4;
-    return W;
-}
-
-Word copyWord_Pon () {
-    Word W;
-    (W).TabWord[0] = 'P';
-    (W).TabWord[1] = 'o';
-    (W).TabWord[2] = 'n';
-    (W).Length = 3;
-    return W;
-}
-
-Word copyWord_Wage () {
-    Word W;
-    (W).TabWord[0] = 'W';
-    (W).TabWord[1] = 'a';
-    (W).TabWord[2] = 'g';
-    (W).TabWord[3] = 'e';
-    (W).Length = 4;
-    return W;
-}
-
-Word copyWord_Kliwon () {
-    Word W;
-    (W).TabWord[0] = 'K';
-    (W).TabWord[1] = 'l';
-    (W).TabWord[2] = 'i';
-    (W).TabWord[3] = 'w';
-    (W).TabWord[4] = 'o';
-    (W).TabWord[5] = 'n';
-    (W).Length = 6;
-    return W;
-}
-
-Word copyWord_YA () {
-    Word W;
-    (W).TabWord[0] = 'Y';
-    (W).TabWord[1] = 'A';
-    (W).Length = 2;
-    return W;
-}
-
-Word copyWord_TIDAK () {
-    Word W;
-    (W).TabWord[0] = 'T';
-    (W).TabWord[1] = 'I';
-    (W).TabWord[2] = 'D';
-    (W).TabWord[3] = 'A';
-    (W).TabWord[4] = 'K';
-    (W).Length = 5;
-    return W;
-}
-// DEFINED WORDS
 
 Pics CreateBlankPicture () {
     Pics P;
@@ -158,10 +86,10 @@ void readWeton (Account *A) {
     STARTWORD();
     printf("\n");
     W = currentWord;
-    if ((wordSimilarCI(W,copyWord_Kliwon()) || wordSimilarCI(W,copyWord_Legi()) || wordSimilarCI(W,copyWord_Pon()) || wordSimilarCI(W,copyWord_Pahing()) || wordSimilarCI(W,copyWord_Wage()))) {
+    if ((wordSimilarCI(W, CopyWord_Any("Kliwon")) || wordSimilarCI(W, CopyWord_Any("Legi")) || wordSimilarCI(W, CopyWord_Any("Pon")) || wordSimilarCI(W, CopyWord_Any("Pahing")) || wordSimilarCI(W, CopyWord_Any("Wage")))) {
         /* NOTHING */
     } else {
-        while (!((wordSimilarCI(W,copyWord_Kliwon()) || wordSimilarCI(W,copyWord_Legi()) || wordSimilarCI(W,copyWord_Pon()) || wordSimilarCI(W,copyWord_Pahing()) || wordSimilarCI(W,copyWord_Wage())))) {
+        while (!((wordSimilarCI(W, CopyWord_Any("Kliwon")) || wordSimilarCI(W, CopyWord_Any("Legi")) || wordSimilarCI(W, CopyWord_Any("Pon")) || wordSimilarCI(W, CopyWord_Any("Pahing")) || wordSimilarCI(W, CopyWord_Any("Wage"))))) {
             printf("Weton tidak valid. Masukkan kembali Weton: ");
             printf("\n");
             STARTWORD();
@@ -169,11 +97,11 @@ void readWeton (Account *A) {
             W = currentWord;
         }
     }
-    if (wordSimilarCI(W, copyWord_Kliwon())){PasteWord(copyWord_Kliwon(), &(A)->weton);}
-    else if (wordSimilarCI(W, copyWord_Legi())){PasteWord(copyWord_Legi(), &(A)->weton);}
-    else if (wordSimilarCI(W, copyWord_Pon())){PasteWord(copyWord_Pon(), &(A)->weton);}
-    else if (wordSimilarCI(W, copyWord_Pahing())){PasteWord(copyWord_Pahing(), &(A)->weton);}
-    else {PasteWord(copyWord_Wage(), &(A)->weton);}
+    if (wordSimilarCI(W, CopyWord_Any("Kliwon"))){PasteWord(CopyWord_Any("Kliwon"), &(A)->weton);}
+    else if (wordSimilarCI(W, CopyWord_Any("Legi"))){PasteWord(CopyWord_Any("Legi"), &(A)->weton);}
+    else if (wordSimilarCI(W, CopyWord_Any("Pon"))){PasteWord(CopyWord_Any("Pon"), &(A)->weton);}
+    else if (wordSimilarCI(W, CopyWord_Any("Pahing"))){PasteWord(CopyWord_Any("Pahing"), &(A)->weton);}
+    else {PasteWord(CopyWord_Any("Wage"), &(A)->weton);}
 }
 void readPhoto (Account *A) {
     int i,j;
@@ -215,7 +143,7 @@ void change_publicity (Account *A) {
     if ((*A).publicity == true) {
         printf("Saat ini, akun Anda adalah akun Publik. Ingin mengubah ke akun Privat? (YA/TIDAK) ");
         STARTWORD();
-        if (wordSimilar(currentWord,copyWord_YA())) {
+        if (isWordSimilar(currentWord, "YA")) {
             (*A).publicity = false;
             printf("\n");
             printf("Akun anda sudah diubah menjadi akun Privat.");
@@ -224,7 +152,7 @@ void change_publicity (Account *A) {
     } else {
         printf("Saat ini, akun Anda adalah akun Privat. Ingin mengubah ke akun Publik? (YA/TIDAK) ");
         STARTWORD();
-        if (wordSimilar(currentWord,copyWord_YA())) {
+        if (isWordSimilar(currentWord, "YA")) {
             (*A).publicity = true;
             printf("\n");
             printf("Akun anda sudah diubah menjadi akun Publik.");
@@ -263,24 +191,8 @@ int length_Account (ListAcc L) {
     return L.NEff;
 }
 
-Account getFirstElmt_Account (ListAcc L) {
-    return L.buffer[0];
-}
-
-Account getLastElmt_Account (ListAcc L) {
-    return L.buffer[L.NEff-1];
-}
-
 Account getElmt_Account (ListAcc L, int idx) {
     return L.buffer[idx];
-}
-
-int getIdxFirst_Account (ListAcc L) {
-    return 0;
-}
-
-int getIdxLast_Account (ListAcc L) {
-    return 19;
 }
 
 int getIdx_Account (ListAcc L, Account A) {
@@ -304,64 +216,10 @@ void setElmt_Account (ListAcc *L, int idx, Account A) {
     (((*L).buffer)[idx]).requests = A.requests;
 }
 
-void insertFirst_Account (ListAcc *L, Account A) {
-    int i;
-    if (!isFull_Account(*L)) {
-        for (i = 0; i < length_Account(*L); i++) {
-            setElmt_Account(&*L,i+1,getElmt_Account(*L,i));
-        }
-        setElmt_Account(&*L,getIdxFirst_Account(*L),A);
-        (*L).NEff += 1;
-    }
-}
-
 void insertLast_Account (ListAcc *L, Account A) {
     if (!isFull_Account(*L)) {
         setElmt_Account(&(*L),length_Account(*L),A);
         (*L).NEff += 1;
-    }
-}
-
-void insertAt_Account (ListAcc *L, int idx, Account A) {
-    int i;
-    if (!isFull_Account(*L)) {
-        for (i = idx; i < length_Account(*L); i++) {
-            setElmt_Account(&*L,i+1,getElmt_Account(*L,i));
-        }
-        setElmt_Account(&*L,idx,A);
-        (*L).NEff += 1;
-    }
-}
-
-void deleteFirst_Account (ListAcc *L, Account *A) {
-    int i;
-    if (!isEmpty_Account(*L)) {
-        PasteWord(getFirstElmt_Account(*L).username,&(A)->username);
-        PasteWord(getFirstElmt_Account(*L).password,&(A)->password);
-        for (i = 0; i < length_Account(*L); i++) {
-            setElmt_Account(&*L,i,getElmt_Account(*L,i+1));
-        }
-        (*L).NEff -= 1;
-    }
-}
-
-void deleteLast_Account (ListAcc *L, Account *A) {
-    if (!isEmpty_Account(*L)) {
-        PasteWord(getLastElmt_Account(*L).username,&(A)->username);
-        PasteWord(getLastElmt_Account(*L).password,&(A)->password);
-        (*L).NEff -= 1;
-    }
-}
-
-void deleteAt_Account (ListAcc *L, int idx, Account *A) {
-    int i;
-    if (!isEmpty_Account(*L)) {
-        PasteWord(getElmt_Account(*L,idx).username,&(A)->username);
-        PasteWord(getElmt_Account(*L,idx).password,&(A)->password);
-        for (i = idx; i < length_Account(*L); i++) {
-            setElmt_Account(&*L,i,getElmt_Account(*L,i+1));
-        }
-        (*L).NEff -= 1;
     }
 }
 
@@ -413,7 +271,7 @@ int getIdx_Username(ListAcc L, Word U){
 }
 
 Word getUsernamebyID (ListAcc L, int id){
-    return L.buffer[id-1].username;
+    return L.buffer[id].username;
 }
 
 

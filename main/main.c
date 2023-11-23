@@ -36,101 +36,9 @@ void inisialisasi() {
     file_kicauan = concatWordEnd(word_inpute, "/kicauan.config");
     file_pengguna = concatWordEnd(word_inpute, "/pengguna.config");
     file_utas = concatWordEnd(word_inpute, "/utas.config");
-    /* CONTOH TULIS FILE
-    FILE *aaa = fopen(file_utas.TabWord, "w");
-    fwrite("vdsvadsas", 1, 9, aaa); 1: ukuran byte data (char itu 1, int itu 4, dst) 9: banyak elemen
-    fclose(aaa);*/ //jangan lupa close
 }
 
 void load (Word W);
-
-// COMMAND READERS
-Word copyWord_Lihat_Profil () {
-    Word W;
-    (W).TabWord[0] = 'L';(W).TabWord[1] = 'I';(W).TabWord[2] = 'H';(W).TabWord[3] = 'A';(W).TabWord[4] = 'T';(W).TabWord[5] = '_';
-    (W).TabWord[6] = 'P';(W).TabWord[7] = 'R';(W).TabWord[8] = 'O';(W).TabWord[9] = 'F';(W).TabWord[10] = 'I';(W).TabWord[11] = 'L';
-    (W).Length = 12;
-    return W;
-}
-
-Word copyWord_Balas() {
-    Word w;
-    w.Length = 5;
-    w.TabWord[0] = 'B'; w.TabWord[1] = 'A'; w.TabWord[2] = 'L'; w.TabWord[3] = 'A'; w.TabWord[4] = 'S';
-    return w;
-}
-
-Word copyWord_Balasan() {
-    Word w;
-    w.Length = 7;
-    w.TabWord[0] = 'B'; w.TabWord[1] = 'A'; w.TabWord[2] = 'L'; w.TabWord[3] = 'A'; w.TabWord[4] = 'S'; w.TabWord[5] = 'A';
-    w.TabWord[6] = 'N';
-    return w;
-}
-
-Word copyWord_hapusBalasan() {
-    Word w;
-    w.Length = 13;
-    w.TabWord[0] = 'H'; w.TabWord[1] = 'A'; w.TabWord[2] = 'P'; w.TabWord[3] = 'U'; w.TabWord[4] = 'S'; w.TabWord[5] = '_';
-    w.TabWord[6] = 'B'; w.TabWord[7] = 'A'; w.TabWord[8] = 'L'; w.TabWord[9] = 'A'; w.TabWord[10] = 'S'; w.TabWord[11] = 'A';
-    w.TabWord[12] = 'N';
-    return w;
-}
-
-Word copyWord_sukaKicauan() {
-    Word w;
-    w.Length = 12;
-    w.TabWord[0] = 'S'; w.TabWord[1] = 'U'; w.TabWord[2] = 'K'; w.TabWord[3] = 'A'; w.TabWord[4] = '_'; w.TabWord[5] = 'K';
-    w.TabWord[6] = 'I'; w.TabWord[7] = 'C'; w.TabWord[8] = 'A'; w.TabWord[9] = 'U'; w.TabWord[10] = 'A'; w.TabWord[11] = 'N';
-    return w;
-}
-
-Word copyWord_ubahKicauan() {
-    Word w;
-    w.Length = 12;
-    w.TabWord[0] = 'U'; w.TabWord[1] = 'B'; w.TabWord[2] = 'A'; w.TabWord[3] = 'H'; w.TabWord[4] = '_'; w.TabWord[5] = 'K';
-    w.TabWord[6] = 'I'; w.TabWord[7] = 'C'; w.TabWord[8] = 'A'; w.TabWord[9] = 'U'; w.TabWord[10] = 'A'; w.TabWord[11] = 'N';
-    return w;
-}
-
-Word copyWord_Utas() {
-    Word w;
-    w.Length = 4;
-    w.TabWord[0] = 'U'; w.TabWord[1] = 'T'; w.TabWord[2] = 'A'; w.TabWord[3] = 'S';
-    return w;
-}
-
-Word copyWord_SambungUtas() {
-    Word w;
-    w.Length = 12;
-    w.TabWord[0] = 'S'; w.TabWord[1] = 'A'; w.TabWord[2] = 'M'; w.TabWord[3] = 'B'; w.TabWord[4] = 'U'; w.TabWord[5] = 'N';
-    w.TabWord[6] = 'G'; w.TabWord[7] = '_'; w.TabWord[8] = 'U'; w.TabWord[9] = 'T'; w.TabWord[10] = 'A'; w.TabWord[11] = 'S';
-    return w;
-}
-
-Word copyWord_HapusUtas() {
-    Word w;
-    w.Length = 10;
-    w.TabWord[0] = 'H'; w.TabWord[1] = 'A'; w.TabWord[2] = 'P'; w.TabWord[3] = 'U'; w.TabWord[4] = 'S'; w.TabWord[5] = '_';
-    w.TabWord[6] = 'U'; w.TabWord[7] = 'T'; w.TabWord[8] = 'A'; w.TabWord[9] = 'S';
-    return w;
-}
-
-Word copyWord_CetakUtas() {
-    Word w;
-    w.Length = 10;
-    w.TabWord[0] = 'C'; w.TabWord[1] = 'E'; w.TabWord[2] = 'T'; w.TabWord[3] = 'A'; w.TabWord[4] = 'K'; w.TabWord[5] = '_';
-    w.TabWord[6] = 'U'; w.TabWord[7] = 'T'; w.TabWord[8] = 'A'; w.TabWord[9] = 'S';
-    return w;
-}
-
-Word copyWord_save_balasan() {
-    Word w;
-    w.Length = 12;
-    w.TabWord[0] = 'S'; w.TabWord[1] = 'A'; w.TabWord[2] = 'V'; w.TabWord[3] = 'E'; w.TabWord[4] = '_'; w.TabWord[5] = 'B';
-    w.TabWord[6] = 'A'; w.TabWord[7] = 'L'; w.TabWord[8] = 'A'; w.TabWord[9] = 'S'; w.TabWord[10] = 'A'; w.TabWord[11] = 'N';
-    return w;
-}
 
 // DAFTAR
 void Daftar () {
@@ -450,10 +358,10 @@ void BuatUtas(int idKicau){
         printf("\nKicauan tidak ditemukan\n");
     } else if (!wordSimilar(Author(ListKicauan_ELMT(Kicauan, (idKicau - 1))), currentuser.username)){
         printf("\nKicauan ini bukan milik anda!\n");
+    } else if (Utas(ListKicauan_ELMT(Kicauan, (idKicau - 1))) != NULL){
+        printf("\nTidak boleh ada dua utas yang memiliki kicauan utama yang sama!!!\n");
     } else {
         IDUtas(ListKicauan_ELMT(Kicauan, (idKicau - 1))) = idUtas; idUtas++;
-        // buat utas baru, yang lama dihapus
-        while (Utas(ListKicauan_ELMT(Kicauan, (idKicau - 1))) != NULL){deleteAtUtas(&Utas(ListKicauan_ELMT(Kicauan, (idKicau - 1))), 1);}
         printf("\nUtas berhasil dibuat!\n\nMasukkan kicauan:\n");
         STARTWORD(); DATETIME WaktuUtas; CreateDATETIME(&WaktuUtas); insertLastUtas(&Utas(ListKicauan_ELMT(Kicauan, (idKicau - 1))), WaktuUtas, currentWord);
         printf("\nApakah Anda ingin melanjutkan utas ini? (YA/TIDAK) "); STARTWORD();
@@ -844,9 +752,9 @@ void readCommand (Word W) {
     } else if (isWordSimilar(W, "GANTI_PROFIL")) {
         Ganti_Profil();
         printf("\n");
-    } else if (substring_beginning(W,copyWord_Lihat_Profil())) {
+    } else if (substring_beginning(W, CopyWord_Any("LIHAT_PROFIL"))) {
         Word user;
-        user.Length = W.Length - copyWord_Lihat_Profil().Length - 1;
+        user.Length = W.Length - (CopyWord_Any("LIHAT_PROFIL")).Length - 1;
         for (int i = 0; i < user.Length; i++) {
             user.TabWord[i] = W.TabWord[i + W.Length - user.Length];
         }
@@ -881,38 +789,38 @@ void readCommand (Word W) {
         printf("\n");
     } else if (isWordSimilar(W, "KICAUAN")) {
         LihatKicauan();
-    } else if (wordSimilarWithoutLength(W,copyWord_sukaKicauan())) {
+    } else if (wordSimilarWithoutLength(W, CopyWord_Any("SUKA_KICAUAN"))) {
         int id = Akuisisi_First_Integer(W);
         SukaKicauan(id);
         printf("\n");
-    } else if (wordSimilarWithoutLength(W,copyWord_ubahKicauan())) {
+    } else if (wordSimilarWithoutLength(W, CopyWord_Any("UBAH_KICAUAN"))) {
         int id = Akuisisi_First_Integer(W);
         UbahKicauan(id);
         printf("\n");
-    } else if (wordSimilarWithoutLength(W, copyWord_Balasan())) {
+    } else if (wordSimilarWithoutLength(W, CopyWord_Any("BALASAN"))) {
         print_balasan(W, acc, friends, Kicauan);
         printf("\n");
-    } else if (wordSimilarWithoutLength(W, copyWord_Balas())) {
+    } else if (wordSimilarWithoutLength(W, CopyWord_Any("BALAS"))) {
         balas(W, acc, friends, Kicauan);
         printf("\n");
-    } else if (wordSimilarWithoutLength(W, copyWord_hapusBalasan())) {
+    } else if (wordSimilarWithoutLength(W, CopyWord_Any("HAPUS_BALASAN"))) {
         hapusBalasan(W, acc, friends, Kicauan);
         printf("\n");
-    } else if (wordSimilarWithoutLength(W, copyWord_Utas())) {
+    } else if (wordSimilarWithoutLength(W, CopyWord_Any("UTAS"))) {
         int id = Akuisisi_First_Integer(W);
         BuatUtas(id);
         printf("\n");
-    } else if (wordSimilarWithoutLength(W, copyWord_SambungUtas())) {
+    } else if (wordSimilarWithoutLength(W, CopyWord_Any("SAMBUNG_UTAS"))) {
         int idU = Akuisisi_First_Integer(W);
         int idx = Akuisisi_Second_Integer(W);
         SambungUtas(idU, idx);
         printf("\n");
-    } else if (wordSimilarWithoutLength(W, copyWord_HapusUtas())) {
+    } else if (wordSimilarWithoutLength(W, CopyWord_Any("HAPUS_UTAS"))) {
         int idU = Akuisisi_First_Integer(W);
         int idx = Akuisisi_Second_Integer(W);
         HapusUtas(idU, idx);
         printf("\n");
-    } else if (wordSimilarWithoutLength(W, copyWord_CetakUtas())) {
+    } else if (wordSimilarWithoutLength(W, CopyWord_Any("CETAK_UTAS"))) {
         int id = Akuisisi_First_Integer(W);
         CetakUtas(id);
     } else if (wordSimilar(W, copyWord_save_balasan())) {

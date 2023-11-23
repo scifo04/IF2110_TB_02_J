@@ -70,10 +70,16 @@ void CopyWord() {
           Jika panjang kata melebihi NMax, maka sisa kata "dipotong" */
 
 void printWord(Word W) {
-    int i;
-    for (i = 0; i < W.Length; i++) {
+    for (int i = 0; i < W.Length; i++) {
         printf("%c",W.TabWord[i]);
     }
+}
+
+void fprintWord(Word W, FILE *file){
+    for (int i = 0; i < W.Length; i++){
+        fprintf(file, "%c", W.TabWord[i]);
+    }
+    fprintf(file, "\n");
 }
 
 char ToLowerCase (char a){
@@ -178,6 +184,23 @@ void PasteWord(Word WIn, Word *WOut) {
         (*WOut).TabWord[i] = WIn.TabWord[i];
     }
     (*WOut).Length = WIn.Length;
+}
+
+int strilen(char *c) {
+    int i = 0;
+    while (c[i] != '\0') {
+        i += 1;
+    }
+    return i;
+}
+
+Word CopyWord_Any (char *c) {
+    Word W;
+    W.Length = strilen(c);
+    for (int i = 0; i < W.Length; i++) {
+        W.TabWord[i] = c[i];
+    }
+    return W;
 }
 
 boolean intCheck (Word W) {

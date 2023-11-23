@@ -30,13 +30,6 @@ typedef struct {
 #define PICROW(x,i,j) (x).content[(i)][(j)]
 #define IDX_ACCOUNT_UNDEF -1
 
-Word copyWord_Pahing ();
-Word copyWord_Legi ();
-Word copyWord_Pon ();
-Word copyWord_Wage ();
-Word copyWord_Kliwon ();
-Word copyWord_YA ();
-Word copyWord_TIDAK ();
 void CreateAccount (Account *A);
 void readUsername (Account *A);
 void readPassword (Account *A);
