@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <sys/stat.h>
 #include "../lib/adt.h"
 #include "../lib/save_balasan.c"
 
@@ -777,6 +778,107 @@ void hapusBalasan(Word input, ListAcc acc, Affection friends, ListKicauan Kicaua
 }
 
 
+void Save() {
+    printf("Masukkan tujuan untuk menyimpan data anda: ");
+    currentWord.Length = 0;
+    STARTWORD();
+    Word directory = currentWord;
+    char *folderPath = directory.TabWord;
+    folderPath[currentWord.Length] = '\0';
+    printWord(currentWord);
+    printf("\n");
+    struct stat folderStats;
+    if (stat(folderPath, &folderStats) == 0 && S_ISDIR(folderStats.st_mode)) {
+        printf("Folder exists.\n");
+    } else {
+        printf("Folder does not exist. Making a new folder...\n");
+        if (mkdir(folderPath,0777) == 0) {
+            printf("Folder created successfully\n");
+        } else {
+            printf("FAIL\n");
+        }
+    }
+
+    save_pengguna(folderPath);
+    // save_kicauan();
+    // save_balasan();
+    // save_draf();
+    // save_utas(); 
+}
+
+void save_pengguna(char *path) {
+    char *filename = "/pengguna.config";
+    int e = strilen(path);
+    for (int i = strilen(path); i < strilen(path)+strilen(filename); i++) {
+        path[i] = filename[i-e]; 
+    }
+    for (int i = 0; i < strilen(path); i++) {
+        printf("%c",path[i]);
+    }
+    printf("\n");
+    FILE *file = fopen(path,"w");
+    fprintf(file,"%d",acc.NEff);
+    fprintf(file,"\n");
+    for (int i = 0; i < acc.NEff; i++) {
+        for (int j = 0; j < acc.buffer[i].username.Length; j++) {
+            fprintf(file,"%c",acc.buffer[i].username.TabWord[j]);
+        }
+        fprintf(file,"\n");
+        for (int j = 0; j < acc.buffer[i].password.Length; j++) {
+            fprintf(file,"%c",acc.buffer[i].password.TabWord[j]);
+        }
+        fprintf(file,"\n");
+        for (int j = 0; j < acc.buffer[i].bio.Length; j++) {
+            fprintf(file,"%c",acc.buffer[i].bio.TabWord[j]);
+        }
+        fprintf(file,"\n");
+        for (int j = 0; j < acc.buffer[i].phone_num.Length; j++) {
+            fprintf(file,"%c",acc.buffer[i].phone_num.TabWord[j]);
+        }
+        fprintf(file,"\n");
+        for (int j = 0; j < acc.buffer[i].weton.Length; j++) {
+            fprintf(file,"%c",acc.buffer[i].weton.TabWord[j]);
+        }
+        fprintf(file,"\n");
+        if (acc.buffer[i].publicity) {
+            fprintf(file,"Public\n");
+        } else {
+            fprintf(file,"Private\n");
+        }
+        for (int j = 0; j < 5; j++) {
+            for (int k = 0; k < 20; k++) {
+                fprintf(file,"%c",acc.buffer[i].photo.content[j][k]);
+            }
+        }
+    }
+    for (int i = 0; i < 20; i++) {
+        for (int j = 0; j < 20; j++) {
+            fprintf(file,"%d",friends.status[i][j]);
+            if (j != 19) {
+                fprintf(file," ");
+            } else {
+                fprintf(file,"\n");
+            }
+        }
+    }
+    int len_total = 0;
+    for (int i = 0; i < 20; i++) {
+        len_total += length_QueueFR(acc.buffer[i].requests);
+    }
+    fprintf(file,"%d\n",len_total);
+    for (int i = 0; i < 20; i++) {
+        Address a = ADDR_HEAD(acc.buffer[i].requests);
+        if (length_QueueFR(acc.buffer[i].requests) != 0) {
+            for (int j = 0; j < length_QueueFR(acc.buffer[i].requests); j++) {
+                fprintf(file,"%d ",ID_REQUESTERN(a));
+                fprintf(file,"%d ",ID_REQUESTEDN(a));
+                fprintf(file,"%d\n",POPULARITYN(a));
+                a = NEXT(a);
+            }
+        }
+    }
+}
+
 void readCommand (Word W) {
     if (isWordSimilar(W, "EXIT")) {
         allowexit = true;
@@ -863,6 +965,8 @@ void readCommand (Word W) {
     } else if (wordSimilarWithoutLength(W, CopyWord_Any("CETAK_UTAS"))) {
         int id = Akuisisi_First_Integer(W);
         CetakUtas(id);
+    } else if (isWordSimilar(W,"SAVE")) {
+        Save();
     }
 }
 

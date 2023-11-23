@@ -116,6 +116,7 @@ void readPhoto (Account *A) {
             PICROW((*A).photo,i,j) = currentWord.TabWord[(20*i) + j];
         }
     }
+    PICROW((*A).photo,4,19) = '\n';
 }
 
 void displayPhoto (Pics P) {
