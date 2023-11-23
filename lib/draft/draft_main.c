@@ -93,54 +93,64 @@ int main(){
 
     Draft myDraft;
     Word tempTwit;
-    int cases;
 
-    scanf("%d", &cases);
 
-    switch(cases){
-        case 1:
-            // Draft kosong belum dibuat
-            // res -> false, false : top = 0 dan cap = 0
-            printf("Is the draft empty: %s\n", IsEmpty_Draft(myDraft) ? "true" : "false");
-            printf("Is the draft full: %s\n", IsFull_Draft(myDraft) ? "true" : "false");
-            displayDraft(&myDraft, &Kicauan, currentuser.username);
-            break;
-        
-        case 2:
-            // Draft kosong dibuat
-            // res -> Yah, anda belum memiliki draf apapun! Buat dulu ya :D
-            CreateEmpty_Draft(&myDraft, currentuser.username, 1);
-            printf("Is the draft empty: %s\n", IsEmpty_Draft(myDraft) ? "true" : "false");
-            printf("Is the draft full: %s\n", IsFull_Draft(myDraft) ? "true" : "false");
+    currentWord.TabWord[0] = '\0'; //Mengosongkan currentWord
+    currentWord.Length = 0;
+    STARTWORD();
 
-            displayDraft(&myDraft, &Kicauan, currentuser.username);
-            break;
+    if(isWordSimilar(currentWord, "1")){
+        // Draft kosong belum dibuat
+        // res -> false, false : top = 0 dan cap = 0
+        printf("Is the draft empty: %s\n", IsEmpty_Draft(myDraft) ? "true" : "false");
+        printf("Is the draft full: %s\n", IsFull_Draft(myDraft) ? "true" : "false");
+        displayDraft(&myDraft, &Kicauan, currentuser.username);
+    }
+    else if (isWordSimilar(currentWord, "2")){
+        // Draft kosong dibuat
+        // res -> Yah, anda belum memiliki draf apapun! Buat dulu ya :D
+        CreateEmpty_Draft(&myDraft, currentuser.username, 1);
+        printf("Is the draft empty: %s\n", IsEmpty_Draft(myDraft) ? "true" : "false");
+        printf("Is the draft full: %s\n", IsFull_Draft(myDraft) ? "true" : "false");
 
-        case 3:
+        displayDraft(&myDraft, &Kicauan, currentuser.username);
+    }
+    else{
             // Draft kosong
             CreateEmpty_Draft(&myDraft, currentuser.username, 1);
             displayDraft(&myDraft, &Kicauan, currentuser.username);
 
             createDraft(&myDraft, &Kicauan, currentuser.username);
-            displayDraft(&myDraft, &Kicauan, currentuser.username);
-            
             createDraft(&myDraft, &Kicauan, currentuser.username);
-            displayDraft(&myDraft, &Kicauan, currentuser.username);
-            
-
             createDraft(&myDraft, &Kicauan, currentuser.username);
-            displayDraft(&myDraft, &Kicauan, currentuser.username);
-
             createDraft(&myDraft, &Kicauan, currentuser.username);
+            createDraft(&myDraft, &Kicauan, currentuser.username);
+            createDraft(&myDraft, &Kicauan, currentuser.username);
+            createDraft(&myDraft, &Kicauan, currentuser.username);
+            createDraft(&myDraft, &Kicauan, currentuser.username);
+            createDraft(&myDraft, &Kicauan, currentuser.username);
+            createDraft(&myDraft, &Kicauan, currentuser.username);
+            createDraft(&myDraft, &Kicauan, currentuser.username);
+            createDraft(&myDraft, &Kicauan, currentuser.username);
+
             displayDraft(&myDraft, &Kicauan, currentuser.username);
 
             displayDraft(&myDraft, &Kicauan, currentuser.username);
             displayDraft(&myDraft, &Kicauan, currentuser.username);
             displayDraft(&myDraft, &Kicauan, currentuser.username);
+            displayDraft(&myDraft, &Kicauan, currentuser.username);
+            displayDraft(&myDraft, &Kicauan, currentuser.username);
+            displayDraft(&myDraft, &Kicauan, currentuser.username);
+            displayDraft(&myDraft, &Kicauan, currentuser.username);
+            displayDraft(&myDraft, &Kicauan, currentuser.username);
+            displayDraft(&myDraft, &Kicauan, currentuser.username);
+            displayDraft(&myDraft, &Kicauan, currentuser.username);
+            displayDraft(&myDraft, &Kicauan, currentuser.username);
+            displayDraft(&myDraft, &Kicauan, currentuser.username);
+            displayDraft(&myDraft, &Kicauan, currentuser.username);
+            displayDraft(&myDraft, &Kicauan, currentuser.username);
+            displayDraft(&myDraft, &Kicauan, currentuser.username);
 
-            break;
-        default:
-            break;
     }
 
 

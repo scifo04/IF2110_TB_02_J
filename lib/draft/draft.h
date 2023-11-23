@@ -93,6 +93,6 @@ Twit twitDraftToTwit(Word *W, ListKicauan kicauanList, Word currentuser);
 
 void displayDraft(Draft *S, ListKicauan *kicauanList, Word currentuser);
 
-Draft copyDraft(Draft S, Draft *T);
+void copyDraft(Draft S, Draft *T);
 
 #endif

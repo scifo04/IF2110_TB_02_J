@@ -12,7 +12,7 @@ void CreateEmpty_Draft(Draft *S, Word currentusername, int draftSize){
     Top(*S) = Nil;
     Author(*S) = currentusername;
     Cap(*S) = draftSize;
-    DBuffer(*S) = malloc(draftSize * sizeof(twitDraft));
+    DBuffer(*S) = (twitDraft*)malloc(draftSize * sizeof(twitDraft));
 }
 
 /* ************ Predikat Untuk test keadaan KOLEKSI ************ */
@@ -36,13 +36,13 @@ void Pushs(Draft *S, twitDraft X){
 
         Draft temp;
         copyDraft(*S, &temp);
+
         free(DBuffer(*S));
 
-        CreateEmpty_Draft(S, DAuthor(temp), Cap(temp));
+        CreateEmpty_Draft(S, DAuthor(temp), Cap(temp) * 2);
         DBuffer(*S) = realloc(DBuffer(*S), Cap(temp) * 2 * sizeof(twitDraft));
-        Cap(*S) = 2 * Cap(temp);
 
-        for (int i = 0; i < Top(temp); i++) {
+        for (int i = 0; i <= Top(temp); i++) {
             (*S).buffer[i] = temp.buffer[i];
         }
         Top(*S) = Top(temp);
@@ -60,21 +60,22 @@ void Pushs(Draft *S, twitDraft X){
 /* F.S. Ukuran capacity 1/2 cap lama */
 void compressDraft(Draft *S) {
     int newCap = 0.5 * Cap(*S);
-    twitDraft *temp = (twitDraft*)malloc(sizeof(twitDraft) * newCap);
-    if (temp == NULL){
-        printf("GAGAL mengalokasi memori");
-        return;
+
+    Draft temp;
+    copyDraft(*S, &temp);
+
+    free(DBuffer(*S));
+
+    CreateEmpty_Draft(S, DAuthor(temp), newCap);
+
+    printf("Top di %d", Top(temp));
+
+    for (int i = 0; i <= Top(temp); i++) {
+        (*S).buffer[i] = temp.buffer[i];
     }
+    Top(*S) = Top(temp);
 
-    int i;
-    for (i = 0; i <= Top(*S); i++){
-        temp[i] = S->buffer[i];
-    }
-
-    free(S->buffer);
-
-    S->buffer = temp;
-    Cap(*S) = newCap;
+    free(DBuffer(temp));
 }
 
 
@@ -89,11 +90,13 @@ void Pops(Draft *S, twitDraft* X){
     }
 
 
-    // float eff = (Top(*S) + 2) / Cap(*S);
+    float eff = (float)(Top(*S) + 2) / Cap(*S);
 
-    // if (eff <= 0.25){
-    //     compressDraft(S);
-    // }
+    if (eff <= 0.25){
+        printf("Compressing.... %f\n", eff);
+        printf("%d %d", (Top(*S) + 2), Cap(*S));
+        compressDraft(S);
+    }
 }
 
 
@@ -102,17 +105,14 @@ void BacaDraft(Word *isiTwit){
     currentWord.TabWord[0] = '\0'; //Mengosongkan currentWord
     currentWord.Length = 0;
     STARTWORD();
-    if(isWordSimilar(currentWord, "")){ //W mungkin tidak berisi apa-apa
-        while(isWordSimilar(currentWord, "")){
-            printf("Draf tidak boleh hanya berisi spasi!\n");
-            printf("Masukkan draf: \n");
-            STARTWORD();
-            printf("\n");
-            *isiTwit = currentWord;
-        }
-    }else {
-        *isiTwit = currentWord;
+    while(currentWord.Length <= 1){
+        printf("Draf tidak boleh hanya berisi spasi!\n");
+        printf("Masukkan draf: \n");
+        currentWord.TabWord[0] = '\0'; //Mengosongkan currentWord
+        currentWord.Length = 0;
+        STARTWORD();
     }
+    *isiTwit = currentWord;
 }
 
 
@@ -150,6 +150,7 @@ void createDraft(Draft *S, ListKicauan *kicauanList, Word currentuser){
         DATETIME D; CreateDATETIME(&D); dateTwitDraft(kicau) = D;
 
         Pushs(S, kicau);
+
         printf("Draf telah berhasil disimpan\n");
     }
     else if (isWordSimilar(currentWord, "TERBIT")){
@@ -235,14 +236,12 @@ void displayDraft(Draft *S, ListKicauan *kicauanList, Word currentuser){
 }
 
 
-Draft copyDraft(Draft S, Draft *T){
-    if (!IsEmpty_Draft(S)){
-        CreateEmpty_Draft(T, S.author, Cap(S));
+void copyDraft(Draft S, Draft *T){
+    CreateEmpty_Draft(T, S.author, Cap(S));
 
-        for (int i = 0; i < Top(S); i++){
-            (*T).buffer[i] = (S).buffer[i];
-        }
-
-        Top(*T) = Top(S);
+    for (int i = 0; i <= Top(S); i++){
+        (*T).buffer[i] = (S).buffer[i];
     }
+
+    Top(*T) = Top(S);
 }
