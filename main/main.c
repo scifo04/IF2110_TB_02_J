@@ -534,7 +534,7 @@ void balas (Word input, ListAcc acc, Affection friends, ListKicauan Kicauan) {
                         AddChild(&old, new);
                     }
                     else {
-                        AddSibling(&old, new);
+                        AddSibling(&FirstChild(old), new);
                     }
                     id_untuk_balas++;
                 }       
@@ -823,8 +823,6 @@ void readCommand (Word W) {
     } else if (wordSimilarWithoutLength(W, CopyWord_Any("CETAK_UTAS"))) {
         int id = Akuisisi_First_Integer(W);
         CetakUtas(id);
-    } else if (wordSimilar(W, copyWord_save_balasan())) {
-        save_balasan(Kicauan);
     }
 }
 
