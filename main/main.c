@@ -42,6 +42,80 @@ void inisialisasi() {
 
 void load (Word W);
 
+void save_pengguna(char *path) {
+    char *filename = "/pengguna.config";
+    int e = strilen(path);
+    for (int i = strilen(path); i < strilen(path)+strilen(filename); i++) {
+        path[i] = filename[i-e]; 
+    }
+    for (int i = 0; i < strilen(path); i++) {
+        printf("%c",path[i]);
+    }
+    printf("\n");
+    FILE *file = fopen(path,"w");
+    fprintf(file,"%d",acc.NEff);
+    fprintf(file,"\n");
+    for (int i = 0; i < acc.NEff; i++) {
+        for (int j = 0; j < acc.buffer[i].username.Length; j++) {
+            fprintf(file,"%c",acc.buffer[i].username.TabWord[j]);
+        }
+        fprintf(file,"\n");
+        for (int j = 0; j < acc.buffer[i].password.Length; j++) {
+            fprintf(file,"%c",acc.buffer[i].password.TabWord[j]);
+        }
+        fprintf(file,"\n");
+        for (int j = 0; j < acc.buffer[i].bio.Length; j++) {
+            fprintf(file,"%c",acc.buffer[i].bio.TabWord[j]);
+        }
+        fprintf(file,"\n");
+        for (int j = 0; j < acc.buffer[i].phone_num.Length; j++) {
+            fprintf(file,"%c",acc.buffer[i].phone_num.TabWord[j]);
+        }
+        fprintf(file,"\n");
+        for (int j = 0; j < acc.buffer[i].weton.Length; j++) {
+            fprintf(file,"%c",acc.buffer[i].weton.TabWord[j]);
+        }
+        fprintf(file,"\n");
+        if (acc.buffer[i].publicity) {
+            fprintf(file,"Public\n");
+        } else {
+            fprintf(file,"Private\n");
+        }
+        for (int j = 0; j < 5; j++) {
+            for (int k = 0; k < 20; k++) {
+                fprintf(file,"%c",acc.buffer[i].photo.content[j][k]);
+            }
+        }
+    }
+    for (int i = 0; i < acc.NEff; i++) {
+        for (int j = 0; j < acc.NEff; j++) {
+            fprintf(file,"%d",friends.status[i][j]);
+            if (j != (acc.NEff - 1)) {
+                fprintf(file," ");
+            } else {
+                fprintf(file,"\n");
+            }
+        }
+    }
+    int len_total = 0;
+    for (int i = 0; i < acc.NEff; i++) {
+        len_total += length_QueueFR(acc.buffer[i].requests);
+    }
+    fprintf(file,"%d\n",len_total);
+    for (int i = 0; i < acc.NEff; i++) {
+        Address a = ADDR_HEAD(acc.buffer[i].requests);
+        if (length_QueueFR(acc.buffer[i].requests) != 0) {
+            for (int j = 0; j < length_QueueFR(acc.buffer[i].requests); j++) {
+                fprintf(file,"%d ",ID_REQUESTERN(a));
+                fprintf(file,"%d ",ID_REQUESTEDN(a));
+                fprintf(file,"%d\n",POPULARITYN(a));
+                a = NEXT(a);
+            }
+        }
+    }
+    fclose(file);
+}
+
 void save_kicauan(){
     FILE *tweeter = fopen(file_kicauan.TabWord, "w");
     if (tweeter != NULL){
@@ -106,6 +180,28 @@ void save_utas(){
         }
     }
     fclose(notthreads);
+}
+
+void load_kicauan(){
+    // HARUS SEBELUM LOAD BALASAN DAN UTAS
+    FILE *tweeter = fopen(file_kicauan.TabWord, "r");
+    if (tweeter != NULL){
+        CopyWordFILE(tweeter);
+        int neff = Akuisisi_First_Integer(currentWord);
+        CreateListKicauan(&Kicauan, (neff + 50));
+        ListKicauan_NEFF(Kicauan) = neff;
+        for (int i = 0; i < neff; i++){
+            IDUtas(ListKicauan_ELMT(Kicauan, i)) = -1;
+            Root(Balasan(ListKicauan_ELMT(Kicauan, i))) = NULL;
+            Utas(ListKicauan_ELMT(Kicauan, i)) = NULL;
+            CopyWordFILE(tweeter); ID(ListKicauan_ELMT(Kicauan, i)) = Akuisisi_First_Integer(currentWord);
+            CopyWordFILE(tweeter); IsiTwit(ListKicauan_ELMT(Kicauan, i)) = currentWord;
+            CopyWordFILE(tweeter); Like(ListKicauan_ELMT(Kicauan, i)) = Akuisisi_First_Integer(currentWord);
+            CopyWordFILE(tweeter); Author(ListKicauan_ELMT(Kicauan, i)) = currentWord;
+            CopyWordFILE(tweeter); DateTime(ListKicauan_ELMT(Kicauan, i)) = BacaDateTimeWord(currentWord);
+        }
+    }
+    fclose(tweeter);
 }
 
 // DAFTAR
@@ -827,7 +923,6 @@ void hapusBalasan(Word input, ListAcc acc, Affection friends, ListKicauan Kicaua
     }
 }
 
-
 void Save() {
     printf("Masukkan tujuan untuk menyimpan data anda: ");
     currentWord.Length = 0;
@@ -848,85 +943,17 @@ void Save() {
             printf("FAIL\n");
         }
     }
+    file_balasan = concatWordEnd(CopyWord_Any(folderPath), "/balasan.config");
+    file_draf = concatWordEnd(CopyWord_Any(folderPath), "/draf.config");
+    file_kicauan = concatWordEnd(CopyWord_Any(folderPath), "/kicauan.config");
+    file_pengguna = concatWordEnd(CopyWord_Any(folderPath), "/pengguna.config");
+    file_utas = concatWordEnd(CopyWord_Any(folderPath), "/utas.config");
 
-    // save_pengguna(folderPath);
-    // save_kicauan();
-    // save_balasan();
-    // save_draf();
-    // save_utas(); 
-}
-
-void save_pengguna(char *path) {
-    char *filename = "/pengguna.config";
-    int e = strilen(path);
-    for (int i = strilen(path); i < strilen(path)+strilen(filename); i++) {
-        path[i] = filename[i-e]; 
-    }
-    for (int i = 0; i < strilen(path); i++) {
-        printf("%c",path[i]);
-    }
-    printf("\n");
-    FILE *file = fopen(path,"w");
-    fprintf(file,"%d",acc.NEff);
-    fprintf(file,"\n");
-    for (int i = 0; i < acc.NEff; i++) {
-        for (int j = 0; j < acc.buffer[i].username.Length; j++) {
-            fprintf(file,"%c",acc.buffer[i].username.TabWord[j]);
-        }
-        fprintf(file,"\n");
-        for (int j = 0; j < acc.buffer[i].password.Length; j++) {
-            fprintf(file,"%c",acc.buffer[i].password.TabWord[j]);
-        }
-        fprintf(file,"\n");
-        for (int j = 0; j < acc.buffer[i].bio.Length; j++) {
-            fprintf(file,"%c",acc.buffer[i].bio.TabWord[j]);
-        }
-        fprintf(file,"\n");
-        for (int j = 0; j < acc.buffer[i].phone_num.Length; j++) {
-            fprintf(file,"%c",acc.buffer[i].phone_num.TabWord[j]);
-        }
-        fprintf(file,"\n");
-        for (int j = 0; j < acc.buffer[i].weton.Length; j++) {
-            fprintf(file,"%c",acc.buffer[i].weton.TabWord[j]);
-        }
-        fprintf(file,"\n");
-        if (acc.buffer[i].publicity) {
-            fprintf(file,"Public\n");
-        } else {
-            fprintf(file,"Private\n");
-        }
-        for (int j = 0; j < 5; j++) {
-            for (int k = 0; k < 20; k++) {
-                fprintf(file,"%c",acc.buffer[i].photo.content[j][k]);
-            }
-        }
-    }
-    for (int i = 0; i < 20; i++) {
-        for (int j = 0; j < 20; j++) {
-            fprintf(file,"%d",friends.status[i][j]);
-            if (j != 19) {
-                fprintf(file," ");
-            } else {
-                fprintf(file,"\n");
-            }
-        }
-    }
-    int len_total = 0;
-    for (int i = 0; i < 20; i++) {
-        len_total += length_QueueFR(acc.buffer[i].requests);
-    }
-    fprintf(file,"%d\n",len_total);
-    for (int i = 0; i < 20; i++) {
-        Address a = ADDR_HEAD(acc.buffer[i].requests);
-        if (length_QueueFR(acc.buffer[i].requests) != 0) {
-            for (int j = 0; j < length_QueueFR(acc.buffer[i].requests); j++) {
-                fprintf(file,"%d ",ID_REQUESTERN(a));
-                fprintf(file,"%d ",ID_REQUESTEDN(a));
-                fprintf(file,"%d\n",POPULARITYN(a));
-                a = NEXT(a);
-            }
-        }
-    }
+    save_pengguna(folderPath);
+    save_kicauan();
+    save_balasan(Kicauan, file_balasan);
+    //save_draf();
+    save_utas();
 }
 
 void readCommand (Word W) {
@@ -1021,7 +1048,7 @@ void readCommand (Word W) {
     } else if (wordSimilarWithoutLength(W, CopyWord_Any("CETAK_UTAS"))) {
         int id = Akuisisi_First_Integer(W);
         CetakUtas(id);
-    } else if (isWordSimilar(W,"SAVE")) {
+    } else if (isWordSimilar(W,"SIMPAN")) {
         Save();
     }
 }

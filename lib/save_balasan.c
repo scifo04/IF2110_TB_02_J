@@ -32,13 +32,7 @@ void save_balasan(ListKicauan LKicau, Word FILEBALAS) {
             count++;
         }
     }
-    if (count == 0) {
-        fprintf(file, "%d", count);
-    }
-    else {
-        fprintf(file, "%d\n", count);
-    }
-
+    fprintf(file, "%d\n", count);
 
     for (i = 0; i < listLength_ListKicauan(LKicau); i++) {
         p = r = Root(ListKicauan_ELMT(LKicau, i).Balasan); // r always root
