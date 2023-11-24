@@ -74,8 +74,13 @@ void CopyWordFILE(FILE *file){
     int i = 0;
     AdvFile(file);
     while(currentChar != '\n'){
-        currentWord.TabWord[i] = currentChar;
-        i++; AdvFile(file);
+        if (currentChar != '\r') {
+            currentWord.TabWord[i] = currentChar;
+            i++; AdvFile(file);
+        }
+        else {
+            AdvFile(file);
+        }
     }
     currentWord.Length = i;
 }

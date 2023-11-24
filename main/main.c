@@ -278,30 +278,33 @@ void load_utas(){
 }
 
 // KICAUAN HARUS DILOAD TERLEBIH DAHULU
-void load_balasan() {
+void load_balasan(ListKicauan LKicau) {
     addressTree root, p, q, r;
-    ListKicauan LKicau;
     Word user, pesan;
     DATETIME d;
+    int id_terbesar = 1;
     FILE *file = fopen(file_balasan.TabWord, "r");
     if (file != NULL) {
-        Twit t;
         CopyWordFILE(file);
         int jumlah_kicau = Akuisisi_First_Integer(currentWord);
         for (int i = 0; i < jumlah_kicau; i++) {
-            CopyWordFILE(file); int idx_kicau = Akuisisi_First_Integer(currentWord);
+            CopyWordFILE(file); int idx_kicau = Akuisisi_First_Integer(currentWord); printf("Idx kicau = %d\n", idx_kicau);
             CopyWordFILE(file); int jumlah_balasan = Akuisisi_First_Integer(currentWord);
-            root = Root(ListKicauan_ELMT(LKicau, idx_kicau).Balasan);
+            root = Root(Balasan(ListKicauan_ELMT(LKicau, idx_kicau - 1)));
             for (int j = 0; j < jumlah_balasan; j++) {
                 int id_parent, id_balasan;
-                CopyWordFILE(file); id_parent = Akuisisi_First_Integer(currentWord); id_balasan = Akuisisi_Second_Integer(currentWord);
+                CopyWordFILE(file); id_parent = Akuisisi_First_Integer(currentWord); printf("Id parent = %d\n", id_parent); id_balasan = Akuisisi_Second_Integer(currentWord); printf("Id balas = %d\n", id_balasan);
                 CopyWordFILE(file); pesan = currentWord;
                 CopyWordFILE(file); user = currentWord;
                 CopyWordFILE(file); d = BacaDateTimeWord(currentWord);
+                if (id_terbesar < id_balasan) {
+                    id_terbesar = id_balasan;
+                }
                 p = Alokasi(id_balasan, user, d, pesan);
                 if (id_parent == -1) {
                     if (root == NULL) {
                         AddChild(&root, p);
+                        Root(Balasan(ListKicauan_ELMT(Kicauan, idx_kicau - 1))) = root;   
                     }
                     else {
                         AddSibling(&root, p);
@@ -313,14 +316,13 @@ void load_balasan() {
                         AddChild(&q, p);
                     }
                     else {
-                        r = FirstChild(p);
-                        AddSibling(&r, p);
+                        AddSibling(&FirstChild(q), p);
                     }
                 }
             }
-
-        }
+        }   
     }
+    id_untuk_balas = id_terbesar + 1;
     fclose(file);
 }
 
@@ -1185,6 +1187,10 @@ void readCommand (Word W) {
         CetakUtas(id);
     } else if (isWordSimilar(W,"SIMPAN")) {
         Save();
+    } else if (isWordSimilar(W, "LOAD_KICAUAN")) {
+        load_kicauan();
+    } else if (isWordSimilar(W, "LOAD_BALASAN")) {
+        load_balasan(Kicauan);
     }
 }
 
