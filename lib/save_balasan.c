@@ -3,12 +3,6 @@
 #include "kicauan/kicauan.h"
 #include "datetime/datetime.h"
 
-int countElmtTree(addressTree p) {
-    if (p != NULL) {
-        return 1 + countElmtTree(FirstChild(p)) + countElmtTree(NextSibling(p));
-    }
-}
-
 void displayBalasan(FILE *file, addressTree p, addressTree root, ListKicauan LKicau, int i) {
     addressTree q;
     if (p != NULL) {
@@ -19,14 +13,8 @@ void displayBalasan(FILE *file, addressTree p, addressTree root, ListKicauan LKi
             q = getParent(root, p);
             fprintf(file, "%d %d\n", Id(q), Id(p));
         }
-        for (int k = 0; k < Pesan(p).Length; k++) {
-            fprintf(file, "%c", Pesan(p).TabWord[k]);
-        }
-        fprintf(file, "\n");
-        for (int k = 0; k < User(p).Length; k++) {
-            fprintf(file, "%c", User(p).TabWord[k]);
-        }
-        fprintf(file, "\n");
+        fprintWord(Pesan(p), file);
+        fprintWord(User(p), file);
         TulisDATETIMEFILE(Datetime(p), file);
         displayBalasan(file, FirstChild(p), root, LKicau, i);
         displayBalasan(file, NextSibling(p), root, LKicau, i);
