@@ -28,15 +28,6 @@ void STARTWORD() {
           atau EndWord = false, currentWord adalah kata yang sudah diakuisisi,
           currentChar karakter pertama sesudah karakter terakhir kata */
 
-void ADVWORD() {
-    IgnoreBlanks();
-    if (currentChar == MARK) {
-        EndWord = true;
-    } else {
-        CopyWord();
-    }
-    IgnoreBlanks();
-}
 /* I.S. : currentChar adalah karakter pertama kata yang akan diakuisisi
    F.S. : currentWord adalah kata terakhir yang sudah diakuisisi,
           currentChar adalah karakter pertama dari kata berikutnya, mungkin MARK
