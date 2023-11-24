@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <sys/stat.h>
 #include "../lib/adt.h"
-#include "../lib/save_balasan.c"
 
 static boolean allowexit = false;
 static ListAcc acc;
