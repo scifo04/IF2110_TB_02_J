@@ -40,7 +40,17 @@ void inisialisasi() {
     file_utas = concatWordEnd(word_inpute, "/utas.config");
 }
 
-void load (Word W);
+void deleteAllData(){
+    // SEBELUM MUAT
+    // Untuk variable variable seperti id_untuk_balas, idUtas, dll mungkin di loadnya tapi gak tau
+    for (int i = 0; i < ListKicauan_NEFF(Kicauan); i++){
+        if (Utas(ListKicauan_ELMT(Kicauan, i)) != NULL){deallocateAllUtas(&Utas(ListKicauan_ELMT(Kicauan, i)));}
+        if (Root(Balasan(ListKicauan_ELMT(Kicauan, i))) != NULL){deallocateAllTree(&Root(Balasan(ListKicauan_ELMT(Kicauan, i))));}
+    }
+    dealocateListKicauan(&Kicauan);
+    // dealokasi stack draft
+    // dealokasi queue fr
+}
 
 void save_pengguna(char *path) {
     char *filename = "/pengguna.config";
@@ -202,6 +212,27 @@ void load_kicauan(){
         }
     }
     fclose(tweeter);
+}
+
+void load_utas(){
+    // HARUS SETELAH LOAD KICAUAN
+    FILE *notthreads = fopen(file_utas.TabWord, "r");
+    if (notthreads != NULL){
+        CopyWordFILE(notthreads);
+        idUtas = (Akuisisi_First_Integer(currentWord)) + 1;
+        int idxK, loop;
+        for (int i = 1; i < idUtas; i++){
+            CopyWordFILE(notthreads); idxK = Akuisisi_First_Integer(currentWord);
+            CopyWordFILE(notthreads); loop = Akuisisi_First_Integer(currentWord);
+            for (int j = 0; j < loop; j++){
+                CopyWordFILE(notthreads); Word isiU = currentWord;
+                CopyWordFILE(notthreads); CopyWordFILE(notthreads); DATETIME waktuU = BacaDateTimeWord(currentWord);
+                insertLastUtas(&Utas(ListKicauan_ELMT(Kicauan, (idxK - 1))), waktuU, isiU);
+            }
+            IDUtas(ListKicauan_ELMT(Kicauan, (idxK - 1))) = i;
+        }
+    }
+    fclose(notthreads);
 }
 
 // DAFTAR
@@ -547,7 +578,7 @@ void BuatUtas(int idKicau){
         printf("\nKicauan tidak ditemukan\n");
     } else if (!wordSimilar(Author(ListKicauan_ELMT(Kicauan, (idKicau - 1))), currentuser.username)){
         printf("\nKicauan ini bukan milik anda!\n");
-    } else if (Utas(ListKicauan_ELMT(Kicauan, (idKicau - 1))) != NULL){
+    } else if (IDUtas(ListKicauan_ELMT(Kicauan, (idKicau - 1))) != -1){
         printf("\nTidak boleh ada dua utas yang memiliki kicauan utama yang sama!!!\n");
     } else {
         IDUtas(ListKicauan_ELMT(Kicauan, (idKicau - 1))) = idUtas; idUtas++;
