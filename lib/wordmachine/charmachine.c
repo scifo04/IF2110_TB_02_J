@@ -39,3 +39,7 @@ void ADV()
               // fclose(pita);
        }
 }
+
+void AdvFile(FILE *file){
+       fscanf(file, "%c", &currentChar);
+}

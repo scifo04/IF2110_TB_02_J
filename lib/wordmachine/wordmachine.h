@@ -46,6 +46,8 @@ void CopyWord();
           currentChar adalah karakter sesudah karakter terakhir yang diakuisisi.
           Jika panjang kata melebihi NMax, maka sisa kata "dipotong" */
 
+void CopyWordFILE(FILE *file);
+
 void printWord(Word W);
 void fprintWord(Word W, FILE *file);
 

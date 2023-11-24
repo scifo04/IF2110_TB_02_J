@@ -44,9 +44,8 @@ void ADVWORD() {
    Proses : Akuisisi kata menggunakan procedure SalinWord */
 
 void CopyWord() {
-    int i;
-    i = 0;
-    while ((currentChar != MARK && currentWord.Length<NMax)) {
+    int i = 0;
+    while (((currentChar != MARK) && (currentWord.Length<NMax))) {
         currentWord.TabWord[i] = currentChar;
         ADV();
         if (i >= NMax) {
@@ -68,6 +67,18 @@ void CopyWord() {
           currentChar = BLANK atau currentChar = MARK;
           currentChar adalah karakter sesudah karakter terakhir yang diakuisisi.
           Jika panjang kata melebihi NMax, maka sisa kata "dipotong" */
+
+void CopyWordFILE(FILE *file){
+    // setiap line di file config pasti kurang dari 280 karakter kan???
+    // bacanya per line
+    int i = 0;
+    AdvFile(file);
+    while(currentChar != '\n'){
+        currentWord.TabWord[i] = currentChar;
+        i++; AdvFile(file);
+    }
+    currentWord.Length = i;
+}
 
 void printWord(Word W) {
     for (int i = 0; i < W.Length; i++) {
