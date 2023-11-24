@@ -6,6 +6,7 @@
 #include "affection/affection.h"
 #include "datetime/datetime.h"
 #include "kicauan/kicauan.h"
+#include "utas/utas.h"
 #include "pcolor/pcolor.h"
 #include "listdin/listdin.h"
 #include "liststatik/liststatik.h"

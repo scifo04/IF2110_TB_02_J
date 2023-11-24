@@ -11,9 +11,6 @@ programmain: main/main.c
 	gcc -o lib/listdin/listdin_main lib/listdin/listdin_main.c lib/listdin/listdin.c -lm
 	clear
 	./lib/listdin/listdin_main
-	gcc -o lib/listlinier/listlinier_main lib/listlinier/listlinier_main.c lib/listlinier/listlinier.c -lm
-	clear
-	./lib/listlinier/listlinier_main
 	gcc -o lib/liststatik/liststatik_main lib/liststatik/liststatik_main.c lib/liststatik/liststatik.c -lm
 	clear
 	./lib/liststatik/liststatik_main
@@ -35,6 +32,6 @@ programmain: main/main.c
 	gcc -o lib/wordmachine/charword_main lib/wordmachine/charword_main.c lib/wordmachine/charmachine.c lib/wordmachine/wordmachine.c -lm
 	clear
 	./lib/wordmachine/charword_main
-	gcc -o main/main main/main.c lib/pcolor/pcolor.c lib/account/account.c lib/affection/affection.c lib/datetime/datetime.c lib/listdin/listdin.c lib/listlinier/listlinier.c lib/liststatik/liststatik.c lib/matrix/matrix.c lib/queue/queue.c lib/draft/draft.c lib/datetime/time.c lib/teman/temanreq.c lib/wordmachine/charmachine.c lib/wordmachine/wordmachine.c lib/kicauan/kicauan.c lib/utas/utas.c lib/tree/tree.c -lm
+	gcc -o main/main main/main.c lib/pcolor/pcolor.c lib/account/account.c lib/affection/affection.c lib/datetime/datetime.c lib/listdin/listdin.c lib/liststatik/liststatik.c lib/matrix/matrix.c lib/queue/queue.c lib/draft/draft.c lib/datetime/time.c lib/teman/temanreq.c lib/wordmachine/charmachine.c lib/wordmachine/wordmachine.c lib/kicauan/kicauan.c lib/utas/utas.c lib/tree/tree.c -lm
 	clear
 	./main/main

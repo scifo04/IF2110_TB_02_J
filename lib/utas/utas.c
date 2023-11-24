@@ -73,3 +73,10 @@ void cetakUtas(AddressUtas U, Word PembuatUtas){
         P = Sambungan(P); idx++;
     }
 }
+
+void deallocateAllUtas(AddressUtas *U){
+    AddressUtas P = *U;
+    *U = NULL;
+    if (Sambungan(P) != NULL){deallocateAllUtas(&Sambungan(P));}
+    free(P);
+}

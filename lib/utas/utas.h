@@ -40,4 +40,5 @@ void deleteAtUtas(AddressUtas *U, int idx);
 
 void cetakUtas(AddressUtas U, Word PembuatUtas);
 
+void deallocateAllUtas(AddressUtas *U);
 #endif

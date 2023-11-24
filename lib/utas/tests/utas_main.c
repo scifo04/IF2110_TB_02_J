@@ -90,6 +90,13 @@ int main(){
         insertLastUtas(&U, D, currentWord);
         cetakUtas(U, Author);
         break;
+    case 8: // deallocateAllUtas
+        STARTWORD();
+        insertLastUtas(&U, D, currentWord);
+        STARTWORD();
+        insertLastUtas(&U, D, currentWord);
+        deallocateAllUtas(&U);
+        printf("%d\n", (U == NULL));
     default:
         break;
     }
