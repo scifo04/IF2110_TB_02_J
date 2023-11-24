@@ -19,26 +19,6 @@ static Word file_utas;
 int id_untuk_balas = 1;
 int idUtas = 1; // ID Utas selanjutnya kalau ada yang buat, auto increment dari 1
 
-void inisialisasi() {
-    Word word_inpute;
-    printf(".______    __    __  .______      .______    __  .______      \n");
-    printf("|   _  \\  |  |  |  | |   _  \\     |   _  \\  |  | |   _  \\     \n");
-    printf("|  |_)  | |  |  |  | |  |_)  |    |  |_)  | |  | |  |_)  |    \n");
-    printf("|   _  <  |  |  |  | |      /     |   _  <  |  | |      /     \n");
-    printf("|  |_)  | |  `--'  | |  |\\  \\----.|  |_)  | |  | |  |\\  \\----.\n");
-    printf("|______/   \\______/  | _| `._____||______/  |__| | _| `._____|\n\n");
-    printf("Selamat datang di BurBir.\n\n");
-    printf("Aplikasi untuk studi kualitatif mengenai perilaku manusia dengan menggunakan metode (pengambilan data berupa) Focused Group Discussion kedua di zamannya.\n\n");
-    printf("Silahkan masukan folder konfigurasi untuk dimuat: ");
-    STARTWORD();
-    word_inpute = concatWordStart("./", currentWord);
-    file_balasan = concatWordEnd(word_inpute, "/balasan.config");
-    file_draf = concatWordEnd(word_inpute, "/draf.config");
-    file_kicauan = concatWordEnd(word_inpute, "/kicauan.config");
-    file_pengguna = concatWordEnd(word_inpute, "/pengguna.config");
-    file_utas = concatWordEnd(word_inpute, "/utas.config");
-}
-
 void deleteAllData(){
     // SEBELUM MUAT
     // Untuk variable variable seperti id_untuk_balas, idUtas, dll mungkin di loadnya tapi gak tau
@@ -282,7 +262,7 @@ void load_balasan(ListKicauan LKicau) {
     addressTree root, p, q, r;
     Word user, pesan;
     DATETIME d;
-    int id_terbesar = 1;
+    int id_terbesar = 0;
     FILE *file = fopen(file_balasan.TabWord, "r");
     if (file != NULL) {
         CopyWordFILE(file);
@@ -1093,26 +1073,6 @@ void Save() {
     save_utas();
 }
 
-void Load() {
-    if (!hasLogged) {
-        printf("Masukkan file konfigurasi untuk dimuat: ");
-        STARTWORD();
-        Word directory = currentWord;
-        directory.TabWord[directory.Length] = '\0';
-        struct stat folderStats;
-        if (stat(directory.TabWord, &folderStats) == 0 && S_ISDIR(folderStats.st_mode)) {
-            printf("Folder exists.\n");
-            load_pengguna(directory);
-            // load_kicauan();
-            // load_balasan();
-            // load_draf();
-            // load_utas();
-        } else {
-            printf("Folder does not exist. Continuing app....\n");
-        }
-    }
-}
-
 void load_pengguna(Word W) {
     Word path = concatWordEnd(W,"/pengguna.config");
     path.TabWord[path.Length] = '\0';
@@ -1189,6 +1149,34 @@ void load_pengguna(Word W) {
         enQueueFR(&acc.buffer[x.idRequested].requests,x);
     }
     fclose(reader);
+}
+
+void Load() {
+    if (!hasLogged) {
+        printf("Masukkan file konfigurasi untuk dimuat: ");
+        STARTWORD();
+        Word directory = currentWord;
+        directory.TabWord[directory.Length] = '\0';
+        struct stat folderStats;
+        if (stat(directory.TabWord, &folderStats) == 0 && S_ISDIR(folderStats.st_mode)) {
+            printf("Folder exists.\n");
+            file_balasan = concatWordEnd(directory, "/balasan.config");
+            file_draf = concatWordEnd(directory, "/draf.config");
+            file_kicauan = concatWordEnd(directory, "/kicauan.config");
+            file_pengguna = concatWordEnd(directory, "/pengguna.config");
+            file_utas = concatWordEnd(directory, "/utas.config");
+            deleteAllData();
+            load_pengguna(directory);
+            load_kicauan();
+            load_balasan(Kicauan);
+            // load_draf();
+            load_utas();
+        } else {
+            printf("Folder does not exist. Continuing app....\n");
+        }
+    } else {
+        printf("\nAnda harus keluar terlebih dahulu untuk melakukan pemuatan\n");
+    }
 }
 
 void readCommand (Word W) {
@@ -1288,6 +1276,18 @@ void readCommand (Word W) {
     } else if (isWordSimilar(W, "MUAT")) {
         Load();
     }
+}
+
+void inisialisasi() {
+    printf(".______    __    __  .______      .______    __  .______      \n");
+    printf("|   _  \\  |  |  |  | |   _  \\     |   _  \\  |  | |   _  \\     \n");
+    printf("|  |_)  | |  |  |  | |  |_)  |    |  |_)  | |  | |  |_)  |    \n");
+    printf("|   _  <  |  |  |  | |      /     |   _  <  |  | |      /     \n");
+    printf("|  |_)  | |  `--'  | |  |\\  \\----.|  |_)  | |  | |  |\\  \\----.\n");
+    printf("|______/   \\______/  | _| `._____||______/  |__| | _| `._____|\n\n");
+    printf("Selamat datang di BurBir.\n\n");
+    printf("Aplikasi untuk studi kualitatif mengenai perilaku manusia dengan menggunakan metode (pengambilan data berupa) Focused Group Discussion kedua di zamannya.\n\n");
+    Load();
 }
 
 int main() {
