@@ -71,6 +71,7 @@ Word CopyWord_Any (char *c);
 int strilen (char *c);
 void PasteWord(Word WIn, Word *WOut);
 boolean intCheck (Word W);
+int charToInt (char c);
 boolean substring_beginning (Word W1, Word W2);
 
 Word concatWordStart(char* A, Word B);

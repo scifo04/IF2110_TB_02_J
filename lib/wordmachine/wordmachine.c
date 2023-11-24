@@ -148,6 +148,10 @@ boolean wordSimilarWithoutLength (Word W1, Word W2) {
     return check;
 }
 
+int charToInt(char c) {
+    return c-48;
+}
+
 boolean isWordSimilar(Word W, char *W2){
     int i = 0;
     while ((i < W.Length) && W2[i] != '\0') {

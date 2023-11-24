@@ -1093,6 +1093,104 @@ void Save() {
     save_utas();
 }
 
+void Load() {
+    if (!hasLogged) {
+        printf("Masukkan file konfigurasi untuk dimuat: ");
+        STARTWORD();
+        Word directory = currentWord;
+        directory.TabWord[directory.Length] = '\0';
+        struct stat folderStats;
+        if (stat(directory.TabWord, &folderStats) == 0 && S_ISDIR(folderStats.st_mode)) {
+            printf("Folder exists.\n");
+            load_pengguna(directory);
+            // load_kicauan();
+            // load_balasan();
+            // load_draf();
+            // load_utas();
+        } else {
+            printf("Folder does not exist. Continuing app....\n");
+        }
+    }
+}
+
+void load_pengguna(Word W) {
+    Word path = concatWordEnd(W,"/pengguna.config");
+    path.TabWord[path.Length] = '\0';
+    FILE *reader = fopen(path.TabWord,"r");
+    CopyWordFILE(reader);
+    Word a = currentWord;
+    int repeat = Akuisisi_First_Integer(a);
+    CreateListAccount(&acc);
+    Account New;
+    CreateAccount(&New);
+    for (int i = 0; i < repeat; i++) {
+        CopyWordFILE(reader);
+        a = currentWord;
+        New.username = a;
+        CopyWordFILE(reader);
+        a = currentWord;
+        New.password = a;
+        CopyWordFILE(reader);
+        a = currentWord;
+        New.bio = a;
+        CopyWordFILE(reader);
+        a = currentWord;
+        New.phone_num = a;
+        CopyWordFILE(reader);
+        a = currentWord;
+        New.weton = a;
+        CopyWordFILE(reader);
+        a = currentWord;
+        if (isWordSimilar(a,"Public")) {
+            New.publicity = true;
+        } else {
+            New.publicity = false;
+        }
+        for (int k = 0; k < 5; k++) {
+            CopyWordFILE(reader);
+            a = currentWord;
+            for (int l = 0; l < 20; l++) {
+                New.photo.content[k][l];
+            }
+        }
+        insertLast_Account(&acc,New);
+    }
+    for (int i = 0; i < 4; i++) {
+        CopyWordFILE(reader);
+        a = currentWord;
+        for (int j = 0; j < 2*acc.NEff+1; j++) {
+            if (a.TabWord[j] != ' ' && a.TabWord[j] != '\n'){
+                friends.status[i][(j/2)] = charToInt(a.TabWord[j]);
+            }
+        }
+    }
+    CopyWordFILE(reader);
+    a = currentWord;
+    int iter = Akuisisi_First_Integer(a);
+    int val[3];
+    int incr = 0;
+    int mult = 1;
+    ELFRType x;
+    for (int i = 0; i < iter; i++) {
+        CopyWordFILE(reader);
+        a = currentWord;
+        for (int j = 0; j < a.Length+1; j++) {
+            if (a.TabWord[j] != ' ') {
+                val[incr] = val[incr] + mult*charToInt(a.TabWord[j]);
+                mult *= 10;
+            } else if (a.TabWord[j] == ' ') {
+                incr += 1;
+                mult = 1;
+            }
+        }
+        x.idRequester = val[0];
+        x.idRequested = val[1];
+        x.popularity = val[2];
+        enQueueFR(&acc.buffer[x.idRequested].requests,x);
+    }
+    fclose(reader);
+}
+
 void readCommand (Word W) {
     if (isWordSimilar(W, "EXIT")) {
         allowexit = true;
@@ -1187,10 +1285,8 @@ void readCommand (Word W) {
         CetakUtas(id);
     } else if (isWordSimilar(W,"SIMPAN")) {
         Save();
-    } else if (isWordSimilar(W, "LOAD_KICAUAN")) {
-        load_kicauan();
-    } else if (isWordSimilar(W, "LOAD_BALASAN")) {
-        load_balasan(Kicauan);
+    } else if (isWordSimilar(W, "MUAT")) {
+        Load();
     }
 }
 
