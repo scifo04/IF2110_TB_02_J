@@ -161,7 +161,7 @@ int main () {
             u = getParent(p, s);
             printf("%d", Id(u));
 
-        case 9:
+        case 9: // Menghapus tree dari root
             CreateTree(&t);
             p = Root(t);
             printf("Masukkan pesan: ");
