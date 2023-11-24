@@ -17,7 +17,7 @@ static Word file_draf;
 static Word file_kicauan;
 static Word file_pengguna;
 static Word file_utas;
-int id_untuk_balas;
+int id_untuk_balas = 1;
 int idUtas = 1; // ID Utas selanjutnya kalau ada yang buat, auto increment dari 1
 
 void inisialisasi() {
@@ -737,13 +737,11 @@ void print_balasan(Word input, ListAcc acc, Affection friends, ListKicauan Kicau
         else {
             Account a = getElmt_Account(acc, id_user_dibalas);
             current_user_id = getIdx_Username(acc, currentuser.username);
-            if (!a.publicity) {
+            if (!a.publicity && !isFriends_Affection(friends, id_user_dibalas, current_user_id)) {
                 printf("\nWah, kicauan tersebut dibuat oleh pengguna dengan akun privat!\n");
             }
             else {
-                if (isFriends_Affection(friends, id_user_dibalas, current_user_id)) {
-                    printTreeBalasan(p, 0, acc, friends, current_user_id);
-                }
+                printTreeBalasan(p, 0, acc, friends, current_user_id);
             }
         }
     }
@@ -1030,7 +1028,6 @@ void readCommand (Word W) {
 
 int main() {
     printf("\e[1;1H\e[2J");
-    id_untuk_balas = 1;
     boolean allowprint = false;
     CreateListAccount(&acc);
     CreateAffection(&friends);

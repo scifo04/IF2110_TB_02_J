@@ -217,7 +217,7 @@ Word CopyWord_Any (char *c) {
 boolean intCheck (Word W) {
     boolean check = true;
     for (int i = 0; i < W.Length; i++) {
-        if (!(W.TabWord[i] >= 48 && W.TabWord[i] <= 57)) {
+        if (!((W.TabWord[i] >= 48) && (W.TabWord[i] <= 57))) {
             check = false;
             return check;
         }

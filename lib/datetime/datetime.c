@@ -21,6 +21,48 @@ void TulisDATETIMEFILE(DATETIME D, FILE *file){
     fprintf(file, "%d/%d/%d %02d:%02d:%02d\n", Day(D), Month(D), Year(D), Hour(Time(D)), Minute(Time(D)), Second(Time(D)));
 }
 
+DATETIME BacaDateTimeWord(Word W){
+    DATETIME D; Day(D) = 0; Month(D) = 0; Year(D) = 0; Hour(Time(D)) = 0; Minute(Time(D)) = 0; Second(Time(D)) = 0;
+    int Q = 0;
+    for (int i = 0; i < W.Length; i++){
+        if (((int)W.TabWord[i] >= 48) && ((int)W.TabWord[i] <= 57)){
+            switch (Q) {
+                case 0:
+                    Day(D) *= 10;
+                    Day(D) += W.TabWord[i] - '0';
+                    if (W.TabWord[i+1] == '/'){Q++;}
+                    break;
+                case 1:
+                    Month(D) *= 10;
+                    Month(D) += W.TabWord[i] - '0';
+                    if (W.TabWord[i+1] == '/'){Q++;}
+                    break;
+                case 2:
+                    Year(D) *= 10;
+                    Year(D) += W.TabWord[i] - '0';
+                    if (W.TabWord[i+1] == ' '){Q++;}
+                    break;
+                case 3:
+                    Hour(Time(D)) *= 10;
+                    Hour(Time(D)) += W.TabWord[i] - '0';
+                    if (W.TabWord[i+1] == ':'){Q++;}
+                    break;
+                case 4:
+                    Minute(Time(D)) *= 10;
+                    Minute(Time(D)) += W.TabWord[i] - '0';
+                    if (W.TabWord[i+1] == ':'){Q++;}
+                    break;
+                case 5:
+                    Second(Time(D)) *= 10;
+                    Second(Time(D)) += W.TabWord[i] - '0';
+                    break;
+                default: break;
+            }
+        }
+    }
+    return D;
+}
+
 // boolean DLT(DATETIME D1, DATETIME D2) {
 //     return ((Year(D1) < Year(D2)) || (Month(D1) < Month(D2)) || (Day(D1) < Day(D2)) || (Hour(Time(D1)) < Hour(Time(D2))) || (Minute(Time(D1)) < Minute(Time(D2))) || (Second(Time(D1)) < Second(Time(D2))));
 // }

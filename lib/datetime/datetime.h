@@ -5,6 +5,7 @@
 #include "../boolean/boolean.h"
 #include "time.h"
 #include <time.h>
+#include "../wordmachine/wordmachine.h"
 
 typedef struct {
     int DD;   /* integer [1..31] */
@@ -21,6 +22,7 @@ typedef struct {
 void CreateDATETIME(DATETIME *D);
 void TulisDATETIME(DATETIME D);
 void TulisDATETIMEFILE(DATETIME D, FILE *file);
+DATETIME BacaDateTimeWord(Word W);
 
 // boolean DLT(DATETIME D1, DATETIME D2);
 // boolean DGT(DATETIME D1, DATETIME D2);
