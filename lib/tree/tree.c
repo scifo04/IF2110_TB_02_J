@@ -180,3 +180,9 @@ addressTree getParent (addressTree root, addressTree p){
         return NULL;
     }
 }
+
+int countElmtTree(addressTree p) {
+    if (p != NULL) {
+        return 1 + countElmtTree(FirstChild(p)) + countElmtTree(NextSibling(p));
+    }
+}
