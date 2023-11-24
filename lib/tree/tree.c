@@ -186,3 +186,13 @@ int countElmtTree(addressTree p) {
         return 1 + countElmtTree(FirstChild(p)) + countElmtTree(NextSibling(p));
     }
 }
+
+void deallocateAllTree (addressTree *root) {
+    addressTree p = *root;
+    *root = NULL;
+    if (p != NULL) {
+        deallocateAllTree(&FirstChild(p));
+        deallocateAllTree(&NextSibling(p));
+        free(p);
+    }
+}

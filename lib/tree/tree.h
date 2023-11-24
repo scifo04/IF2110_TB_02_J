@@ -68,6 +68,8 @@ addressTree getChildAddress (addressTree p, addressTree q);
 
 addressTree getParent(addressTree root,addressTree C);
 
-int countElmtTree(addressTree p);
+int countElmtTree (addressTree p);
+
+void deallocateAllTree (addressTree *p);
 
 #endif

@@ -10,20 +10,22 @@ int main () {
     Tree t;
     addressTree p, q, r, s, u;
     DATETIME d;
-    int input;
-    Word user, pesan;
+    int angka;
+    Word input, user, pesan;
     ListAcc LAcc;
     Affection aff;
 
-    printf("Masukkan input tanpa titik koma: ");
-    scanf("%d", &input);
+    printf("Masukkan input: ");
+    STARTWORD();
+    input = currentWord;
 
     printf("Masukkan username: ");
     STARTWORD();
     user = currentWord;
-    user.TabWord[0] = ' ';
+    
+    angka = input.TabWord[0] - '0';
 
-    switch (input) {
+    switch (angka) {
         case 1: // Tree kosong
             CreateTree(&t);
             p = Root(t);
@@ -158,6 +160,26 @@ int main () {
             printTree(p, 0);
             u = getParent(p, s);
             printf("%d", Id(u));
+
+        case 9:
+            CreateTree(&t);
+            p = Root(t);
+            printf("Masukkan pesan: ");
+            STARTWORD();
+            CreateDATETIME(&d);
+
+            q = Alokasi(3, user, d, currentWord);
+            r = Alokasi(4, user, d, currentWord);
+            s = Alokasi(5, user, d, currentWord);
+            AddChild(&p, q);
+            AddChild(&q, r);
+            AddChild(&r, s);
+
+            printTree(p, 0);
+            deallocateAllTree(&p);
+            printTree(p, 0);
+            printf("\nApakah p NULL = ");
+            printf("%d\n", (p == NULL));
     }
     return 0;
 }
