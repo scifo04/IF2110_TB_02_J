@@ -57,6 +57,32 @@ void save_kicauan(){
     fclose(tweeter);
 }
 
+void save_draf(){
+    int number;
+    twitDraft delVal;
+
+    FILE *drafts = fopen(file_draf.TabWord, "w");
+    if (drafts != NULL){
+        if (fscanf(drafts, "%d", &number) == 1) {
+            printf("Number from the file: %d\n", number);
+        } else {
+            Draft temp;
+            copyDraft(myDraft, &temp);
+
+            fprintf(drafts, "%d\n", 1);
+            if (!IsEmpty_Draft(temp)){
+                fprintWord(DAuthor(temp), drafts);
+                while(!IsEmpty_Draft(temp)){
+                    fprintWord(isiTwitDraft(InfoTops(temp)), drafts);
+                    TulisDATETIMEFILE(dateTwitDraft(InfoTops(temp)), drafts);
+                    Pops(&temp, &delVal);
+                }
+            }
+        }
+    }
+    fclose(drafts);
+}
+
 void save_utas(){
     FILE *notthreads = fopen(file_utas.TabWord, "w");
     if (notthreads != NULL){
@@ -814,16 +840,16 @@ void Save() {
     printWord(currentWord);
     printf("\n");
     struct stat folderStats;
-    // if (stat(folderPath, &folderStats) == 0 && S_ISDIR(folderStats.st_mode)) {
-    //     printf("Folder exists.\n");
-    // } else {
-    //     printf("Folder does not exist. Making a new folder...\n");
-    //     if (mkdir(folderPath,0777) == 0) {
-    //         printf("Folder created successfully\n");
-    //     } else {
-    //         printf("FAIL\n");
-    //     }
-    // }
+    if (stat(folderPath, &folderStats) == 0 && S_ISDIR(folderStats.st_mode)) {
+        printf("Folder exists.\n");
+    } else {
+        printf("Folder does not exist. Making a new folder...\n");
+        if (mkdir(folderPath,0777) == 0) {
+            printf("Folder created successfully\n");
+        } else {
+            printf("FAIL\n");
+        }
+    }
 
     // save_pengguna(folderPath);
     // save_kicauan();
